@@ -33,17 +33,17 @@ specialized code for any application.
 Installation
 ------------
 
-Simply compile crcany.c.
+This will compile the crcany and mincrc executables:
+
+    make
 
 Test
 ----
 
-Test using the list of all catalogued CRCs, available here in the file
-allcrcs.txt.
+Test crcany using the list of all catalogued CRCs, available here in the file
+allcrcs.txt, and test mincrc against the abbreviated list using the Makefile:
 
-`crcany < allcrcs.txt`
-
-This will report the tests passed.
+    make test
 
 License
 -------
