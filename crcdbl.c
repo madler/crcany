@@ -94,12 +94,12 @@ void crc_bitwise_dbl(model_t *model, word_t *crc_hi, word_t *crc_lo,
     /* pre-process the CRC */
     lo = *crc_lo ^ model->xorout;
     hi = *crc_hi ^ model->xorout_hi;
-    hi &= ONES(model->width - WORDBITS);
     if (model->rev)
         reverse_dbl(&hi, &lo, model->width);
 
     /* process the input data a bit at a time */
     if (model->ref) {
+        hi &= ONES(model->width - WORDBITS);
         while (len--) {
             lo ^= *buf++;
             BIGREF;  BIGREF;  BIGREF;  BIGREF;
