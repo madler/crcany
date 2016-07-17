@@ -1,7 +1,15 @@
+/* model.h -- Generic CRC parameter model routines
+ * Copyright (C) 2014, 2016 Mark Adler
+ * For conditions of distribution and use, see copyright notice in crcany.c.
+ */
+
 /*
   Define a generic model for a CRC and interpret a description of CRC model
   using the standard set of parameters.
  */
+
+#ifndef _MODEL_H_
+#define _MODEL_H_
 
 #include <stdio.h>
 #include <stdint.h>
@@ -155,3 +163,5 @@ void process_model(model_t *model);
    will be allocated.  *line will be reallocated as needed for longer input
    lines. */
 ssize_t getcleanline(char **line, size_t *size, FILE *in);
+
+#endif

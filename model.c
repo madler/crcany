@@ -1,3 +1,8 @@
+/* model.c -- Generic CRC parameter model routines
+ * Copyright (C) 2014, 2016 Mark Adler
+ * For conditions of distribution and use, see copyright notice in crcany.c.
+ */
+
 #include "model.h"
 
 /* --- Parameter processing routines --- */
@@ -408,7 +413,7 @@ int read_model(model_t *model, char *str)
 word_t reverse(word_t x, unsigned n)
 {
     word_t y;
-    
+
     y = x & 1;
     while (--n) {
         x >>= 1;
