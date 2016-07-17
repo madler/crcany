@@ -87,13 +87,13 @@ static inline word_t crc_bitwise(model_t *model, word_t crc,
         return model->init;
 
     /* pre-process the CRC */
-    crc &= ONES(model->width);
     crc ^= model->xorout;
     if (model->rev)
         crc = reverse(crc, model->width);
 
     /* process the input data a bit at a time */
     if (model->ref) {
+        crc &= ONES(model->width);
         while (len--) {
             crc ^= *buf++;
             crc = crc & 1 ? (crc >> 1) ^ poly : crc >> 1;
@@ -187,15 +187,16 @@ static inline word_t crc_bytewise(model_t *model, word_t crc,
         return model->init;
 
     /* pre-process the CRC */
-    crc &= ONES(model->width);
     crc ^= model->xorout;
     if (model->rev)
         crc = reverse(crc, model->width);
 
     /* process the input data a byte at a time */
-    if (model->ref)
+    if (model->ref) {
+        crc &= ONES(model->width);
         while (len--)
             crc = (crc >> 8) ^ model->table_byte[(crc ^ *buf++) & 0xff];
+    }
     else if (model->width <= 8) {
         unsigned shift;
 
@@ -297,17 +298,18 @@ static inline word_t crc_wordwise(model_t *model, word_t crc,
     shift = model->width <= 8 ? 8 - model->width : model->width - 8;
 
     /* pre-process the CRC */
-    crc &= ONES(model->width);
     crc ^= model->xorout;
     if (model->rev)
         crc = reverse(crc, model->width);
 
     /* process the first few bytes up to a word_t boundary, if any */
-    if (model->ref)
+    if (model->ref) {
+        crc &= ONES(model->width);
         while (len && ((ptrdiff_t)buf & (WORDCHARS - 1))) {
             crc = (crc >> 8) ^ model->table_byte[(crc ^ *buf++) & 0xff];
             len--;
         }
+    }
     else if (model->width <= 8) {
         crc <<= shift;
         while (len && ((ptrdiff_t)buf & (WORDCHARS - 1))) {
