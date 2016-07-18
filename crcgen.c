@@ -1,5 +1,5 @@
 /*
-  crcgen version 1.0, 17 July 2016
+  crcgen version 1.1, 18 July 2016
 
   Copyright (C) 2016 Mark Adler
 
@@ -25,6 +25,7 @@
 
 /* Version history:
    1.0  17 Jul 2016  First version (bit-wise and byte-wise only)
+   1.1  18 Jul 2016  Improve generated code
  */
 
 /* Generate C code to compute the given CRC. This generates code that will work
@@ -153,15 +154,19 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         model->poly);
     }
     else if (model->width <= 8) {
+        if (model->width < 8)
+            fprintf(code,
+        "    crc <<= %u;\n", 8 - model->width);
         fprintf(code,
-        "    crc <<= %u;\n"
         "    while (len--) {\n"
         "        crc ^= *data++;\n"
         "        for (unsigned k = 0; k < 8; k++)\n"
         "            crc = crc & 0x80 ? (crc << 1) ^ %#"X" : crc << 1;\n"
-        "    }\n"
-        "    crc >>= %u;\n",
-        8 - model->width, model->poly << (8 - model->width), 8 - model->width);
+        "    }\n",
+        model->poly << (8 - model->width));
+        if (model->width < 8)
+            fprintf(code,
+        "    crc >>= %u;\n", 8 - model->width);
         if (!model->rev)
             fprintf(code,
         "    crc &= %#"X";\n", ONES(model->width));
@@ -242,19 +247,29 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         if (model->width != crc_t_bit && !model->rev)
             fprintf(code,
         "    crc &= %#"X";\n", ONES(model->width));
-        fprintf(code,
+        if (model->width > 8)
+            fputs(
         "    while (len--)\n"
-        "        crc = %stable[(crc ^ *data++)%s];\n",
-        model->width > 8 ? "(crc >> 8) ^ " : "",
-        model->width > 8 ? " & 0xff" : "");
+        "        crc = (crc >> 8) ^ table[(crc ^ *data++) & 0xff];\n", code);
+        else
+            fputs(
+        "    while (len--)\n"
+        "        crc = table[crc ^ *data++];\n", code);
+
     }
     else if (model->width <= 8) {
-        fprintf(code,
-        "    crc <<= %u;\n"
+        if (model->width != crc_t_bit && !model->rev)
+            fprintf(code,
+        "    crc &= %#"X";\n", ONES(model->width));
+        if (model->width < 8)
+            fprintf(code,
+        "    crc <<= %u;\n", 8 - model->width);
+        fputs(
         "    while (len--)\n"
-        "        crc = table[crc ^ *data++];\n"
-        "    crc >>= %u;\n",
-        8 - model->width, 8 - model->width);
+        "        crc = table[crc ^ *data++];\n", code);
+        if (model->width < 8)
+            fprintf(code,
+        "    crc >>= %u;\n", 8 - model->width);
     }
     else {
         fprintf(code,
