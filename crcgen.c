@@ -189,8 +189,10 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
 
     // write test code for bit-wise function
     fprintf(test,
+        "\n"
         "    %s %s_bit(%s, unsigned char const *, size_t);\n"
-        "    if (%s_bit(%s_bit(0, NULL, 0), test, len) != %#"X")\n"
+        "    init = %s_bit(0, NULL, 0);\n"
+        "    if (%s_bit(init, test, len) != %#"X")\n"
         "        fputs(\"bit-wise mismatch for %s\\n\", stderr);\n",
         crc_t, name, crc_t, name, name, model->check, name);
 
@@ -274,8 +276,10 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
 
     // write test code for byte-wise function
     fprintf(test,
+        "\n"
         "    %s %s_byte(%s, unsigned char const *, size_t);\n"
-        "    if (%s_byte(%s_bit(0, NULL, 0), test, len) != %#"X")\n"
+        "    init = %s_byte(0, NULL, 0);\n"
+        "    if (%s_byte(init, test, len) != %#"X")\n"
         "        fputs(\"byte-wise mismatch for %s\\n\", stderr);\n",
         crc_t, name, crc_t, name, name, model->check, name);
 }
@@ -386,9 +390,12 @@ int main(void) {
     }
     fputs(
         "#include <stdio.h>\n"
+        "#include <stdint.h>\n"
+        "\n"
         "int main(void) {\n"
         "    unsigned char const *test = (unsigned char *)\"123456789\";\n"
-        "    unsigned const len = 9;\n", test);
+        "    unsigned const len = 9;\n"
+        "    uintmax_t init;\n", test);
 
     // read each line from stdin, process the CRC description
     char *line = NULL;
@@ -441,6 +448,7 @@ int main(void) {
     free(line);
 
     fputs(
+        "\n"
         "    return 0;\n"
         "}\n", test);
     fclose(test);
