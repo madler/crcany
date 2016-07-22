@@ -1,5 +1,5 @@
 /*
-  crcgen version 1.2, 19 July 2016
+  crcgen version 1.2, 21 July 2016
 
   Copyright (C) 2016 Mark Adler
 
@@ -26,7 +26,8 @@
 /* Version history:
    1.0  17 Jul 2016  First version (bit-wise and byte-wise only)
    1.1  18 Jul 2016  Improve generated code
-   1.2  19 Jul 2016  Add word-wise code generation
+   1.2  21 Jul 2016  Add word-wise code generation
+                     Define WORD_BIT and LONG_BIT for non-posix-compliant
  */
 
 /* Generate C code to compute the given CRC. This generates code that will work
@@ -43,6 +44,31 @@
 #include <unistd.h>
 #include "model.h"
 #include "crc.h"
+
+// Define WORD_BIT and LONG_BIT for a non-POSIX-compliant limit.h -- allow the
+// possibility of 128 bits just for future-proofing
+#ifndef WORD_BIT
+#  if INT_MAX == 32767
+#    define WORD_BIT 16
+#  elif INT_MAX == 2147483647
+#    define WORD_BIT 32
+#  elif INT_MAX == 9223372036854775807
+#    define WORD_BIT 64
+#  else
+#    define WORD_BIT 128
+#  endif
+#endif
+#ifndef LONG_BIT
+#  if LONG_MAX == 32767
+#    define LONG_BIT 16
+#  elif LONG_MAX == 2147483647
+#    define LONG_BIT 32
+#  elif LONG_MAX == 9223372036854775807
+#    define LONG_BIT 64
+#  else
+#    define LONG_BIT 128
+#  endif
+#endif
 
 // printf() directive to print a uintmax_t in hexadecimal (e.g. "llx" or "jx").
 #define X PRIxMAX
