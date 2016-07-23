@@ -1,5 +1,5 @@
 /*
-  crcgen version 1.2, 22 July 2016
+  crcgen version 1.3, 23 July 2016
 
   Copyright (C) 2016 Mark Adler
 
@@ -32,6 +32,7 @@
                      Add random data testing from middle to middle of words
                      Test CRC header files as well
                      Use word table for byte table when possible
+   1.3  23 Jul 2016  Build xorout into the tables
  */
 
 /* Generate C code to compute the given CRC. This generates code that will work
@@ -339,9 +340,6 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         "    if (data == NULL)\n"
         "        return %#"X";\n",
         crc_t, name, crc_t, model->init);
-    if (model->xorout)
-        fprintf(code,
-        "    crc ^= %#"X";\n", model->xorout);
     if (model->rev)
         fprintf(code,
         "    crc = revlow(crc, %u);\n", model->width);
@@ -385,9 +383,6 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
     if (model->rev)
         fprintf(code,
         "    crc = revlow(crc, %u);\n", model->width);
-    if (model->xorout)
-        fprintf(code,
-        "    crc ^= %#"X";\n", model->xorout);
     fputs("    return crc;\n"
           "}\n", code);
 
@@ -428,9 +423,6 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         "    if (data == NULL)\n"
         "        return %#"X";\n",
         crc_t, name, crc_t, model->init);
-    if (model->xorout)
-        fprintf(code,
-        "    crc ^= %#"X";\n", model->xorout);
     if (model->rev)
         fprintf(code,
         "    crc = revlow(crc, %u);\n", model->width);
@@ -566,9 +558,6 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
     if (model->rev)
         fprintf(code,
         "    crc = revlow(crc, %u);\n", model->width);
-    if (model->xorout)
-        fprintf(code,
-        "    crc ^= %#"X";\n", model->xorout);
     fputs(
         "    return crc;\n"
         "}\n", code);

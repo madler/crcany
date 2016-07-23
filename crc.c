@@ -87,9 +87,7 @@ void crc_table_bytewise(model_t *model)
 
     k = 0;
     do {
-        crc = model->xorout;
-        crc = crc_bitwise(model, crc, &k, 1);
-        crc ^= model->xorout;
+        crc = crc_bitwise(model, 0, &k, 1);
         if (model->rev)
             crc = reverse(crc, model->width);
         if (model->width < 8 && !model->ref)
@@ -105,7 +103,6 @@ word_t crc_bytewise(model_t *model, word_t crc, unsigned char *buf, size_t len)
         return model->init;
 
     /* pre-process the CRC */
-    crc ^= model->xorout;
     if (model->rev)
         crc = reverse(crc, model->width);
 
@@ -137,7 +134,7 @@ word_t crc_bytewise(model_t *model, word_t crc, unsigned char *buf, size_t len)
     /* post-process and return the CRC */
     if (model->rev)
         crc = reverse(crc, model->width);
-    return crc ^ model->xorout;
+    return crc;
 }
 
 /* Swap the bytes in a word_t.  This can be replaced by a byte-swap builtin, if
@@ -172,6 +169,7 @@ void crc_table_wordwise(model_t *model)
         crc = model->table_byte[k];
         model->table_word[0][k] = opp ? swap(crc << top) : crc << top;
         for (n = 1; n < WORDCHARS; n++) {
+            crc ^= model->xorout;
             if (model->ref)
                 crc = (crc >> 8) ^ model->table_byte[crc & 0xff];
             else if (model->width <= 8)
@@ -179,6 +177,7 @@ void crc_table_wordwise(model_t *model)
             else
                 crc = (crc << 8) ^
                       model->table_byte[(crc >> (model->width - 8)) & 0xff];
+            crc ^= model->xorout;
             model->table_word[n][k] = opp ? swap(crc << top) : crc << top;
         }
     }
@@ -199,7 +198,6 @@ word_t crc_wordwise(model_t *model, word_t crc, unsigned char *buf, size_t len)
     shift = model->width <= 8 ? 8 - model->width : model->width - 8;
 
     /* pre-process the CRC */
-    crc ^= model->xorout;
     if (model->rev)
         crc = reverse(crc, model->width);
 
@@ -324,5 +322,5 @@ word_t crc_wordwise(model_t *model, word_t crc, unsigned char *buf, size_t len)
     /* post-process and return the CRC */
     if (model->rev)
         crc = reverse(crc, model->width);
-    return crc ^ model->xorout;
+    return crc;
 }
