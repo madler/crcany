@@ -30,6 +30,7 @@
                      Define WORD_BIT and LONG_BIT for non-posix-compliant
                      Add comments in .h files with architecture assumptions
                      Add random data testing from middle to middle of words
+                     Test CRC header files as well
  */
 
 /* Generate C code to compute the given CRC. This generates code that will work
@@ -87,7 +88,7 @@
 // check value. If the check value does not match the computed CRC, then the
 // generated code prints an error to stderr.
 static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
-                    FILE *test) {
+                    FILE *defs, FILE *test) {
     // select the unsigned integer type to be used for CRC calculations
     fputs(
         "// These CRC routines take the initial/current CRC in the first argument, a\n"
@@ -235,15 +236,17 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
           "}\n", code);
 
     // write test code for bit-wise function
+    fprintf(defs,
+        "#include \"%s.h\"\n",
+        name);
     fprintf(test,
         "\n"
         "    // %s\n"
-        "    %s %s_bit(%s, unsigned char const *, size_t);\n"
         "    init = %s_bit(0, NULL, 0);\n"
         "    if (%s_bit(init, test, len) != %#"X")\n"
         "        fputs(\"bit-wise mismatch for %s\\n\", stderr);\n"
         "    crc = %s_bit(init, data + 1, sizeof(data) - 1);\n",
-        name, crc_t, name, crc_t, name, name, model->check, name, name);
+        name, name, name, model->check, name, name);
 
     // byte-wise table
     crc_table_bytewise(model);
@@ -337,12 +340,11 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
 
     // write test code for byte-wise function
     fprintf(test,
-        "    %s %s_byte(%s, unsigned char const *, size_t);\n"
         "    if (%s_byte(0, NULL, 0) != init ||\n"
         "        %s_byte(init, test, len) != %#"X" ||\n"
         "        %s_byte(init, data + 1, sizeof(data) - 1) != crc)\n"
         "        fputs(\"byte-wise mismatch for %s\\n\", stderr);\n",
-        crc_t, name, crc_t, name, name, model->check, name, name);
+        name, name, model->check, name, name);
 
     // word-wise table
     crc_table_wordwise(model);
@@ -554,12 +556,11 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
 
     // write test code for word-wise function
     fprintf(test,
-        "    %s %s_word(%s, unsigned char const *, size_t);\n"
         "    if (%s_word(0, NULL, 0) != init ||\n"
         "        %s_word(init, test, len) != %#"X" ||\n"
         "        %s_word(init, data + 1, sizeof(data) - 1) != crc)\n"
         "        fputs(\"word-wise mismatch for %s\\n\", stderr);\n",
-        crc_t, name, crc_t, name, name, model->check, name, name);
+        name, name, model->check, name, name);
 }
 
 // Make a base name for the CRC routines and source files, making use of the
@@ -654,15 +655,12 @@ static int create_source(char *src, char *name, FILE **head, FILE **code) {
 // to compute each one. Each CRC goes into it's own .h and .c source files in
 // the "src" subdirectory of the current directory.
 int main(void) {
-    // create test code file
-    FILE *test;
+    // create test source files
+    FILE *defs, *test;
     {
-        int ret = mkdir(SRC, 0755);
-        if (ret && errno != EEXIST)
-            return 1;
-        test = fopen("src/crc_test.c", "w");
-        if (test == NULL) {
-            fputs("could not create test code file -- aborting\n", stderr);
+        int ret = create_source(SRC, "crc_test", &defs, &test);
+        if (ret) {
+            fputs("could not create test code files -- aborting\n", stderr);
             return 1;
         }
     }
@@ -671,6 +669,7 @@ int main(void) {
         "#include <stdlib.h>\n"
         "#include <stdint.h>\n"
         "#include <time.h>\n"
+        "#include \"crc_test.h\"\n"
         "\n"
         "int main(void) {\n"
         "    unsigned char const *test = (unsigned char *)\"123456789\";\n"
@@ -687,8 +686,7 @@ int main(void) {
         "            ran >>= 8;\n"
         "        } while (n);\n"
         "    }\n"
-        "    uintmax_t init, crc;\n"
-        , test);
+        "    uintmax_t init, crc;\n", test);
 
     // read each line from stdin, process the CRC description
     char *line = NULL;
@@ -730,7 +728,7 @@ int main(void) {
                 fprintf(stderr, "%s/%s.[ch] %s -- skipping\n", SRC, name,
                         errno == 1 ? "create error" : "exists");
             else {
-                crc_gen(&model, name, head, code, test);
+                crc_gen(&model, name, head, code, defs, test);
                 fclose(code);
                 fclose(head);
             }
