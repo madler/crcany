@@ -23,10 +23,9 @@ integers.
 _crcgen_ generates C code for each CRC definition read from stdin, putting the
 resulting code into .h and .c files for each definition in the src/
 subdirectory. Test code is also generated in src/crc_test.c. Code is generated
-for the machine being run on (e.g. with respect to the lengths of the integer
-types), and will generate code for any CRC whose width is less than or equal to
-the maximum integer size. The generated code provides both bit-wise and
-byte-wise routines.
+for the machine being run on (i.e. with respect to the lengths of the integer
+types and their endianess), and will generate code for any CRC whose width is
+less than or equal to the maximum integer size.
 
 Motivation
 ----------
