@@ -31,6 +31,7 @@
                      Add comments in .h files with architecture assumptions
                      Add random data testing from middle to middle of words
                      Test CRC header files as well
+                     Use word table for byte table when possible
  */
 
 /* Generate C code to compute the given CRC. This generates code that will work
@@ -48,8 +49,21 @@
 #include "model.h"
 #include "crc.h"
 
-// Define WORD_BIT and LONG_BIT for a non-POSIX-compliant limit.h -- allow the
-// possibility of 128 bits just for future-proofing
+// Define WORD_BIT and LONG_BIT for a non-POSIX-compliant limit.h. Also define
+// similar constants SHRT_BIT and INTMAX_BIT.
+#ifndef SHRT_BIT
+#  if SHRT_MAX == 127
+#    define SHRT_BIT 8
+#  elif SHRT_MAX == 32767
+#    define SHRT_BIT 16
+#  elif SHRT_MAX == 2147483647
+#    define SHRT_BIT 32
+#  elif SHRT_MAX == 9223372036854775807
+#    define SHRT_BIT 64
+#  else
+#    error Unexpected integer size
+#  endif
+#endif
 #ifndef WORD_BIT
 #  if INT_MAX == 32767
 #    define WORD_BIT 16
@@ -58,7 +72,7 @@
 #  elif INT_MAX == 9223372036854775807
 #    define WORD_BIT 64
 #  else
-#    define WORD_BIT 128
+#    error Unexpected integer size
 #  endif
 #endif
 #ifndef LONG_BIT
@@ -69,7 +83,18 @@
 #  elif LONG_MAX == 9223372036854775807
 #    define LONG_BIT 64
 #  else
-#    define LONG_BIT 128
+#    error Unexpected integer size
+#  endif
+#endif
+#ifndef INTMAX_BIT
+#  if INTMAX_MAX == 32767
+#    define INTMAX_BIT 16
+#  elif INTMAX_MAX == 2147483647
+#    define INTMAX_BIT 32
+#  elif INTMAX_MAX == 9223372036854775807
+#    define INTMAX_BIT 64
+#  else
+#    error Unexpected integer size
 #  endif
 #endif
 
@@ -113,42 +138,28 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         fputs(
         "#include <stdint.h>\n", head);
         crc_t = "uintmax_t";
-        crc_t_bit = 0;
-        uintmax_t x = 1;
-        do {
-            crc_t_bit++;
-            x <<= 1;
-        } while (x);
+        crc_t_bit = INTMAX_BIT;
     }
 
     // select the unsigned integer type to be used for table entries
     char *crc_table_t;
     unsigned crc_table_t_bit;
-    {
-        unsigned short_bit = 0;
-        {
-            unsigned short x = 1;
-            do {
-                short_bit++;
-                x <<= 1;
-            } while (x);
-        }
-        if (model->width <= CHAR_BIT) {
-            crc_table_t = "unsigned char";
-            crc_table_t_bit = CHAR_BIT;
-        }
-        else if (model->width <= short_bit) {
-            crc_table_t = "unsigned short";
-            crc_table_t_bit = short_bit;
-        }
-        else {
-            crc_table_t = crc_t;
-            crc_table_t_bit = crc_t_bit;
-        }
+    if (model->width <= CHAR_BIT) {
+        crc_table_t = "unsigned char";
+        crc_table_t_bit = CHAR_BIT;
+    }
+    else if (model->width <= SHRT_BIT) {
+        crc_table_t = "unsigned short";
+        crc_table_t_bit = SHRT_BIT;
+    }
+    else {
+        crc_table_t = crc_t;
+        crc_table_t_bit = crc_t_bit;
     }
 
     // include the header in the code
     fprintf(code,
+        "#include <stdint.h>\n"
         "#include \"%s.h\"\n", name);
 
     // reverse function, if needed
@@ -250,30 +261,70 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         "    crc = %s_bit(init, data + 1, sizeof(data) - 1);\n",
         name, name, name, model->check, name, name);
 
+    // determine endianess of this machine
+    unsigned little = 1;
+    little = *((unsigned char *)(&little));
+
     // byte-wise table
-    crc_table_bytewise(model);
-    fprintf(code,
+    if ((little && model->ref) ||
+        (!little && !model->ref && model->width == INTMAX_BIT))
+        fputs(
+        "\n"
+        "#define table_byte table_word[0]\n", code);
+    else {
+        crc_table_bytewise(model);
+        fprintf(code,
         "\n"
         "static %s const table_byte[] = {\n",
-        crc_table_t);
+            crc_table_t);
+        {
+            unsigned const d = (model->width + 3) >> 2; // hex digits per entry
+            char const *pre = "   ";        // this plus one space is line prefix
+            unsigned const max = COLS;      // maximum length before new line
+            unsigned n = 0;                 // characters on this line, so far
+            for (unsigned k = 0; k < 255; k++) {
+                if (n == 0)
+                    n += fprintf(code, "%s", pre);
+                n += fprintf(code, " 0x%0*"X",", d, model->table_byte[k]);
+                if (n + d + 4 > max) {
+                    putc('\n', code);
+                    n = 0;
+                }
+            }
+            fprintf(code, "%s 0x%0*"X, n ? "" : pre, d, model->table_byte[255]);
+        }
+        fputs(
+        "\n"
+        "};\n", code);
+    }
+
+    // word-wise table
+    crc_table_wordwise(model);
+    fprintf(code,
+        "\n"
+        "static %s const table_word[][256] = {\n",
+        little ? crc_table_t : "uintmax_t");
     {
-        unsigned const d = (model->width + 3) >> 2; // hex digits per entry
+        // hex digits per entry
+        unsigned d = little ? crc_table_t_bit >> 2 : WORDCHARS << 1;
         char const *pre = "   ";        // this plus one space is line prefix
         unsigned const max = COLS;      // maximum length before new line
         unsigned n = 0;                 // characters on this line, so far
-        for (unsigned k = 0; k < 255; k++) {
-            if (n == 0)
-                n += fprintf(code, "%s", pre);
-            n += fprintf(code, " 0x%0*"X",", d, model->table_byte[k]);
-            if (n + d + 4 > max) {
-                putc('\n', code);
-                n = 0;
+        for (unsigned j = 0; j < WORDCHARS; j++) {
+            for (unsigned k = 0; k < 256; k++) {
+                if (n == 0)
+                    n += fprintf(code, "%s", pre);
+                n += fprintf(code, "%s0x%0*"X"%s",
+                             k ? " " : "{", d, model->table_word[j][k],
+                             k != 255 ? "," : j != WORDCHARS-1 ? "}," : "}");
+                if (n + d + 5 > max || k == 255) {
+                    putc('\n', code);
+                    n = 0;
+                }
             }
         }
-        fprintf(code, "%s 0x%0*"X, n ? "" : pre, d, model->table_byte[255]);
     }
     fputs(
-        "\n"
         "};\n", code);
 
     // byte-wise CRC calculation function
@@ -347,40 +398,6 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         "        %s_byte(init, data + 1, sizeof(data) - 1) != crc)\n"
         "        fputs(\"byte-wise mismatch for %s\\n\", stderr);\n",
         name, name, model->check, name, name);
-
-    // word-wise table
-    crc_table_wordwise(model);
-    fputs(
-        "\n"
-        "#include <stdint.h>\n", code);
-    unsigned little = 1;
-    little = *((unsigned char *)(&little));
-    fprintf(code,
-        "\n"
-        "static %s const table_word[][256] = {\n",
-        little ? crc_table_t : "uintmax_t");
-    {
-        // hex digits per entry
-        unsigned d = little ? crc_table_t_bit >> 2 : WORDCHARS << 1;
-        char const *pre = "   ";        // this plus one space is line prefix
-        unsigned const max = COLS;      // maximum length before new line
-        unsigned n = 0;                 // characters on this line, so far
-        for (unsigned j = 0; j < WORDCHARS; j++) {
-            for (unsigned k = 0; k < 256; k++) {
-                if (n == 0)
-                    n += fprintf(code, "%s", pre);
-                n += fprintf(code, "%s0x%0*"X"%s",
-                             k ? " " : "{", d, model->table_word[j][k],
-                             k != 255 ? "," : j != WORDCHARS-1 ? "}," : "}");
-                if (n + d + 5 > max || k == 255) {
-                    putc('\n', code);
-                    n = 0;
-                }
-            }
-        }
-    }
-    fputs(
-        "};\n", code);
 
     // word-wise CRC calculation function
     unsigned top = model->ref ? 0 : WORDBITS - (model->width > 8 ? model->width : 8);
