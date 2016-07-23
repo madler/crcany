@@ -1,5 +1,5 @@
 /*
-  crcgen version 1.2, 21 July 2016
+  crcgen version 1.2, 22 July 2016
 
   Copyright (C) 2016 Mark Adler
 
@@ -26,8 +26,9 @@
 /* Version history:
    1.0  17 Jul 2016  First version (bit-wise and byte-wise only)
    1.1  18 Jul 2016  Improve generated code
-   1.2  21 Jul 2016  Add word-wise code generation
+   1.2  22 Jul 2016  Add word-wise code generation
                      Define WORD_BIT and LONG_BIT for non-posix-compliant
+                     Add comments in .h files with architecture assumptions
  */
 
 /* Generate C code to compute the given CRC. This generates code that will work
@@ -87,7 +88,13 @@
 static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
                     FILE *test) {
     // select the unsigned integer type to be used for CRC calculations
-    fputs("#include <stddef.h>\n", head);
+    fputs(
+        "// These CRC routines take the initial/current CRC in the first argument, a\n"
+        "// pointer to the message bytes in the second argument and the number of bytes\n"
+        "// to compute the CRC over in the third argument. These routines will all\n"
+        "// return the same result, differing only in speed and code complexity.\n"
+        "\n"
+        "#include <stddef.h>\n", head);
     char *crc_t;
     unsigned crc_t_bit;
     if (model->width <= WORD_BIT) {
@@ -157,8 +164,12 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
 
     // bit-wise CRC calculation function
     fprintf(head,
+        "\n"
+        "// The type for the CRC assumes that %s is %u-bytes.\n"
+        "\n"
+        "// Compute the CRC a bit at a time.\n"
         "%s %s_bit(%s, unsigned char const *, size_t);\n",
-        crc_t, name, crc_t);
+        crc_t, crc_t_bit >> 3, crc_t, name, crc_t);
     fprintf(code,
         "\n"
         "%s %s_bit(%s crc, unsigned char const *data, size_t len) {\n"
@@ -259,6 +270,8 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
 
     // byte-wise CRC calculation function
     fprintf(head,
+        "\n"
+        "// Compute the CRC a byte at a time.\n"
         "%s %s_byte(%s, unsigned char const *, size_t);\n",
         crc_t, name, crc_t);
     fprintf(code,
@@ -330,6 +343,9 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
 
     // word-wise table
     crc_table_wordwise(model);
+    fputs(
+        "\n"
+        "#include <stdint.h>\n", code);
     unsigned little = 1;
     little = *((unsigned char *)(&little));
     fprintf(code,
@@ -378,9 +394,10 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         "}\n",
         WORDCHARS - 1);
     fprintf(head,
-        "#include <stdint.h>\n"
+        "\n"
+        "// Compute the CRC a word at a time, assuming %s-endian.\n"
         "%s %s_word(%s, unsigned char const *, size_t);\n",
-        crc_t, name, crc_t);
+        little ? "little" : "big", crc_t, name, crc_t);
     fprintf(code,
         "\n"
         "%s %s_word(%s crc, unsigned char const *data, size_t len) {\n"
