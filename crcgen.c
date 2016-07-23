@@ -93,8 +93,10 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
     fputs(
         "// These CRC routines take the initial/current CRC in the first argument, a\n"
         "// pointer to the message bytes in the second argument and the number of bytes\n"
-        "// to compute the CRC over in the third argument. These routines will all\n"
-        "// return the same result, differing only in speed and code complexity.\n"
+        "// to compute the CRC over in the third argument. If the second argument is\n"
+        "// NULL, then the other arguments are ignored, and the initial CRC (the CRC of\n"
+        "// zero bytes), is returned. These routines will all return the same result,\n"
+        "// differing only in speed and code complexity.\n"
         "\n"
         "#include <stddef.h>\n", head);
     char *crc_t;
