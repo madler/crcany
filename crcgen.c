@@ -1,5 +1,5 @@
 /*
-  crcgen version 1.3, 23 July 2016
+  crcgen version 1.3, 24 July 2016
 
   Copyright (C) 2016 Mark Adler
 
@@ -32,7 +32,8 @@
                      Add random data testing from middle to middle of words
                      Test CRC header files as well
                      Use word table for byte table when possible
-   1.3  23 Jul 2016  Build xorout into the tables
+   1.3  24 Jul 2016  Build xorout into the tables
+                     Use word table for byte table for 8-bit or less CRCs
  */
 
 /* Generate C code to compute the given CRC. This generates code that will work
@@ -267,7 +268,7 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
     little = *((unsigned char *)(&little));
 
     // byte-wise table
-    if ((little && model->ref) ||
+    if ((little && (model->ref || model->width <= 8)) ||
         (!little && !model->ref && model->width == INTMAX_BIT))
         fputs(
         "\n"
