@@ -35,6 +35,7 @@
    1.3  24 Jul 2016  Build xorout into the tables
                      Use word table for byte table for 8-bit or less CRCs
                      Avoid use of uintmax_t outside loop for little endian
+                     Improve bit reverse function
  */
 
 /* Generate C code to compute the given CRC. This generates code that will work
@@ -159,28 +160,35 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         crc_table_t = crc_t;
         crc_table_t_bit = crc_t_bit;
     }
-    (void)crc_table_t_bit;
 
     // include the header in the code
     fprintf(code,
         "#include <stdint.h>\n"
         "#include \"%s.h\"\n", name);
 
-    // reverse function, if needed
-    if (model->rev)
+    // function to reverse the low model->width bits, if needed (unlikely)
+    if (model->rev) {
         fprintf(code,
         "\n"
-        "static inline %s revlow(%s crc) {\n"
-        "    %s rev = crc & 1;\n"
-        "    unsigned n = %u;\n"
-        "    while (--n) {\n"
-        "        crc >>= 1;\n"
-        "        rev <<= 1;\n"
-        "        rev |= crc & 1;\n"
-        "    }\n"
-        "    return rev;\n"
-        "}\n",
-        crc_t, crc_t, crc_t, model->width);
+        "static inline %s revlow(%s crc) {\n", crc_t, crc_t);
+        unsigned dist = crc_table_t_bit;
+        uintmax_t mask = ((uintmax_t)1 << dist) - 1;
+        uintmax_t pick = mask;
+        while (dist >>= 1) {
+            pick ^= pick << dist;
+            fprintf(code,
+        "    crc = ((crc >> %u) & %#"X") + ((crc << %u) & %#"X");\n",
+                    dist, pick & mask, dist, ~pick & mask);
+        }
+        if (crc_table_t_bit != model->width)
+            fprintf(code,
+        "    return crc >> %u;\n"
+        "}\n", crc_table_t_bit - model->width);
+        else
+            fputs(
+        "    return crc;\n"
+        "}\n", code);
+    }
 
     // bit-wise CRC calculation function
     fprintf(head,
