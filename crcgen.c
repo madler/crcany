@@ -34,6 +34,7 @@
                      Use word table for byte table when possible
    1.3  24 Jul 2016  Build xorout into the tables
                      Use word table for byte table for 8-bit or less CRCs
+                     Avoid use of uintmax_t outside loop for little endian
  */
 
 /* Generate C code to compute the given CRC. This generates code that will work
@@ -158,6 +159,7 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         crc_table_t = crc_t;
         crc_table_t_bit = crc_t_bit;
     }
+    (void)crc_table_t_bit;
 
     // include the header in the code
     fprintf(code,
@@ -168,8 +170,9 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
     if (model->rev)
         fprintf(code,
         "\n"
-        "static inline %s revlow(%s crc, unsigned n) {\n"
+        "static inline %s revlow(%s crc) {\n"
         "    %s rev = crc & 1;\n"
+        "    unsigned n = %u;\n"
         "    while (--n) {\n"
         "        crc >>= 1;\n"
         "        rev <<= 1;\n"
@@ -177,7 +180,7 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         "    }\n"
         "    return rev;\n"
         "}\n",
-        crc_t, crc_t, crc_t);
+        crc_t, crc_t, crc_t, model->width);
 
     // bit-wise CRC calculation function
     fprintf(head,
@@ -186,19 +189,18 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         "\n"
         "// Compute the CRC a bit at a time.\n"
         "%s %s_bit(%s, unsigned char const *, size_t);\n",
-        crc_t, crc_t_bit >> 3, crc_t, name, crc_t);
+            crc_t, crc_t_bit >> 3, crc_t, name, crc_t);
     fprintf(code,
         "\n"
         "%s %s_bit(%s crc, unsigned char const *data, size_t len) {\n"
         "    if (data == NULL)\n"
-        "        return %#"X";\n",
-        crc_t, name, crc_t, model->init);
+        "        return %#"X";\n", crc_t, name, crc_t, model->init);
     if (model->xorout)
         fprintf(code,
         "    crc ^= %#"X";\n", model->xorout);
     if (model->rev)
-        fprintf(code,
-        "    crc = revlow(crc, %u);\n", model->width);
+        fputs(
+        "    crc = revlow(crc);\n", code);
     if (model->ref) {
         if (model->width != crc_t_bit && !model->rev)
             fprintf(code,
@@ -208,8 +210,7 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         "        crc ^= *data++;\n"
         "        for (unsigned k = 0; k < 8; k++)\n"
         "            crc = crc & 1 ? (crc >> 1) ^ %#"X" : crc >> 1;\n"
-        "    }\n",
-        model->poly);
+        "    }\n", model->poly);
     }
     else if (model->width <= 8) {
         if (model->width < 8)
@@ -220,8 +221,7 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         "        crc ^= *data++;\n"
         "        for (unsigned k = 0; k < 8; k++)\n"
         "            crc = crc & 0x80 ? (crc << 1) ^ %#"X" : crc << 1;\n"
-        "    }\n",
-        model->poly << (8 - model->width));
+        "    }\n", model->poly << (8 - model->width));
         if (model->width < 8)
             fprintf(code,
         "    crc >>= %u;\n", 8 - model->width);
@@ -242,8 +242,8 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         "    crc &= %#"X";\n", ONES(model->width));
     }
     if (model->rev)
-        fprintf(code,
-        "    crc = revlow(crc, %u);\n", model->width);
+        fputs(
+        "    crc = revlow(crc);\n", code);
     if (model->xorout)
         fprintf(code,
         "    crc ^= %#"X";\n", model->xorout);
@@ -252,8 +252,7 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
 
     // write test code for bit-wise function
     fprintf(defs,
-        "#include \"%s.h\"\n",
-        name);
+        "#include \"%s.h\"\n", name);
     fprintf(test,
         "\n"
         "    // %s\n"
@@ -261,7 +260,7 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         "    if (%s_bit(init, test, len) != %#"X")\n"
         "        fputs(\"bit-wise mismatch for %s\\n\", stderr);\n"
         "    crc = %s_bit(init, data + 1, sizeof(data) - 1);\n",
-        name, name, name, model->check, name, name);
+            name, name, name, model->check, name, name);
 
     // determine endianess of this machine
     unsigned little = 1;
@@ -277,8 +276,7 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         crc_table_bytewise(model);
         fprintf(code,
         "\n"
-        "static %s const table_byte[] = {\n",
-            crc_table_t);
+        "static %s const table_byte[] = {\n", crc_table_t);
         {
             unsigned const d = (model->width + 3) >> 2; // hex digits per entry
             char const *pre = "   ";        // this plus one space is line prefix
@@ -287,13 +285,17 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
             for (unsigned k = 0; k < 255; k++) {
                 if (n == 0)
                     n += fprintf(code, "%s", pre);
-                n += fprintf(code, " 0x%0*"X",", d, model->table_byte[k]);
+                n += fprintf(code, " %s%0*"X",",
+                             d == 1 && model->width < 4 ? "" : "0x", d,
+                             model->table_byte[k]);
                 if (n + d + 4 > max) {
                     putc('\n', code);
                     n = 0;
                 }
             }
-            fprintf(code, "%s 0x%0*"X, n ? "" : pre, d, model->table_byte[255]);
+            fprintf(code, "%s %s%0*"X, n ? "" : pre,
+                    d == 1 && model->width < 4 ? "" : "0x", d,
+                    model->table_byte[255]);
         }
         fputs(
         "\n"
@@ -304,11 +306,11 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
     crc_table_wordwise(model);
     fprintf(code,
         "\n"
-        "static %s const table_word[][256] = {\n",
-        little ? crc_table_t : "uintmax_t");
+        "static %s const table_word[][256] = {\n", little ? crc_table_t : "uintmax_t");
     {
-        // hex digits per entry
-        unsigned d = little ? crc_table_t_bit >> 2 : WORDCHARS << 1;
+        unsigned d = little ? model->ref ? (model->width + 3) >> 2 :
+                                           ((model->width + 7) >> 3) << 1 :
+                              WORDCHARS << 1;   // hex digits per entry
         char const *pre = "   ";        // this plus one space is line prefix
         unsigned const max = COLS;      // maximum length before new line
         unsigned n = 0;                 // characters on this line, so far
@@ -316,8 +318,10 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
             for (unsigned k = 0; k < 256; k++) {
                 if (n == 0)
                     n += fprintf(code, "%s", pre);
-                n += fprintf(code, "%s0x%0*"X"%s",
-                             k ? " " : "{", d, model->table_word[j][k],
+                n += fprintf(code, "%s%s%0*"X"%s",
+                             k ? " " : "{",
+                             d == 1 && model->width < 4 ? "" : "0x", d,
+                             model->table_word[j][k],
                              k != 255 ? "," : j != WORDCHARS-1 ? "}," : "}");
                 if (n + d + 5 > max || k == 255) {
                     putc('\n', code);
@@ -333,17 +337,15 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
     fprintf(head,
         "\n"
         "// Compute the CRC a byte at a time.\n"
-        "%s %s_byte(%s, unsigned char const *, size_t);\n",
-        crc_t, name, crc_t);
+        "%s %s_byte(%s, unsigned char const *, size_t);\n", crc_t, name, crc_t);
     fprintf(code,
         "\n"
         "%s %s_byte(%s crc, unsigned char const *data, size_t len) {\n"
         "    if (data == NULL)\n"
-        "        return %#"X";\n",
-        crc_t, name, crc_t, model->init);
+        "        return %#"X";\n", crc_t, name, crc_t, model->init);
     if (model->rev)
-        fprintf(code,
-        "    crc = revlow(crc, %u);\n", model->width);
+        fputs(
+        "    crc = revlow(crc);\n", code);
     if (model->ref) {
         if (model->width != crc_t_bit && !model->rev)
             fprintf(code,
@@ -376,14 +378,14 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         fprintf(code,
         "    while (len--)\n"
         "        crc = (crc << 8) ^ table_byte[((crc >> %u) ^ *data++) & 0xff];\n",
-        model->width - 8);
+                model->width - 8);
         if (model->width != crc_t_bit && !model->rev)
             fprintf(code,
         "    crc &= %#"X";\n", ONES(model->width));
     }
     if (model->rev)
-        fprintf(code,
-        "    crc = revlow(crc, %u);\n", model->width);
+        fputs(
+        "    crc = revlow(crc);\n", code);
     fputs("    return crc;\n"
           "}\n", code);
 
@@ -393,26 +395,43 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         "        %s_byte(init, test, len) != %#"X" ||\n"
         "        %s_byte(init, data + 1, sizeof(data) - 1) != crc)\n"
         "        fputs(\"byte-wise mismatch for %s\\n\", stderr);\n",
-        name, name, model->check, name, name);
+            name, name, model->check, name, name);
 
     // word-wise CRC calculation function
-    unsigned top = model->ref ? 0 : WORDBITS - (model->width > 8 ? model->width : 8);
     unsigned shift = model->width <= 8 ? 8 - model->width : model->width - 8;
-    if ((little ^ model->ref) && top != WORDBITS - 8)
+    if ((little && !model->ref && model->width > 8) || (!little && model->ref)) {
+        // function to swap low bytes, just enough to contain CRC for little-endian
         fprintf(code,
         "\n"
-        "static inline uintmax_t swapmax(uintmax_t x) {\n"
-        "    uintmax_t y;\n"
-        "    unsigned n = %u;\n"
-        "    y = x & 0xff;\n"
-        "    while (x >>= 8) {\n"
-        "        y <<= 8;\n"
-        "        y |= x & 0xff;\n"
-        "        n--;\n"
-        "    }\n"
-        "    return y << (n << 3);\n"
-        "}\n",
-        WORDCHARS - 1);
+        "static inline %s swap%s(%s crc) {\n"
+        "    return\n",
+        little ? crc_t : "uintmax_t", little ? "low" : "max",
+        little ? crc_t : "uintmax_t");
+        uintmax_t pick = 0xff;
+        int mid = little ? (model->width - 1) & ~7 : WORDBITS - 8;
+        int last = -mid;
+        do {
+            fprintf(code,
+        "        ((crc & %#"X") << %d) +\n", pick, mid);
+            mid -= 16;
+            pick <<= 8;
+        } while (mid > 0);
+        if (mid == 0) {
+            fprintf(code,
+        "        (crc & %#"X") +\n", pick);
+            mid -= 16;
+            pick <<= 8;
+        }
+        while (mid > last) {
+            fprintf(code,
+        "        ((crc & %#"X") >> %d) +\n", pick, -mid);
+            mid -= 16;
+            pick <<= 8;
+        }
+        fprintf(code,
+        "        ((crc & %#"X") >> %d);\n"
+        "}\n", pick, -mid);
+    }
     fprintf(head,
         "\n"
         "// Compute the CRC a word at a time, assuming %s-endian.\n"
@@ -422,11 +441,10 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         "\n"
         "%s %s_word(%s crc, unsigned char const *data, size_t len) {\n"
         "    if (data == NULL)\n"
-        "        return %#"X";\n",
-        crc_t, name, crc_t, model->init);
+        "        return %#"X";\n", crc_t, name, crc_t, model->init);
     if (model->rev)
-        fprintf(code,
-        "    crc = revlow(crc, %u);\n", model->width);
+        fputs(
+        "    crc = revlow(crc);\n", code);
 
     // do bytes up to word boundary
     if (model->ref) {
@@ -464,67 +482,83 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         "    while (len && ((ptrdiff_t)data & %#x)) {\n"
         "        crc = (crc << 8) ^ table_byte[((crc >> %u) ^ *data++) & 0xff];\n"
         "        len--;\n"
-        "    }\n",
-        WORDCHARS - 1, shift);
+        "    }\n", WORDCHARS - 1, shift);
     }
 
-    // do available full words
+    // do full words if there are any
     fprintf(code,
-        "    if (len >= %u) {\n"
-        "        uintmax_t word = crc;\n",
-        WORDCHARS);
-    if (top && (!little || top != WORDBITS - 8))
-        fprintf(code,
-        "        word <<= %u;\n",
-        top);
-    if ((little ^ model->ref) && top != WORDBITS - 8)
-        fputs(
-        "        word = swapmax(word);\n", code);
+        "    if (len >= %u) {\n", WORDCHARS);
+
+    // do full words for little-endian
     if (little) {
+        unsigned top = model->width > 8 ? -model->width & 7 : 0;
+        if (!model->ref) {
+            if (top)
+                fprintf(code,
+        "        crc <<= %u;\n", top);
+            if (model->width > 8)
+                fputs(
+        "        crc = swaplow(crc);\n", code);
+        }
         fprintf(code,
         "        do {\n"
-        "            word ^= *(uintmax_t const *)data;\n"
-        "            crc = table_word[%u][word & 0xff] ^\n",
-        WORDCHARS - 1);
+        "            uintmax_t word = crc ^ *(uintmax_t const *)data;\n"
+        "            crc = table_word[%u][word & 0xff] ^\n", WORDCHARS - 1);
         for (unsigned k = 1; k < WORDCHARS - 1; k++) {
             fprintf(code,
         "                  table_word[%u][(word >> %u) & 0xff] ^\n",
-        WORDCHARS - k - 1, k << 3);
+                    WORDCHARS - k - 1, k << 3);
         }
         fprintf(code,
         "                  table_word[0][word >> %u];\n"
-        "            word = crc;\n"
         "            data += %u;\n"
         "            len -= %u;\n"
         "        } while (len >= %u);\n",
-        (WORDCHARS - 1) << 3, WORDCHARS, WORDCHARS, WORDCHARS);
+                (WORDCHARS - 1) << 3, WORDCHARS, WORDCHARS, WORDCHARS);
+        if (!model->ref) {
+            if (model->width > 8)
+                fputs(
+        "        crc = swaplow(crc);\n", code);
+            if (top)
+                fprintf(code,
+        "        crc >>= %u;\n", top);
+        }
     }
+
+    // do full words for big-endian
     else {
+        unsigned top = model->ref ? 0 : WORDBITS - (model->width > 8 ? model->width : 8);
+        if (model->ref)
+            fputs(
+        "        uintmax_t word = swapmax(crc);\n", code);
+        else
+            fprintf(code,
+        "        uintmax_t word = (uintmax_t)crc << %u;\n", top);
         fputs(
         "        do {\n"
         "            word ^= *(uintmax_t const *)data;\n"
         "            word = table_word[0][word & 0xff] ^\n", code);
         for (unsigned k = 1; k < WORDCHARS - 1; k++) {
             fprintf(code,
-        "                   table_word[%u][(word >> %u) & 0xff] ^\n",
-        k, k << 3);
+        "                   table_word[%u][(word >> %u) & 0xff] ^\n", k, k << 3);
         }
         fprintf(code,
         "                   table_word[%u][word >> %u];\n"
         "            data += %u;\n"
         "            len -= %u;\n"
         "        } while (len >= %u);\n",
-        WORDCHARS - 1, (WORDCHARS - 1) << 3, WORDCHARS, WORDCHARS, WORDCHARS);
+                WORDCHARS - 1, (WORDCHARS - 1) << 3,
+                WORDCHARS, WORDCHARS, WORDCHARS);
+        if (model->ref)
+            fputs(
+        "        crc = swapmax(word);\n", code);
+        else
+            fprintf(code,
+        "        crc = word >> %u;\n", top);
     }
-    if ((little ^ model->ref) && top != WORDBITS - 8)
-        fputs(
-        "        word = swapmax(word);\n", code);
-    if (top && (!little || top != WORDBITS - 8))
-        fprintf(code,
-        "        word >>= %u;\n",
-        top);
+
+    // no more full words
     fputs(
-        "        crc = word;\n"
         "    }\n", code);
 
     // do last few bytes
@@ -537,7 +571,6 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
             fputs(
         "    while (len--)\n"
         "        crc = table_byte[crc ^ *data++];\n", code);
-
     }
     else if (model->width <= 8) {
         fputs(
@@ -557,8 +590,8 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         "    crc &= %#"X";\n", ONES(model->width));
     }
     if (model->rev)
-        fprintf(code,
-        "    crc = revlow(crc, %u);\n", model->width);
+        fputs(
+        "    crc = revlow(crc);\n", code);
     fputs(
         "    return crc;\n"
         "}\n", code);
@@ -569,7 +602,7 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         "        %s_word(init, test, len) != %#"X" ||\n"
         "        %s_word(init, data + 1, sizeof(data) - 1) != crc)\n"
         "        fputs(\"word-wise mismatch for %s\\n\", stderr);\n",
-        name, name, model->check, name, name);
+            name, name, model->check, name, name);
 }
 
 // Make a base name for the CRC routines and source files, making use of the
