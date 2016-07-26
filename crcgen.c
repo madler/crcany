@@ -172,7 +172,7 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         "\n"
         "static inline %s revlow(%s crc) {\n", crc_t, crc_t);
         unsigned dist = crc_table_t_bit;
-        uintmax_t mask = ((uintmax_t)1 << dist) - 1;
+        uintmax_t mask = (((uintmax_t)1 << (dist - 1)) << 1) - 1;
         uintmax_t pick = mask;
         while (dist >>= 1) {
             pick ^= pick << dist;
