@@ -412,17 +412,50 @@ int read_model(model_t *model, char *str)
 /* See model.h. */
 word_t reverse(word_t x, unsigned n)
 {
-    unsigned bits = WORDBITS;
-    while ((bits >> 1) >= n)
-        bits >>= 1;
-    word_t mask = (((word_t)1 << (bits - 1)) << 1) - 1;
-    unsigned dist = bits;
-    word_t pick = mask;
-    while (x &= mask, dist >>= 1) {
-        pick ^= pick << dist;
-        x = ((x >> dist) & pick) + ((x << dist) & ~pick);
+    if (n == 1)
+        return x & 1;
+    if (n == 2)
+        return ((x >> 1) & 1) + ((x << 1) & 2);
+    if (n <= 4) {
+        x = ((x >> 2) & 3) + ((x << 2) & 0xc);
+        x = ((x >> 1) & 5) + ((x << 1) & 0xa);
+        return x >> (4 - n);
     }
-    return x >> (bits - n);
+    if (n <= 8) {
+        x = ((x >> 4) & 0xf) + ((x << 4) & 0xf0);
+        x = ((x >> 2) & 0x33) + ((x << 2) & 0xcc);
+        x = ((x >> 1) & 0x55) + ((x << 1) & 0xaa);
+        return x >> (8 - n);
+    }
+    if (n <= 16) {
+        x = ((x >> 8) & 0xff) + ((x << 8) & 0xff00);
+        x = ((x >> 4) & 0xf0f) + ((x << 4) & 0xf0f0);
+        x = ((x >> 2) & 0x3333) + ((x << 2) & 0xcccc);
+        x = ((x >> 1) & 0x5555) + ((x << 1) & 0xaaaa);
+        return x >> (16 - n);
+    }
+#if WORDBITS >= 32
+    if (n <= 32) {
+        x = ((x >> 16) & 0xffff) + ((x << 16) & 0xffff0000);
+        x = ((x >> 8) & 0xff00ff) + ((x << 8) & 0xff00ff00);
+        x = ((x >> 4) & 0xf0f0f0f) + ((x << 4) & 0xf0f0f0f0);
+        x = ((x >> 2) & 0x33333333) + ((x << 2) & 0xcccccccc);
+        x = ((x >> 1) & 0x55555555) + ((x << 1) & 0xaaaaaaaa);
+        return x >> (32 - n);
+    }
+#  if WORDBITS >= 64
+    if (n <= 64) {
+        x = ((x >> 32) & 0xffffffff) + ((x << 32) & 0xffffffff00000000);
+        x = ((x >> 16) & 0xffff0000ffff) + ((x << 16) & 0xffff0000ffff0000);
+        x = ((x >> 8) & 0xff00ff00ff00ff) + ((x << 8) & 0xff00ff00ff00ff00);
+        x = ((x >> 4) & 0xf0f0f0f0f0f0f0f) + ((x << 4) & 0xf0f0f0f0f0f0f0f0);
+        x = ((x >> 2) & 0x3333333333333333) + ((x << 2) & 0xcccccccccccccccc);
+        x = ((x >> 1) & 0x5555555555555555) + ((x << 1) & 0xaaaaaaaaaaaaaaaa);
+        return x >> (64 - n);
+    }
+#  endif
+#endif
+    return n < 2*WORDBITS ? reverse(x, WORDBITS) << (n - WORDBITS) : 0;
 }
 
 /* See model.h. */
