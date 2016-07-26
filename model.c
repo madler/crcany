@@ -412,17 +412,17 @@ int read_model(model_t *model, char *str)
 /* See model.h. */
 word_t reverse(word_t x, unsigned n)
 {
-    word_t y;
-
-    y = x & 1;
-    while (--n) {
-        x >>= 1;
-        if (x == 0)
-            return y << n;
-        y <<= 1;
-        y |= x & 1;
+    unsigned bits = WORDBITS;
+    while ((bits >> 1) >= n)
+        bits >>= 1;
+    word_t mask = (((word_t)1 << (bits - 1)) << 1) - 1;
+    unsigned dist = bits;
+    word_t pick = mask;
+    while (x &= mask, dist >>= 1) {
+        pick ^= pick << dist;
+        x = ((x >> dist) & pick) + ((x << dist) & ~pick);
     }
-    return y;
+    return x >> (bits - n);
 }
 
 /* See model.h. */
