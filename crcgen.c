@@ -1,5 +1,5 @@
 /*
-  crcgen version 1.3, 24 July 2016
+  crcgen version 1.4, 29 July 2016
 
   Copyright (C) 2016 Mark Adler
 
@@ -36,6 +36,7 @@
                      Use word table for byte table for 8-bit or less CRCs
                      Avoid use of uintmax_t outside loop for little endian
                      Improve bit reverse function
+   1.4  29 Jul 2016  Avoid generating byte-wise table twice in crcgen
  */
 
 /* Generate C code to compute the given CRC. This generates code that will work
@@ -274,6 +275,9 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
     unsigned little = 1;
     little = *((unsigned char *)(&little));
 
+    // generate byte-wise and word-wise tables
+    crc_table_wordwise(model);
+
     // byte-wise table
     if ((little && (model->ref || model->width <= 8)) ||
         (!little && !model->ref && model->width == INTMAX_BIT))
@@ -281,7 +285,6 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         "\n"
         "#define table_byte table_word[0]\n", code);
     else {
-        crc_table_bytewise(model);
         fprintf(code,
         "\n"
         "static %s const table_byte[] = {\n", crc_table_t);
@@ -311,7 +314,6 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
     }
 
     // word-wise table
-    crc_table_wordwise(model);
     fprintf(code,
         "\n"
         "static %s const table_word[][256] = {\n", little ? crc_table_t : "uintmax_t");
