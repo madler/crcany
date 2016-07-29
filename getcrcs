@@ -1,0 +1,7 @@
+#!/usr/bin/ruby -w
+# Get all of the CRC definitions from Greg Cook's CRC catalog.
+require 'open-uri'
+cat = "http://reveng.sourceforge.net/crc-catalogue/all.htm"
+open(cat).each do |line|
+    line.match(/<code>\s*(width=.*)\s*<\/code>/i) { puts $1.squeeze(' ') }
+end
