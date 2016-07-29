@@ -1,4 +1,5 @@
 w=3 p=3 i=7 r=t c=6 n=CRC-3/ROHC
+w=4 p=3 i=15 r=f x=15 c=11 n=CRC-4/INTERLAKEN
 w=4 p=3 r=t c=7 n=CRC-4/ITU
 w=5 p=9 i=9 r=f c=0 n=CRC-5/EPC
 w=5 p=21 r=t c=7 n=CRC-5/ITU
@@ -9,22 +10,28 @@ w=6 p=25 r=t c=38 n=CRC-6/DARC
 w=6 p=3 r=t c=6 n=CRC-6/ITU
 w=7 p=9 r=f c=117 n=CRC-7
 w=7 p=79 i=-1 r=t c=83 n=CRC-7/ROHC
+w=7 p=69 r=f c=97 n=CRC-7/UMTS
 w=8 p=7 r=f c=244 n=CRC-8
+w=8 p=47 i=-1 r=f x=-1 c=223 n=CRC-8/AUTOSAR
 w=8 p=155 i=-1 r=f c=218 n=CRC-8/CDMA2000
 w=8 p=57 r=t c=21 n=CRC-8/DARC
 w=8 p=213 r=f c=188 n=CRC-8/DVB-S2
 w=8 p=29 i=-1 r=t c=151 n=CRC-8/EBU
 w=8 p=29 i=-3 r=f c=126 n=CRC-8/I-CODE
 w=8 p=7 r=f x=85 c=161 n=CRC-8/ITU
+w=8 p=155 r=f c=234 n=CRC-8/LTE
 w=8 p=49 r=t c=161 n=CRC-8/MAXIM
+w=8 p=47 r=f c=62 n=CRC-8/OPENSAFETY
 w=8 p=7 i=-1 r=t c=208 n=CRC-8/ROHC
+w=8 p=29 i=-1 r=f x=-1 c=75 n=CRC-8/SAE-J1850
 w=8 p=155 r=t c=37 n=CRC-8/WCDMA
 w=10 p=563 r=f c=409 n=CRC-10
 w=10 p=985 i=-1 r=f c=563 n=CRC-10/CDMA2000
 w=11 p=901 i=26 r=f c=1443 n=CRC-11
-w=12 p=2063 r=f refo=t c=3503 n=CRC-12/3GPP
+w=11 p=775 r=f c=97 n=CRC-11/UMTS
 w=12 p=3859 i=-1 r=f c=3405 n=CRC-12/CDMA2000
 w=12 p=2063 r=f c=3931 n=CRC-12/DECT
+w=12 p=2063 r=f refo=t c=3503 n=CRC-12/UMTS
 w=13 p=7413 r=f c=1274 n=CRC-13/BBC
 w=14 p=2053 r=t c=2093 n=CRC-14/DARC
 w=15 p=17817 r=f c=1438 n=CRC-15
@@ -34,14 +41,19 @@ w=16 p=4129 i=7439 r=f c=58828 n=CRC-16/AUG-CCITT
 w=16 p=32773 r=f c=-280 n=CRC-16/BUYPASS
 w=16 p=4129 i=-1 r=f c=10673 n=CRC-16/CCITT-FALSE
 w=16 p=51303 i=-1 r=f c=19462 n=CRC-16/CDMA2000
+w=16 p=32773 i=-1 r=f c=44775 n=CRC-16/CMS
 w=16 p=32773 i=32781 r=f c=40655 n=CRC-16/DDS-110
 w=16 p=1417 r=f x=1 c=126 n=CRC-16/DECT-R
 w=16 p=1417 r=f c=127 n=CRC-16/DECT-X
 w=16 p=15717 r=t x=-1 c=60034 n=CRC-16/DNP
 w=16 p=15717 r=f x=-1 c=49847 n=CRC-16/EN-13757
 w=16 p=4129 i=-1 r=f x=-1 c=54862 n=CRC-16/GENIBUS
+w=16 p=28515 r=f c=48628 n=CRC-16/LJ1200
 w=16 p=32773 r=t x=-1 c=17602 n=CRC-16/MAXIM
 w=16 p=4129 i=-1 r=t c=28561 n=CRC-16/MCRF4XX
+w=16 p=22837 r=f c=23864 n=CRC-16/OPENSAFETY-A
+w=16 p=30043 r=f c=8446 n=CRC-16/OPENSAFETY-B
+w=16 p=7631 i=-1 r=f x=-1 c=43033 n=CRC-16/PROFIBUS
 w=16 p=4129 i=45738 r=t c=25552 n=CRC-16/RIELLO
 w=16 p=35767 r=f c=53467 n=CRC-16/T10-DIF
 w=16 p=41111 r=f c=4019 n=CRC-16/TELEDISK
@@ -53,10 +65,16 @@ w=16 p=32773 i=-1 r=t c=19255 n=MODBUS
 w=16 p=4129 i=-1 r=t x=-1 c=36974 n=X-25
 w=16 p=4129 r=f c=12739 n=XMODEM
 w=24 p=8801531 i=11994318 r=f c=2215682 n=CRC-24
+w=24 p=1627 i=5592405 r=t c=12737110 n=CRC-24/BLE
 w=24 p=6122955 i=-74566 r=f c=7961021 n=CRC-24/FLEXRAY-A
 w=24 p=6122955 i=11259375 r=f c=2040760 n=CRC-24/FLEXRAY-B
+w=24 p=3312483 i=-1 r=f x=-1 c=11858918 n=CRC-24/INTERLAKEN
+w=24 p=8801531 r=f c=13494019 n=CRC-24/LTE-A
+w=24 p=8388707 r=f c=2355026 n=CRC-24/LTE-B
+w=30 p=540064199 i=-1 r=f x=-1 c=79907519 n=CRC-30/CDMA
 w=31 p=79764919 i=-1 r=f x=-1 c=216654956 n=CRC-31/PHILIPS
 w=32 p=79764919 i=-1 r=t x=-1 c=3421780262 n=CRC-32
+w=32 p=4104977171 i=-1 r=t x=-1 c=379048042 n=CRC-32/AUTOSAR
 w=32 p=79764919 i=-1 r=f x=-1 c=-58124008 n=CRC-32/BZIP2
 w=32 p=517762881 i=-1 r=t x=-1 c=3808858755 n=CRC-32C
 w=32 p=2821953579 i=-1 r=t x=-1 c=2268157302 n=CRC-32D
