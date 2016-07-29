@@ -1,5 +1,5 @@
 /*
-  crcany version 1.3, 23 July 2016
+  crcany version 1.4, 29 July 2016
 
   Copyright (C) 2014, 2016 Mark Adler
 
@@ -29,6 +29,7 @@
                      Move common code to model.[ch]
    1.2  17 Jul 2016  Move generic CRC code to crc.[ch] and crcdbl.[ch]
    1.3  23 Jul 2016  Build xorout into the tables
+   1.4  29 Jul 2016  Fix a bug in word-wise table generation
 
  */
 

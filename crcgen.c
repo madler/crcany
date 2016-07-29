@@ -37,6 +37,7 @@
                      Avoid use of uintmax_t outside loop for little endian
                      Improve bit reverse function
    1.4  29 Jul 2016  Avoid generating byte-wise table twice in crcgen
+                     Fix a bug in word-wise table generation
  */
 
 /* Generate C code to compute the given CRC. This generates code that will work

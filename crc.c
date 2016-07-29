@@ -158,18 +158,20 @@ static inline word_t swap(word_t x)
 
 void crc_table_wordwise(model_t *model)
 {
-    unsigned n, k, opp, top;
-    word_t crc;
-
     crc_table_bytewise(model);
-    opp = 1;
+    unsigned opp = 1;
     opp = *((unsigned char *)(&opp)) ^ model->ref;
-    top = model->ref ? 0 : WORDBITS - (model->width > 8 ? model->width : 8);
-    for (k = 0; k < 256; k++) {
-        crc = model->table_byte[k];
+    unsigned top =
+        model->ref ? 0 :
+                     WORDBITS - (model->width > 8 ? model->width : 8);
+    word_t xor = model->xorout;
+    if (model->width < 8 && !model->ref)
+        xor <<= 8 - model->width;
+    for (unsigned k = 0; k < 256; k++) {
+        word_t crc = model->table_byte[k];
         model->table_word[0][k] = opp ? swap(crc << top) : crc << top;
-        for (n = 1; n < WORDCHARS; n++) {
-            crc ^= model->xorout;
+        for (unsigned n = 1; n < WORDCHARS; n++) {
+            crc ^= xor;
             if (model->ref)
                 crc = (crc >> 8) ^ model->table_byte[crc & 0xff];
             else if (model->width <= 8)
@@ -177,7 +179,7 @@ void crc_table_wordwise(model_t *model)
             else
                 crc = (crc << 8) ^
                       model->table_byte[(crc >> (model->width - 8)) & 0xff];
-            crc ^= model->xorout;
+            crc ^= xor;
             model->table_word[n][k] = opp ? swap(crc << top) : crc << top;
         }
     }
