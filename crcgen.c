@@ -207,19 +207,19 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         "%s %s_bit(%s crc, void const *data, size_t len) {\n"
         "    if (data == NULL)\n"
         "        return %#"X";\n", crc_t, name, crc_t, model->init);
-    if (model->ref) {
-        if (model->xorout) {
-            if (model->xorout == ONES(model->width))
-                fputs(
+    if (model->xorout) {
+        if (model->xorout == ONES(model->width))
+            fputs(
         "    crc = ~crc;\n", code);
-            else
+        else
             fprintf(code,
         "    crc ^= %#"X";\n", model->xorout);
         }
-        if (model->rev)
-            fputs(
+    if (model->rev)
+        fputs(
         "    crc = revlow(crc);\n", code);
-        else if (model->width != crc_t_bit)
+    if (model->ref) {
+        if (model->width != crc_t_bit && !model->rev)
             fprintf(code,
         "    crc &= %#"X";\n", ONES(model->width));
         fprintf(code,
@@ -241,17 +241,6 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         }
     }
     else if (model->width <= 8) {
-        if (model->xorout) {
-            if (model->xorout == ONES(model->width))
-                fputs(
-        "    crc = ~crc;\n", code);
-            else
-            fprintf(code,
-        "    crc ^= %#"X";\n", model->xorout);
-        }
-        if (model->rev)
-            fputs(
-        "    crc = revlow(crc);\n", code);
         if (model->width < 8)
             fprintf(code,
         "    crc <<= %u;\n", 8 - model->width);
@@ -280,17 +269,6 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         "    crc &= %#"X";\n", ONES(model->width));
     }
     else {
-        if (model->xorout) {
-            if (model->xorout == ONES(model->width))
-                fputs(
-        "    crc = ~crc;\n", code);
-            else
-            fprintf(code,
-        "    crc ^= %#"X";\n", model->xorout);
-        }
-        if (model->rev)
-            fputs(
-        "    crc = revlow(crc);\n", code);
         fprintf(code,
         "    while (len--) {\n"
         "        crc ^= (%s)(*(unsigned char const *)data++) << %u;\n"
