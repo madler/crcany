@@ -1,5 +1,5 @@
 /*
-  crcgen version 1.4, 29 July 2016
+  crcgen version 1.4, 30 July 2016
 
   Copyright (C) 2016 Mark Adler
 
@@ -36,9 +36,10 @@
                      Use word table for byte table for 8-bit or less CRCs
                      Avoid use of uintmax_t outside loop for little endian
                      Improve bit reverse function
-   1.4  29 Jul 2016  Avoid generating byte-wise table twice in crcgen
+   1.4  30 Jul 2016  Avoid generating byte-wise table twice in crcgen
                      Fix a bug in word-wise table generation
                      Use void * type to pass crc data
+                     Use x = ~x instead of x ^= 0xff... where appropriate
  */
 
 /* Generate C code to compute the given CRC. This generates code that will work
@@ -206,14 +207,19 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         "%s %s_bit(%s crc, void const *data, size_t len) {\n"
         "    if (data == NULL)\n"
         "        return %#"X";\n", crc_t, name, crc_t, model->init);
-    if (model->xorout)
-        fprintf(code,
-        "    crc ^= %#"X";\n", model->xorout);
-    if (model->rev)
-        fputs(
-        "    crc = revlow(crc);\n", code);
     if (model->ref) {
-        if (model->width != crc_t_bit && !model->rev)
+        if (model->xorout) {
+            if (model->xorout == ONES(model->width))
+                fputs(
+        "    crc = ~crc;\n", code);
+            else
+            fprintf(code,
+        "    crc ^= %#"X";\n", model->xorout);
+        }
+        if (model->rev)
+            fputs(
+        "    crc = revlow(crc);\n", code);
+        else if (model->width != crc_t_bit)
             fprintf(code,
         "    crc &= %#"X";\n", ONES(model->width));
         fprintf(code,
@@ -222,8 +228,30 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         "        for (unsigned k = 0; k < 8; k++)\n"
         "            crc = crc & 1 ? (crc >> 1) ^ %#"X" : crc >> 1;\n"
         "    }\n", model->poly);
+        if (model->rev)
+            fputs(
+        "    crc = revlow(crc);\n", code);
+        if (model->xorout) {
+            if (model->xorout == ONES(model->width) && crc_t_bit == model->width)
+                fputs(
+        "    crc = ~crc;\n", code);
+            else
+                fprintf(code,
+        "    crc ^= %#"X";\n", model->xorout);
+        }
     }
     else if (model->width <= 8) {
+        if (model->xorout) {
+            if (model->xorout == ONES(model->width))
+                fputs(
+        "    crc = ~crc;\n", code);
+            else
+            fprintf(code,
+        "    crc ^= %#"X";\n", model->xorout);
+        }
+        if (model->rev)
+            fputs(
+        "    crc = revlow(crc);\n", code);
         if (model->width < 8)
             fprintf(code,
         "    crc <<= %u;\n", 8 - model->width);
@@ -236,11 +264,33 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         if (model->width < 8)
             fprintf(code,
         "    crc >>= %u;\n", 8 - model->width);
+        if (model->rev)
+            fputs(
+        "    crc = revlow(crc);\n", code);
+        if (model->xorout) {
+            if (model->xorout == ONES(model->width) && !model->rev)
+                fputs(
+        "    crc = ~crc;\n", code);
+            else
+                fprintf(code,
+        "    crc ^= %#"X";\n", model->xorout);
+        }
         if (!model->rev)
             fprintf(code,
         "    crc &= %#"X";\n", ONES(model->width));
     }
     else {
+        if (model->xorout) {
+            if (model->xorout == ONES(model->width))
+                fputs(
+        "    crc = ~crc;\n", code);
+            else
+            fprintf(code,
+        "    crc ^= %#"X";\n", model->xorout);
+        }
+        if (model->rev)
+            fputs(
+        "    crc = revlow(crc);\n", code);
         fprintf(code,
         "    while (len--) {\n"
         "        crc ^= (%s)(*(unsigned char const *)data++) << %u;\n"
@@ -248,16 +298,21 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         "            crc = crc & %#"X" ? (crc << 1) ^ %#"X" : crc << 1;\n"
         "    }\n",
         crc_t, model->width - 8, (word_t)1 << (model->width - 1), model->poly);
+        if (model->rev)
+            fputs(
+        "    crc = revlow(crc);\n", code);
+        if (model->xorout) {
+            if (model->xorout == ONES(model->width) && !model->rev)
+                fputs(
+        "    crc = ~crc;\n", code);
+            else
+                fprintf(code,
+        "    crc ^= %#"X";\n", model->xorout);
+        }
         if (model->width != crc_t_bit && !model->rev)
             fprintf(code,
         "    crc &= %#"X";\n", ONES(model->width));
     }
-    if (model->rev)
-        fputs(
-        "    crc = revlow(crc);\n", code);
-    if (model->xorout)
-        fprintf(code,
-        "    crc ^= %#"X";\n", model->xorout);
     fputs("    return crc;\n"
           "}\n", code);
 
