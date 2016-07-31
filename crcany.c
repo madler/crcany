@@ -1,5 +1,5 @@
 /*
-  crcany version 1.4, 29 July 2016
+  crcany version 1.4, 30 July 2016
 
   Copyright (C) 2014, 2016 Mark Adler
 
@@ -29,7 +29,8 @@
                      Move common code to model.[ch]
    1.2  17 Jul 2016  Move generic CRC code to crc.[ch] and crcdbl.[ch]
    1.3  23 Jul 2016  Build xorout into the tables
-   1.4  29 Jul 2016  Fix a bug in word-wise table generation
+   1.4  30 Jul 2016  Fix a bug in word-wise table generation
+                     Reduce verbosity of testing
 
  */
 
@@ -144,11 +145,9 @@ int main(void)
             if (tests & 2)
                 printf("%s: bitwise test %s (CRC too long for others)\n",
                        model.name, tests & 1 ? "passed" : "failed");
-            else if (tests == 13)
-                printf("%s: all tests passed\n", model.name);
             else if (tests == 0)
                 printf("%s: all tests failed\n", model.name);
-            else
+            else if (tests != 13)
                 printf("%s: bitwise %s, bytewise %s, wordwise %s\n",
                        model.name, tests & 1 ? "passed" : "failed",
                        tests & 4 ? "passed" : "failed",
