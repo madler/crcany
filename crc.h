@@ -27,7 +27,7 @@
    The final value of crc is the CRC of the chunks in sequence.  The first call
    of crc_bitwise() gets the initial CRC value for this model.
  */
-word_t crc_bitwise(model_t *, word_t, unsigned char const *, size_t);
+word_t crc_bitwise(model_t *, word_t, void const *, size_t);
 
 /* Fill in the 256-entry table in model with the CRC of the bytes 0..255, for a
    byte-wise calculation of the given CRC model.  The table value is the
@@ -40,7 +40,7 @@ void crc_table_bytewise(model_t *);
 /* Equivalent to crc_bitwise(), but use a faster byte-wise table-based
    approach. This assumes that model->table_byte has been initialized using
    crc_table_bytewise(). */
-word_t crc_bytewise(model_t *, word_t, unsigned char const *, size_t);
+word_t crc_bytewise(model_t *, word_t, void const *, size_t);
 
 /* Fill in the tables for a word-wise CRC calculation.  This also fills in the
    byte-wise table since that is needed for the word-wise calculation.
@@ -60,6 +60,6 @@ void crc_table_wordwise(model_t *);
 /* Equivalent to crc_bitwise(), but use an even faster word-wise table-based
    approach.  This assumes that model->table_byte and model->table_word have
    been initialized using crc_table_wordwise(). */
-word_t crc_wordwise(model_t *, word_t, unsigned char const *, size_t);
+word_t crc_wordwise(model_t *, word_t, void const *, size_t);
 
 #endif

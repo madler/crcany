@@ -6,9 +6,9 @@
 #include <stddef.h>
 #include "crc.h"
 
-word_t crc_bitwise(model_t *model, word_t crc,
-                   unsigned char const *buf, size_t len)
+word_t crc_bitwise(model_t *model, word_t crc, void const *dat, size_t len)
 {
+    unsigned char const *buf = dat;
     word_t poly = model->poly;
 
     /* if requested, return the initial CRC */
@@ -97,9 +97,10 @@ void crc_table_bytewise(model_t *model)
     } while (++k);
 }
 
-word_t crc_bytewise(model_t *model, word_t crc,
-                    unsigned char const *buf, size_t len)
+word_t crc_bytewise(model_t *model, word_t crc, void const *dat, size_t len)
 {
+    unsigned char const *buf = dat;
+
     /* if requested, return the initial CRC */
     if (buf == NULL)
         return model->init;
@@ -187,9 +188,9 @@ void crc_table_wordwise(model_t *model)
     }
 }
 
-word_t crc_wordwise(model_t *model, word_t crc,
-                    unsigned char const *buf, size_t len)
+word_t crc_wordwise(model_t *model, word_t crc, void const *dat, size_t len)
 {
+    unsigned char const *buf = dat;
     unsigned little, top, shift;
 
     /* if requested, return the initial CRC */
