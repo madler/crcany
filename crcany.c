@@ -165,5 +165,7 @@ int main(void)
     crc = 1;
     printf("%u models verified word-wise out of %u usable (%s-endian)\n",
            goodword, numall, *((unsigned char *)(&crc)) ? "little" : "big");
+    puts(good == num && goodbyte == numall && goodword == numall ?
+         "-- all good" : "** verification failed");
     return 0;
 }
