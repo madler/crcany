@@ -1,4 +1,4 @@
-CFLAGS=-O3 -Wall -Wextra -Wcast-qual -std=gnu99
+CFLAGS=-O3 -Wall -Wextra -Wcast-qual -std=gnu99 -pedantic
 all: crcany crcgen mincrc
 crcany: crcany.o crc.o crcdbl.o model.o
 crcany.o: crcany.c crc.h crcdbl.h model.h
