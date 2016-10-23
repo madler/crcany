@@ -1,5 +1,5 @@
 /*
-  crcgen version 1.4, 30 July 2016
+  crcgen version 1.5, 23 October 2016
 
   Copyright (C) 2016 Mark Adler
 
@@ -40,6 +40,7 @@
                      Fix a bug in word-wise table generation
                      Use void * type to pass crc data
                      Use x = ~x instead of x ^= 0xff... where appropriate
+   1.5  23 Oct 2016  Improve use of data types and C99 compatibility
  */
 
 /* Generate C code to compute the given CRC. This generates code that will work

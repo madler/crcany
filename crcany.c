@@ -1,5 +1,5 @@
 /*
-  crcany version 1.4, 30 July 2016
+  crcany version 1.5, 23 October 2016
 
   Copyright (C) 2014, 2016 Mark Adler
 
@@ -31,6 +31,8 @@
    1.3  23 Jul 2016  Build xorout into the tables
    1.4  30 Jul 2016  Fix a bug in word-wise table generation
                      Reduce verbosity of testing
+   1.5  23 Oct 2016  Improve use of data types and C99 compatibility
+                     Add verifications summary message
 
  */
 
