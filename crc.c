@@ -6,7 +6,8 @@
 #include <stddef.h>
 #include "crc.h"
 
-word_t crc_bitwise(model_t *model, word_t crc, unsigned char *buf, size_t len)
+word_t crc_bitwise(model_t *model, word_t crc,
+                   unsigned char const *buf, size_t len)
 {
     word_t poly = model->poly;
 
@@ -96,7 +97,8 @@ void crc_table_bytewise(model_t *model)
     } while (++k);
 }
 
-word_t crc_bytewise(model_t *model, word_t crc, unsigned char *buf, size_t len)
+word_t crc_bytewise(model_t *model, word_t crc,
+                    unsigned char const *buf, size_t len)
 {
     /* if requested, return the initial CRC */
     if (buf == NULL)
@@ -185,7 +187,8 @@ void crc_table_wordwise(model_t *model)
     }
 }
 
-word_t crc_wordwise(model_t *model, word_t crc, unsigned char *buf, size_t len)
+word_t crc_wordwise(model_t *model, word_t crc,
+                    unsigned char const *buf, size_t len)
 {
     unsigned little, top, shift;
 
@@ -232,7 +235,7 @@ word_t crc_wordwise(model_t *model, word_t crc, unsigned char *buf, size_t len)
             if (!model->ref)
                 crc = swap(crc);
             do {
-                crc ^= *(word_t *)buf;
+                crc ^= *(word_t const *)buf;
                 crc = model->table_word[WORDCHARS - 1][crc & 0xff]
                     ^ model->table_word[WORDCHARS - 2][(crc >> 8)
 #if WORDCHARS > 2
@@ -269,7 +272,7 @@ word_t crc_wordwise(model_t *model, word_t crc, unsigned char *buf, size_t len)
             if (model->ref)
                 crc = swap(crc);
             do {
-                crc ^= *(word_t *)buf;
+                crc ^= *(word_t const *)buf;
                 crc = model->table_word[0][crc & 0xff]
                     ^ model->table_word[1][(crc >> 8)
 #if WORDCHARS > 2
