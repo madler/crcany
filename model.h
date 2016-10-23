@@ -83,7 +83,8 @@ typedef struct {
 
 /* Read and verify a CRC model description from the string str, returning the
    result in *model.  Return 0 on success, 1 on invalid input, or 2 if out of
-   memory.  model->name is allocated and should be freed when done.
+   memory.  model->name is allocated and should be freed when done. str is
+   modified in the process, and so it cannot be a literal string.
 
    The parameters are "width", "poly", "init", "refin", "refout", "xorout",
    "check", and "name".  The names may be abbrievated to "w", "p", "i", "r",
