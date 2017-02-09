@@ -1,5 +1,5 @@
 /* model.h -- Generic CRC parameter model routines
- * Copyright (C) 2014, 2016 Mark Adler
+ * Copyright (C) 2014, 2016, 2017 Mark Adler
  * For conditions of distribution and use, see copyright notice in crcany.c.
  */
 
@@ -76,6 +76,7 @@ typedef struct {
     word_t init, init_hi;       /* CRC of a zero-length sequence */
     word_t xorout, xorout_hi;   /* final CRC is exclusive-or'ed with this */
     word_t check, check_hi;     /* CRC of the nine ASCII bytes "12345679" */
+    word_t res, res_hi;         /* Residue of the CRC */
     char *name;                 /* text description of this CRC */
     word_t table_byte[256];             /* table for byte-wise calculation */
     word_t table_word[WORDCHARS][256];  /* tables for word-wise calculation */
@@ -87,16 +88,16 @@ typedef struct {
    modified in the process, and so it cannot be a literal string.
 
    The parameters are "width", "poly", "init", "refin", "refout", "xorout",
-   "check", and "name".  The names may be abbrievated to "w", "p", "i", "r",
-   "refo", "x", "c", and "n" respectively.  Each name is followed by an "="
-   sign, followed by the value for that parameter.  There are no spaces
-   permitted around the "=".  "width", "poly", "init", "xorout", and "check"
-   are non-negative integers, and can be provided in decimal (no leading zero),
-   octal (prefixed with "0"), or hexadecimal (prefixed by "0x").  refin and
-   refout must be true or false, and can be abbreviated to t or f.  Upper and
-   lower case are considered equivalent for all parameter names and values.
-   The value for "name" may be in quotes to permit spaces in the name.  The
-   parameters may be provided in any order.
+   "check", "residue", and "name".  The names may be abbreviated to "w", "p",
+   "i", "r", "refo", "x", "c", "res", and "n" respectively.  Each name is
+   followed by an "=" sign, followed by the value for that parameter.  There
+   are no spaces permitted around the "=".  "width", "poly", "init", "xorout",
+   "check", and "residue" are non-negative integers, and can be provided in
+   decimal (no leading zero), octal (prefixed with "0"), or hexadecimal
+   (prefixed by "0x"). refin and refout must be "true" or "false", and can be
+   abbreviated to "t" or "f". Upper and lower case are considered equivalent
+   for all parameter names and values. The value for "name" may be in quotes to
+   permit spaces in the name. The parameters may be provided in any order.
 
    "width" is the number of bits in the CRC, referred to herein as n.  "poly"
    is the binary representation of the CRC polynomial, sans the x^n term.
@@ -113,18 +114,18 @@ typedef struct {
    here to the largest integer type available to the compiler (uintmax_t).  On
    most modern systems, this permits up to 128-bit CRCs.
 
-   "poly", "init", "xorout", and "check" must all be less than 2^n.  The least
-   significant bit of "poly" must be one.
+   "poly", "init", "xorout", "check", and "residue" must all be less than 2^n.
+   The least significant bit of "poly" must be one.
 
-   "init" and "xorout" are optional, and set to zero if not provided.  Either
-   "refin" or "refout" can be omitted, in which case the one missing is set to
-   the one provided.  At least one of "refin" or "refout" must be provided.
-   All other parameters must be provided.
+   "init", "xorout", and "residue" are optional, and are set to zero if not
+   provided.  Either "refin" or "refout" can be omitted, in which case the one
+   missing is set to the one provided.  At least one of "refin" or "refout"
+   must be provided. All other parameters must be provided.
 
    Example (from the RevEng catalogue at
-   http://reveng.sourceforge.net/crc-catalogue/all.htm):
+   http://reveng.sourceforge.net/crc-catalogue/all.htm ):
 
-      width=16 poly=0x1021 init=0x0000 refin=true refout=true xorout=0x0000 check=0x2189 name="KERMIT"
+      width=16 poly=0x1021 init=0x0000 refin=true refout=true xorout=0x0000 check=0x2189 residue=0x0000 name="KERMIT"
 
    The same model maximally abbreviated:
 

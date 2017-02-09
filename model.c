@@ -1,5 +1,5 @@
 /* model.c -- Generic CRC parameter model routines
- * Copyright (C) 2014, 2016 Mark Adler
+ * Copyright (C) 2014, 2016, 2017 Mark Adler
  * For conditions of distribution and use, see copyright notice in crcany.c.
  */
 
@@ -216,8 +216,9 @@ static int normal_big(word_t *low, word_t *high, unsigned width)
 #define REFOUT 16
 #define XOROUT 32
 #define CHECK 64
-#define NAME 128
-#define ALL (WIDTH|POLY|INIT|REFIN|REFOUT|XOROUT|CHECK|NAME)
+#define RES 128
+#define NAME 256
+#define ALL (WIDTH|POLY|INIT|REFIN|REFOUT|XOROUT|CHECK|RES|NAME)
 
 /* See model.h. */
 int read_model(model_t *model, char *str)
@@ -228,8 +229,6 @@ int read_model(model_t *model, char *str)
     unsigned got, bad, rep;
     char *unk;
     word_t hi, lo;
-    const char *parm[] = {"width", "poly", "init", "refin", "refout", "xorout",
-                          "check", "name"};
 
     /* read name=value pairs from line */
     got = bad = rep = 0;
@@ -328,6 +327,19 @@ int read_model(model_t *model, char *str)
             model->check_hi = hi;
             got |= CHECK;
         }
+        else if (strncasecmp(name, "residue", n < 3 ? 3 : n) == 0) {
+            if (got & RES) {
+                rep |= RES;
+                continue;
+            }
+            if ((end = strtobig(value, &hi, &lo)) == NULL || *end) {
+                bad |= RES;
+                continue;
+            }
+            model->res = lo;
+            model->res_hi = hi;
+            got |= RES;
+        }
         else if (strncasecmp(name, "name", n) == 0) {
             if (got & NAME) {
                 rep |= NAME;
@@ -362,6 +374,11 @@ int read_model(model_t *model, char *str)
         model->xorout_hi = 0;
         got |= XOROUT;
     }
+    if ((got & RES) == 0) {
+        model->res = 0;
+        model->res_hi = 0;
+        got |= RES;
+    }
 
     /* check for parameter values out of range */
     if (got & WIDTH) {
@@ -379,6 +396,9 @@ int read_model(model_t *model, char *str)
             if ((got & CHECK) &&
                 normal_big(&model->check, &model->check_hi, model->width))
                 bad |= CHECK;
+            if ((got & RES) &&
+                normal_big(&model->res, &model->res_hi, model->width))
+                bad |= RES;
         }
     }
 
@@ -387,6 +407,8 @@ int read_model(model_t *model, char *str)
     if (ret == -1)
         fprintf(stderr, "bad syntax (not 'parm=value') at: '%s'\n", str);
     else {
+        const char *parm[] = {"width", "poly", "init", "refin", "refout",
+            "xorout", "check", "residue", "name"};
         name = model->name == NULL ? "<no name>" : model->name;
         if (unk != NULL)
             fprintf(stderr, "%s: unknown parameter %s\n", name, unk);

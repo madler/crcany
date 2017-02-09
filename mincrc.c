@@ -1,7 +1,7 @@
 /*
-  mincrc version 1.1, 15 July 2016
+  mincrc version 1.2, 10 February 2017
 
-  Copyright (C) 2014, 2016 Mark Adler
+  Copyright (C) 2014, 2016, 2017 Mark Adler
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -27,6 +27,7 @@
    1.0  17 Dec 2014  First version
    1.1  15 Jul 2016  Allow negative numbers
                      Move common code to model.[ch]
+   1.2  10 Feb 2017  Add residue parameter
  */
 
 /* Maximally compress the CRC representations by abbreviating parameter names,
@@ -221,6 +222,8 @@ int main(void)
             if (model.xorout || model.xorout_hi)
                 parm("x", model.xorout, model.xorout_hi, model.width, out);
             parm("c", model.check, model.check_hi, model.width, out);
+            if (model.res || model.res_hi)
+                parm("res", model.res, model.res_hi, model.width, out);
             quoted("n", model.name, out);
         }
         free(model.name);
