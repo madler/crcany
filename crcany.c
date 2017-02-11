@@ -1,7 +1,7 @@
 /*
-  crcany version 1.5, 23 October 2016
+  crcany version 1.6, 10 February 2017
 
-  Copyright (C) 2014, 2016 Mark Adler
+  Copyright (C) 2014, 2016, 2017 Mark Adler
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -33,6 +33,7 @@
                      Reduce verbosity of testing
    1.5  23 Oct 2016  Improve use of data types and C99 compatibility
                      Add verifications summary message
+   1.6  10 Feb 2017  Add new residue parameter parsing and checking
 
  */
 
