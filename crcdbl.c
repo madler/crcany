@@ -142,3 +142,45 @@ void crc_bitwise_dbl(model_t *model, word_t *crc_hi, word_t *crc_lo,
     *crc_lo = lo;
     *crc_hi = hi;
 }
+
+void crc_zeros_dbl(model_t *model, word_t *crc_hi, word_t *crc_lo,
+                   size_t count)
+{
+    word_t poly_lo = model->poly;
+    word_t poly_hi = model->poly_hi;
+    word_t lo, hi;
+
+    /* use crc_bitwise() for CRCs that fit in a word_t */
+    if (model->width <= WORDBITS) {
+        *crc_lo = crc_zeros(model, *crc_lo, count);
+        *crc_hi = 0;
+        return;
+    }
+
+    /* pre-process the CRC */
+    lo = *crc_lo ^ model->xorout;
+    hi = *crc_hi ^ model->xorout_hi;
+    if (model->rev)
+        reverse_dbl(&hi, &lo, model->width);
+
+    /* process the input data a bit at a time */
+    if (model->ref) {
+        hi &= ONES(model->width - WORDBITS);
+        while (count--)
+            BIGREF;
+    }
+    else {
+        word_t mask = (word_t)1 << (model->width - WORDBITS - 1);
+        while (count--)
+            BIGNORM;
+        hi &= ONES(model->width - WORDBITS);
+    }
+
+    /* post-process and return the CRC */
+    if (model->rev)
+        reverse_dbl(&hi, &lo, model->width);
+    lo ^= model->xorout;
+    hi ^= model->xorout_hi;
+    *crc_lo = lo;
+    *crc_hi = hi;
+}

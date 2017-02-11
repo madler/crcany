@@ -30,4 +30,8 @@
 void crc_bitwise_dbl(model_t *, word_t *, word_t *,
                      unsigned char const *, size_t);
 
+/* Similar to crc_zeros(), but works for CRCs up to twice as long as a
+   word_t. */
+void crc_zeros_dbl(model_t *, word_t *, word_t *, size_t);
+
 #endif

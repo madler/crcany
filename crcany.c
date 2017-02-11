@@ -74,7 +74,7 @@ int main(void)
 {
     int ret;
     unsigned tests;
-    unsigned inval = 0, num = 0, good = 0;
+    unsigned inval = 0, num = 0, good = 0, goodres = 0;
     unsigned numall = 0, goodbyte = 0, goodword = 0;
     char *line = NULL;
     size_t size;
@@ -115,8 +115,16 @@ int main(void)
                 tests |= 1;
                 good++;
             }
-            if (model.width > WORDBITS)
+            crc = crc_hi = 0;
+            crc_zeros_dbl(&model, &crc_hi, &crc, model.width);
+            crc ^= model.xorout;
+            crc_hi ^= model.xorout_hi;
+            if (crc == model.res && crc_hi == model.res_hi) {
                 tests |= 2;
+                goodres++;
+            }
+            if (model.width > WORDBITS)
+                tests |= 4;
             else {
                 /* initialize tables for byte-wise and word-wise */
                 crc_table_wordwise(&model);
@@ -125,7 +133,7 @@ int main(void)
                 crc = crc_bytewise(&model, 0, NULL, 0);
                 crc = crc_bytewise(&model, crc, test, 9);
                 if (crc == model.check) {
-                    tests |= 4;
+                    tests |= 8;
                     goodbyte++;
                 }
 
@@ -137,23 +145,31 @@ int main(void)
                     crc = crc_wordwise(&model, 0, NULL, 0);
                     crc = crc_wordwise(&model, crc, test + 15, 9);
                     if (crc == model.check) {
-                        tests |= 8;
+                        tests |= 16;
                         goodword++;
                     }
                 }
                 numall++;
             }
             num++;
-            if (tests & 2)
-                printf("%s: bitwise test %s (CRC too long for others)\n",
-                       model.name, tests & 1 ? "passed" : "failed");
+            if (tests & 4)
+                printf("%s:%s%s%s (CRC too long for byte, word)\n",
+                       model.name,
+                       tests & 1 ? "" : " bit fail",
+                       tests & 3 ? "" : ",",
+                       tests & 2 ? "" : " residue fail");
             else if (tests == 0)
                 printf("%s: all tests failed\n", model.name);
-            else if (tests != 13)
-                printf("%s: bitwise %s, bytewise %s, wordwise %s\n",
-                       model.name, tests & 1 ? "passed" : "failed",
-                       tests & 4 ? "passed" : "failed",
-                       tests & 8 ? "passed" : "failed");
+            else if (tests != 1 + 2 + 8 + 16)
+                printf("%s:%s%s%s%s%s%s%s\n",
+                       model.name,
+                       tests & 1 ? "" : " bit fail",
+                       tests & 3 ? "" : ",",
+                       tests & 2 ? "" : " residue fail",
+                       (tests & 3) == 3 || (tests & 8) ? "" : ",",
+                       tests & 8 ? "" : " byte fail",
+                       (tests & 11) == 11 || (tests & 16) ? "" : ",",
+                       tests & 16 ? "" : " word fail");
         }
         free(model.name);
         model.name = NULL;
@@ -162,12 +178,14 @@ int main(void)
     free(test);
     printf("%u models verified bit-wise out of %u usable "
            "(%u unusable models)\n", good, num, inval);
+    printf("%u model residues verified out of %u usable "
+           "(%u unusable models)\n", goodres, num, inval);
     printf("%u models verified byte-wise out of %u usable\n",
            goodbyte, numall);
     crc = 1;
     printf("%u models verified word-wise out of %u usable (%s-endian)\n",
            goodword, numall, *((unsigned char *)(&crc)) ? "little" : "big");
-    puts(good == num && goodbyte == numall && goodword == numall ?
-         "-- all good" : "** verification failed");
+    puts(good == num && goodres == num && goodbyte == numall &&
+         goodword == numall ? "-- all good" : "** verification failed");
     return 0;
 }

@@ -29,6 +29,9 @@
  */
 word_t crc_bitwise(model_t *, word_t, void const *, size_t);
 
+/* Run count zero bits through the CRC described in model. */
+word_t crc_zeros(model_t *, word_t, size_t);
+
 /* Fill in the 256-entry table in model with the CRC of the bytes 0..255, for a
    byte-wise calculation of the given CRC model.  The table value is the
    internal CRC register contents after processing the byte.  If not reflected
