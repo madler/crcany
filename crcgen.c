@@ -123,16 +123,20 @@
 // generated code prints an error to stderr.
 static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
                     FILE *defs, FILE *test) {
-    // select the unsigned integer type to be used for CRC calculations
-    fputs(
-        "// These CRC routines take the initial/current CRC in the first argument, a\n"
-        "// pointer to the message bytes in the second argument and the number of bytes\n"
-        "// to compute the CRC over in the third argument. If the second argument is\n"
-        "// NULL, then the other arguments are ignored, and the initial CRC (the CRC of\n"
-        "// zero bytes), is returned. These routines will all return the same result,\n"
-        "// differing only in speed and code complexity.\n"
+    // provide usage information in the header, and make sure size_t is defined
+    fprintf(head,
+        "// The _bit, _byte, and _word routines return the CRC of the len bytes at mem,\n"
+        "// applied to the previous CRC value, crc. If mem is NULL, then the other\n"
+        "// arguments are ignored, and the initial CRC, i.e. the CRC of zero bytes, is\n"
+        "// returned. Those routines will all return the same result, differing only in\n"
+        "// speed and code complexity. The _rem routine returns the CRC of the remaining\n"
+        "// bits in the last byte, for when the number of bits in the message is not a\n"
+        "// multiple of eight. The %s bits bits of the low byte of val are applied to\n"
+        "// crc. bits must be in 0..8.\n"
         "\n"
-        "#include <stddef.h>\n", head);
+        "#include <stddef.h>\n", model->ref ? "low" : "high");
+
+    // select the unsigned integer type to be used for CRC calculations
     char *crc_t;
     unsigned crc_t_bit;
     if (model->width <= WORD_BIT) {
@@ -198,17 +202,18 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
     // bit-wise CRC calculation function
     fprintf(head,
         "\n"
-        "// The type for the CRC assumes that %s is %u-bytes.\n"
-        "\n"
         "// Compute the CRC a bit at a time.\n"
-        "%s %s_bit(%s, void const *, size_t);\n",
-            crc_t, crc_t_bit >> 3, crc_t, name, crc_t);
+        "%s %s_bit(%s crc, void const *mem, size_t len);\n",
+            crc_t, name, crc_t);
     fprintf(code,
+        "\n"
+        "// This code assumes that %s is %u-bytes.\n"
         "\n"
         "%s %s_bit(%s crc, void const *mem, size_t len) {\n"
         "    unsigned char const *data = mem;\n"
         "    if (data == NULL)\n"
-        "        return %#"X";\n", crc_t, name, crc_t, model->init);
+        "        return %#"X";\n",
+            crc_t, crc_t_bit >> 3, crc_t, name, crc_t, model->init);
     if (model->xorout) {
         if (model->xorout == ONES(model->width))
             fputs(
@@ -311,11 +316,11 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
     // bit-wise CRC calculation function for a small number of bits (0..8)
     fprintf(head,
         "\n"
-        "// Compute the CRC of the remaining number of bits in the last byte, for when\n"
-        "// the number of bits in the message is not a multiple of eight. Apply the low\n"
-        "// bits bits of val to crc for reflected CRCs, or the high bits bits of the low\n"
-        "// byte of val to crc for non-reflected CRCs, where bits must be in 0..8.\n"
-        "%s %s_rem(%s, unsigned, unsigned);\n", crc_t, name, crc_t);
+        "// Compute the CRC of the %s bits bits in %sval.\n"
+        "%s %s_rem(%s crc, unsigned val, unsigned bits);\n",
+            model->ref ? "low" : "high",
+            model->ref ? "" : "the low byte of ",
+            crc_t, name, crc_t);
     fprintf(code,
         "\n"
         "%s %s_rem(%s crc, unsigned val, unsigned bits) {\n", crc_t, name, crc_t);
@@ -494,7 +499,7 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
     fprintf(head,
         "\n"
         "// Compute the CRC a byte at a time.\n"
-        "%s %s_byte(%s, void const *, size_t);\n", crc_t, name, crc_t);
+        "%s %s_byte(%s crc, void const *mem, size_t len);\n", crc_t, name, crc_t);
     fprintf(code,
         "\n"
         "%s %s_byte(%s crc, void const *mem, size_t len) {\n"
@@ -594,15 +599,18 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
     }
     fprintf(head,
         "\n"
-        "// Compute the CRC a word at a time, assuming %s-endian.\n"
-        "%s %s_word(%s, void const *, size_t);\n",
-        little ? "little" : "big", crc_t, name, crc_t);
+        "// Compute the CRC a word at a time.\n"
+        "%s %s_word(%s crc, void const *mem, size_t len);\n",
+        crc_t, name, crc_t);
     fprintf(code,
+        "\n"
+        "// This code assumes that integers are stored %s-endian.\n"
         "\n"
         "%s %s_word(%s crc, void const *mem, size_t len) {\n"
         "    unsigned char const *data = mem;\n"
         "    if (data == NULL)\n"
-        "        return %#"X";\n", crc_t, name, crc_t, model->init);
+        "        return %#"X";\n",
+            little ? "little" : "big", crc_t, name, crc_t, model->init);
     if (model->rev)
         fputs(
         "    crc = revlow(crc);\n", code);
