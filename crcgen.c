@@ -308,6 +308,116 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         "    crc = %s_bit(init, data + 1, sizeof(data) - 1);\n",
             name, name, name, model->check, name, name);
 
+    // bit-wise CRC calculation function for a small number of bits (0..8)
+    fprintf(head,
+        "\n"
+        "// Compute the CRC of the remaining number of bits in the last byte, for when\n"
+        "// the number of bits in the message is not a multiple of eight. Apply the low\n"
+        "// bits bits of val to crc for reflected CRCs, or the high bits bits of the low\n"
+        "// byte of val to crc for non-reflected CRCs, where bits must be in 0..8.\n"
+        "%s %s_rem(%s, unsigned, unsigned);\n", crc_t, name, crc_t);
+    fprintf(code,
+        "\n"
+        "%s %s_rem(%s crc, unsigned val, unsigned bits) {\n", crc_t, name, crc_t);
+    if (model->xorout) {
+        if (model->xorout == ONES(model->width))
+            fputs(
+        "    crc = ~crc;\n", code);
+        else
+            fprintf(code,
+        "    crc ^= %#"X";\n", model->xorout);
+        }
+    if (model->rev)
+        fputs(
+        "    crc = revlow(crc);\n", code);
+    if (model->ref) {
+        if (model->width != crc_t_bit && !model->rev)
+            fprintf(code,
+        "    crc &= %#"X";\n", ONES(model->width));
+        fprintf(code,
+        "    val &= (1U << bits) - 1;\n"
+        "    crc ^= val;\n"
+        "    while (bits--)\n"
+        "        crc = crc & 1 ? (crc >> 1) ^ %#"X" : crc >> 1;\n", model->poly);
+        if (model->rev)
+            fputs(
+        "    crc = revlow(crc);\n", code);
+        if (model->xorout) {
+            if (model->xorout == ONES(model->width) && crc_t_bit == model->width)
+                fputs(
+        "    crc = ~crc;\n", code);
+            else
+                fprintf(code,
+        "    crc ^= %#"X";\n", model->xorout);
+        }
+    }
+    else if (model->width <= 8) {
+        if (model->width < 8)
+            fprintf(code,
+        "    crc <<= %u;\n", 8 - model->width);
+        fprintf(code,
+        "    val &= ((1U << bits) - 1) << (8 - bits);\n"
+        "    crc ^= val;\n"
+        "    while (bits--)\n"
+        "        crc = crc & 0x80 ? (crc << 1) ^ %#"X" : crc << 1;\n",
+                model->poly << (8 - model->width));
+        if (model->width < 8)
+            fprintf(code,
+        "    crc >>= %u;\n", 8 - model->width);
+        if (model->rev)
+            fputs(
+        "    crc = revlow(crc);\n", code);
+        if (model->xorout) {
+            if (model->xorout == ONES(model->width) && !model->rev)
+                fputs(
+        "    crc = ~crc;\n", code);
+            else
+                fprintf(code,
+        "    crc ^= %#"X";\n", model->xorout);
+        }
+        if (!model->rev)
+            fprintf(code,
+        "    crc &= %#"X";\n", ONES(model->width));
+    }
+    else {
+        fprintf(code,
+        "    val &= ((1U << bits) - 1) << (8 - bits);\n"
+        "    crc ^= (%s)val << %u;\n"
+        "    while (bits--)\n"
+        "        crc = crc & %#"X" ? (crc << 1) ^ %#"X" : crc << 1;\n",
+        crc_t, model->width - 8, (word_t)1 << (model->width - 1), model->poly);
+        if (model->rev)
+            fputs(
+        "    crc = revlow(crc);\n", code);
+        if (model->xorout) {
+            if (model->xorout == ONES(model->width) && !model->rev)
+                fputs(
+        "    crc = ~crc;\n", code);
+            else
+                fprintf(code,
+        "    crc ^= %#"X";\n", model->xorout);
+        }
+        if (model->width != crc_t_bit && !model->rev)
+            fprintf(code,
+        "    crc &= %#"X";\n", ONES(model->width));
+    }
+    fputs("    return crc;\n"
+          "}\n", code);
+
+    // write test code for small number of bits function
+    if (model->ref)
+        fprintf(test,
+            "    if (%s_bit(init, \"\\xda\", 1) !=\n"
+            "        %s_rem(%s_rem(init, 0xda, 3), 0x1b, 5))\n"
+            "        fputs(\"small bits mismatch for %s\\n\", stderr);\n",
+                name, name, name, name);
+    else
+        fprintf(test,
+            "    if (%s_bit(init, \"\\xda\", 1) !=\n"
+            "        %s_rem(%s_rem(init, 0xda, 3), 0xd0, 5))\n"
+            "        fputs(\"small bits mismatch for %s\\n\", stderr);\n",
+                name, name, name, name);
+
     // determine endianess of this machine
     unsigned little = 1;
     little = *((unsigned char *)(&little));
