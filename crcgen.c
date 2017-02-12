@@ -1,7 +1,7 @@
 /*
-  crcgen version 1.5, 23 October 2016
+  crcgen version 1.6, 11 February 2017
 
-  Copyright (C) 2016 Mark Adler
+  Copyright (C) 2016, 2017 Mark Adler
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -41,6 +41,8 @@
                      Use void * type to pass crc data
                      Use x = ~x instead of x ^= 0xff... where appropriate
    1.5  23 Oct 2016  Improve use of data types and C99 compatibility
+   1.6  11 Feb 2017  Add creation of remaining bits function (_rem)
+                     Improve the generated comments and prototypes
  */
 
 /* Generate C code to compute the given CRC. This generates code that will work
