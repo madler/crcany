@@ -209,7 +209,7 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
             crc_t, name, crc_t);
     fprintf(code,
         "\n"
-        "// This code assumes that %s is %u-bytes.\n"
+        "// This code assumes that %s is %u bytes.\n"
         "\n"
         "%s %s_bit(%s crc, void const *mem, size_t len) {\n"
         "    unsigned char const *data = mem;\n"
