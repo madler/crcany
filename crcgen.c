@@ -363,7 +363,7 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
             fprintf(code,
         "    crc <<= %u;\n", 8 - model->width);
         fprintf(code,
-        "    val &= ((1U << bits) - 1) << (8 - bits);\n"
+        "    val &= 0x100 - (0x100 >> bits) ;\n"
         "    crc ^= val;\n"
         "    while (bits--)\n"
         "        crc = crc & 0x80 ? (crc << 1) ^ %#"X" : crc << 1;\n",
@@ -388,7 +388,7 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
     }
     else {
         fprintf(code,
-        "    val &= ((1U << bits) - 1) << (8 - bits);\n"
+        "    val &= 0x100 - (0x100 >> bits) ;\n"
         "    crc ^= (%s)val << %u;\n"
         "    while (bits--)\n"
         "        crc = crc & %#"X" ? (crc << 1) ^ %#"X" : crc << 1;\n",
