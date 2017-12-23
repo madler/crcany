@@ -15,6 +15,7 @@ w=7 p=79 i=-1 r=t c=83 n=CRC-7/ROHC
 w=7 p=69 r=f c=97 n=CRC-7/UMTS
 w=8 p=7 r=f c=244 n=CRC-8
 w=8 p=47 i=-1 r=f x=-1 c=223 res=66 n=CRC-8/AUTOSAR
+w=8 p=167 r=t c=38 n=CRC-8/BLUETOOTH
 w=8 p=155 i=-1 r=f c=218 n=CRC-8/CDMA2000
 w=8 p=57 r=t c=21 n=CRC-8/DARC
 w=8 p=213 r=f c=188 n=CRC-8/DVB-S2
@@ -72,6 +73,8 @@ w=16 p=4129 r=t c=8585 n=KERMIT
 w=16 p=32773 i=-1 r=t c=19255 n=MODBUS
 w=16 p=4129 i=-1 r=t x=-1 c=36974 res=61624 n=X-25
 w=16 p=4129 r=f c=12739 n=XMODEM
+w=17 p=92251 r=f c=20227 n=CRC-17/CAN-FD
+w=21 p=1058969 r=f c=972865 n=CRC-21/CAN-FD
 w=24 p=8801531 i=11994318 r=f c=2215682 n=CRC-24
 w=24 p=1627 i=5592405 r=t c=12737110 n=CRC-24/BLE
 w=24 p=6122955 i=-74566 r=f c=7961021 n=CRC-24/FLEXRAY-A
