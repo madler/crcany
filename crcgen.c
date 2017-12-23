@@ -1,5 +1,5 @@
 /*
-  crcgen version 1.6, 11 February 2017
+  crcgen version 1.7, 23 December 2017
 
   Copyright (C) 2016, 2017 Mark Adler
 
@@ -43,6 +43,8 @@
    1.5  23 Oct 2016  Improve use of data types and C99 compatibility
    1.6  11 Feb 2017  Add creation of remaining bits function (_rem)
                      Improve the generated comments and prototypes
+   1.7  23 Dec 2017  Update to the latest CRC catalog
+                     Minor improvements to code generation
  */
 
 /* Generate C code to compute the given CRC. This generates code that will work
