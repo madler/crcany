@@ -82,6 +82,7 @@ width=24 poly=0x5d6dcb init=0xabcdef refin=false refout=false xorout=0x000000 ch
 width=24 poly=0x328b63 init=0xffffff refin=false refout=false xorout=0xffffff check=0xb4f3e6 residue=0x144e63 name="CRC-24/INTERLAKEN"
 width=24 poly=0x864cfb init=0x000000 refin=false refout=false xorout=0x000000 check=0xcde703 residue=0x000000 name="CRC-24/LTE-A"
 width=24 poly=0x800063 init=0x000000 refin=false refout=false xorout=0x000000 check=0x23ef52 residue=0x000000 name="CRC-24/LTE-B"
+width=24 poly=0x800063 init=0xffffff refin=false refout=false xorout=0xffffff check=0x200fa5 residue=0x800fe3 name="CRC-24/OS-9"
 width=30 poly=0x2030b9c7 init=0x3fffffff refin=false refout=false xorout=0x3fffffff check=0x04c34abf residue=0x34efa55a name="CRC-30/CDMA"
 width=31 poly=0x04c11db7 init=0x7fffffff refin=false refout=false xorout=0x7fffffff check=0x0ce9e46c residue=0x4eaf26f1 name="CRC-31/PHILIPS"
 width=32 poly=0x04c11db7 init=0xffffffff refin=true refout=true xorout=0xffffffff check=0xcbf43926 residue=0xdebb20e3 name="CRC-32"
