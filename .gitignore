@@ -1,5 +1,6 @@
 *.o
-crcany
+crctest
 crcgen
 mincrc
+crcany
 src/

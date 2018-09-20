@@ -37,14 +37,14 @@ architecture.
 Installation
 ------------
 
-This will compile the crcany, crcgen, and mincrc executables:
+This will compile the crctest, crcgen, and mincrc executables:
 
     make
 
 Test
 ----
 
-Test crcany and crcgen using the list of all catalogued CRCs, available here in
+Test crctest and crcgen using the list of all catalogued CRCs, available here in
 the file allcrcs.txt, and test mincrc against the abbreviated list using the
 Makefile:
 

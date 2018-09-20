@@ -126,7 +126,7 @@
 // check value. If the check value does not match the computed CRC, then the
 // generated code prints an error to stderr.
 static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
-                    FILE *defs, FILE *test) {
+                    FILE *defs, FILE *test, FILE *allc, FILE *allh) {
     // provide usage information in the header, and make sure size_t is defined
     fprintf(head,
         "// The _bit, _byte, and _word routines return the CRC of the len bytes at mem,\n"
@@ -305,7 +305,7 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
     fputs("    return crc;\n"
           "}\n", code);
 
-    // write test code for bit-wise function
+    // write test and all code for bit-wise function
     fprintf(defs,
         "#include \"%s.h\"\n", name);
     fprintf(test,
@@ -313,9 +313,22 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         "    // %s\n"
         "    init = %s_bit(0, NULL, 0);\n"
         "    if (%s_bit(init, \"123456789\", 9) != %#"X")\n"
-        "        fputs(\"bit-wise mismatch for %s\\n\", stderr);\n"
+        "        fputs(\"bit-wise mismatch for %s\\n\", stderr), err++;\n"
         "    crc = %s_bit(init, data + 1, sizeof(data) - 1);\n",
             name, name, name, model->check, name, name);
+    fprintf(allc,
+        "\n"
+        "#include \"%s.h\"\n"
+        "uintmax_t %s(uintmax_t crc, void const *mem, size_t len) {\n"
+        "    return %s_word(crc, mem, len);\n"
+        "}\n", name, name, name);
+    fprintf(allh,
+        "    {\"%s\", \"", model->name);
+    for (char *p = name + 3; *p; p++)
+        if (isalnum(*p))
+            putc(*p, allh);
+    fprintf(allh,
+        "\", %u, %s},\n", model->width, name);
 
     // bit-wise CRC calculation function for a small number of bits (0..8)
     fprintf(head,
@@ -418,13 +431,13 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         fprintf(test,
             "    if (%s_bit(init, \"\\xda\", 1) !=\n"
             "        %s_rem(%s_rem(init, 0xda, 3), 0x1b, 5))\n"
-            "        fputs(\"small bits mismatch for %s\\n\", stderr);\n",
+            "        fputs(\"small bits mismatch for %s\\n\", stderr), err++;\n",
                 name, name, name, name);
     else
         fprintf(test,
             "    if (%s_bit(init, \"\\xda\", 1) !=\n"
             "        %s_rem(%s_rem(init, 0xda, 3), 0xd0, 5))\n"
-            "        fputs(\"small bits mismatch for %s\\n\", stderr);\n",
+            "        fputs(\"small bits mismatch for %s\\n\", stderr), err++;\n",
                 name, name, name, name);
 
     // determine endianess of this machine
@@ -563,7 +576,7 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         "    if (%s_byte(0, NULL, 0) != init ||\n"
         "        %s_byte(init, \"123456789\", 9) != %#"X" ||\n"
         "        %s_byte(init, data + 1, sizeof(data) - 1) != crc)\n"
-        "        fputs(\"byte-wise mismatch for %s\\n\", stderr);\n",
+        "        fputs(\"byte-wise mismatch for %s\\n\", stderr), err++;\n",
             name, name, model->check, name, name);
 
     // word-wise CRC calculation function
@@ -778,7 +791,7 @@ static void crc_gen(model_t *model, char *name, FILE *head, FILE *code,
         "    if (%s_word(0, NULL, 0) != init ||\n"
         "        %s_word(init, \"123456789\", 9) != %#"X" ||\n"
         "        %s_word(init, data + 1, sizeof(data) - 1) != crc)\n"
-        "        fputs(\"word-wise mismatch for %s\\n\", stderr);\n",
+        "        fputs(\"word-wise mismatch for %s\\n\", stderr), err++;\n",
             name, name, model->check, name, name);
 }
 
@@ -821,15 +834,18 @@ static char *crc_name(model_t *model) {
 
 // Create the src directory if necessary, and create src/name.h and src/name.c
 // source files for writing, returning their handles in *head and *code
-// respectively. If a file by either of those names already exists, then an
-// error is returned. A failure to create the directory or writable files will
-// return true, with no open handles and *head and *code containing NULL. If
-// the problem was a source file that already existed, then create_source()
-// will return 2. Otherwise it will return 1 on error, 0 on success.
+// respectively. If head or code is NULL, then the respective file is not
+// created. If a file by either of those names already exists, then an error is
+// returned. A failure to create the directory or writable files will return
+// true, with no open handles and *head and *code containing NULL. If the
+// problem was a source file that already existed, then create_source() will
+// return 2. Otherwise it will return 1 on error, 0 on success.
 static int create_source(char *src, char *name, FILE **head, FILE **code) {
     // for error return
-    *head = NULL;
-    *code = NULL;
+    if (head != NULL)
+        *head = NULL;
+    if (code != NULL)
+        *code = NULL;
 
     // create the src directory if it does not exist
     int ret = mkdir(src, 0755);
@@ -846,21 +862,27 @@ static int create_source(char *src, char *name, FILE **head, FILE **code) {
     suff[1] = 0;
 
     // create header file
-    *suff = 'h';
-    *head = fopen(path, "wx");
-    if (*head == NULL)
-        return errno == EEXIST ? 2 : 1;
+    if (head != NULL) {
+        *suff = 'h';
+        *head = fopen(path, "wx");
+        if (*head == NULL)
+            return errno == EEXIST ? 2 : 1;
+    }
 
     // create code file
-    *suff = 'c';
-    *code = fopen(path, "wx");
-    if (*code == NULL) {
-        int err = errno;
-        fclose(*head);
-        *head = NULL;
-        *suff = 'h';
-        unlink(path);
-        return err == EEXIST ? 2 : 1;
+    if (code != NULL) {
+        *suff = 'c';
+        *code = fopen(path, "wx");
+        if (*code == NULL) {
+            int err = errno;
+            if (head != NULL) {
+                fclose(*head);
+                *head = NULL;
+                *suff = 'h';
+                unlink(path);
+            }
+            return err == EEXIST ? 2 : 1;
+        }
     }
 
     // all good -- return handles for header and code
@@ -875,20 +897,18 @@ static int create_source(char *src, char *name, FILE **head, FILE **code) {
 // the "src" subdirectory of the current directory.
 int main(void) {
     // create test source files
-    FILE *defs, *test;
-    {
-        int ret = create_source(SRC, "crc_test", &defs, &test);
-        if (ret) {
-            fputs("could not create test code files -- aborting\n", stderr);
-            return 1;
-        }
+    FILE *defs, *test, *allc, *allh;
+    if (create_source(SRC, "test_src", &defs, &test) ||
+        create_source(SRC, "allcrcs", &allh, &allc)) {
+        fputs("could not create test code files -- aborting\n", stderr);
+        return 1;
     }
     fputs(
         "#include <stdio.h>\n"
         "#include <stdlib.h>\n"
         "#include <stdint.h>\n"
         "#include <time.h>\n"
-        "#include \"crc_test.h\"\n"
+        "#include \"test_src.h\"\n"
         "\n"
         "int main(void) {\n"
         "    unsigned char data[31];\n"
@@ -903,7 +923,20 @@ int main(void) {
         "            ran >>= 8;\n"
         "        } while (n);\n"
         "    }\n"
-        "    uintmax_t init, crc;\n", test);
+        "    uintmax_t init, crc;\n"
+        "    int err = 0;\n", test);
+    fputs(
+        "#include <stdint.h>\n", allc);
+    fputs(
+        "\n"
+        "typedef uintmax_t (*crc_f)(uintmax_t, void const *, size_t);\n"
+        "\n"
+        "struct {\n"
+        "    char const *name;\n"
+        "    char const *match;\n"
+        "    unsigned short width;\n"
+        "    crc_f func;\n"
+        "} const all[] = {\n", allh);
 
     // read each line from stdin, process the CRC description
     char *line = NULL;
@@ -945,7 +978,7 @@ int main(void) {
                 fprintf(stderr, "%s/%s.[ch] %s -- skipping\n", SRC, name,
                         errno == 1 ? "create error" : "exists");
             else {
-                crc_gen(&model, name, head, code, defs, test);
+                crc_gen(&model, name, head, code, defs, test, allc, allh);
                 fclose(code);
                 fclose(head);
             }
@@ -956,9 +989,18 @@ int main(void) {
     free(line);
 
     fputs(
+        "    {\"\", \"\", 0, NULL}\n"
+        "};\n", allh);
+    fclose(allh);
+    fclose(allc);
+    fputs(
         "\n"
+        "    // done\n"
+        "    fputs(err ? \"** verification failed\\n\" :\n"
+        "                \"-- all good\\n\", stderr);\n"
         "    return 0;\n"
         "}\n", test);
     fclose(test);
+    fclose(defs);
     return 0;
 }
