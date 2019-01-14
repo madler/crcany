@@ -75,7 +75,7 @@ typedef struct {
     word_t poly, poly_hi;       /* polynomial representation (sans x^width) */
     word_t init, init_hi;       /* CRC of a zero-length sequence */
     word_t xorout, xorout_hi;   /* final CRC is exclusive-or'ed with this */
-    word_t check, check_hi;     /* CRC of the nine ASCII bytes "12345679" */
+    word_t check, check_hi;     /* CRC of the nine ASCII bytes "123456789" */
     word_t res, res_hi;         /* Residue of the CRC */
     char *name;                 /* text description of this CRC */
     word_t table_byte[256];             /* table for byte-wise calculation */
