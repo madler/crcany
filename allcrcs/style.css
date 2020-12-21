@@ -1,0 +1,64 @@
+BODY {
+color: black;
+background-color: white;
+font-family: "Helve-WP GR", "Arial", sans-serif;
+margin-left: 2em;
+margin-right: 2em
+}
+
+DIV.box {
+border: solid;
+border-width: thin;
+padding-left: 1em;
+padding-right: 1em;
+margin-top: 1em;
+margin-bottom: 1em
+}
+
+DIV.hl-back {
+color: black;
+background-color: #DFC
+}
+
+H1.centred, P.centred {
+text-align: center
+}
+
+P.justified {
+text-align: justify
+}
+
+IMG.right-aligned {
+float: right
+}
+
+A IMG {
+border-style: none
+}
+
+OL > LI {
+list-style-type: decimal
+}
+
+OL > LI OL > LI {
+list-style-type: lower-latin
+}
+
+OL > LI OL > LI OL > LI {
+list-style-type: lower-roman
+}
+
+TABLE.border, TABLE.border TH, TABLE.border TD {
+border: solid;
+border-width: thin;
+border-collapse: collapse;
+empty-cells: show
+}
+
+CAPTION {
+caption-side: top
+}
+
+TH, TD {
+padding: 0.5em
+}
