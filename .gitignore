@@ -4,3 +4,4 @@ crcgen
 mincrc
 crcany
 src/
+.DS_Store
