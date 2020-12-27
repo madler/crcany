@@ -30,7 +30,7 @@ typedef uintmax_t word_t;
 /* Determine the size of uintmax_t at pre-processor time.  (sizeof is not
    evaluated at pre-processor time.)  If word_t is instead set to an explicit
    size above, e.g. uint64_t, then #define WORDCHARS appropriately, e.g. as 8.
-   WORDCHARS must be 2, 4, or 8. */
+ */
 #if UINTMAX_MAX == UINT16_MAX
 #  define WORDCHARS 2
 #elif UINTMAX_MAX == UINT32_MAX

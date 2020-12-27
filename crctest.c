@@ -94,7 +94,9 @@ int main(void) {
                 tests |= 4;
             else {
                 // initialize tables for byte-wise and word-wise
-                crc_table_wordwise(&model);
+                unsigned little = 1;
+                little = *((unsigned char *)(&little));
+                crc_table_wordwise(&model, little, WORDBITS);
 
                 // byte-wise
                 crc = crc_bytewise(&model, 0, NULL, 0);

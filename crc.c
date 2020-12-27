@@ -187,21 +187,20 @@ static inline word_t swap(word_t x)
     return y << (n << 3);
 }
 
-void crc_table_wordwise(model_t *model)
+void crc_table_wordwise(model_t *model, unsigned little, unsigned word_bits)
 {
     crc_table_bytewise(model);
-    unsigned opp = 1;
-    opp = *((unsigned char *)(&opp)) ^ model->ref;
+    unsigned opp = little ^ model->ref;
     unsigned top =
         model->ref ? 0 :
-                     WORDBITS - (model->width > 8 ? model->width : 8);
+                     word_bits - (model->width > 8 ? model->width : 8);
     word_t xor = model->xorout;
     if (model->width < 8 && !model->ref)
         xor <<= 8 - model->width;
     for (unsigned k = 0; k < 256; k++) {
         word_t crc = model->table_byte[k];
         model->table_word[0][k] = opp ? swap(crc << top) : crc << top;
-        for (unsigned n = 1; n < WORDCHARS; n++) {
+        for (unsigned n = 1; n < (word_bits >> 3); n++) {
             crc ^= xor;
             if (model->ref)
                 crc = (crc >> 8) ^ model->table_byte[crc & 0xff];

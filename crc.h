@@ -46,7 +46,12 @@ void crc_table_bytewise(model_t *);
 word_t crc_bytewise(model_t *, word_t, void const *, size_t);
 
 /* Fill in the tables for a word-wise CRC calculation.  This also fills in the
-   byte-wise table since that is needed for the word-wise calculation.
+   byte-wise table since that is needed for the word-wise calculation. The
+   second parameter is 1 for little-endian, 0 for big endian. The third
+   parameter is the number of bits in a word to use for the tables, which must
+   be 32 or 64. The endian request must match the machine being run on for
+   crc_wordwise() to work. The endian request can be different than the machine
+   being run on when generating code for a different machine.
 
    The entry in table_word[n][k] is the CRC register contents for the sequence
    of bytes: k followed by n zero bytes.  For non-reflected CRCs, the CRC is
@@ -54,11 +59,11 @@ word_t crc_bytewise(model_t *, word_t, void const *, size_t);
    that the first byte of the CRC to be shifted out is in the same place in the
    word_t as the first byte that comes from memory.
 
-   If model->ref is true and the machine is little-endian, then table_word[0]
+   If model->ref is true and the request is little-endian, then table_word[0]
    is the same as table_byte.  In that case, the two could be combined,
    reducing the total size of the tables.  This is also true if model->ref is
-   false, the machine is big-endian, and model->width is equal to WORDBITS. */
-void crc_table_wordwise(model_t *);
+   false, the request is big-endian, and model->width is equal to word bits. */
+void crc_table_wordwise(model_t *, unsigned, unsigned);
 
 /* Equivalent to crc_bitwise(), but use an even faster word-wise table-based
    approach.  This assumes that model->table_byte and model->table_word have
