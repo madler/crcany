@@ -1,7 +1,10 @@
-#!/usr/bin/ruby -w
+#!/usr/bin/env python3
 # Get all of the CRC definitions from Greg Cook's CRC catalog.
-require 'open-uri'
-cat = "http://reveng.sourceforge.net/crc-catalogue/all.htm"
-open(cat).each do |line|
-    line.match(/<code>\s*(width=.*)\s*<\/code>/i) { puts $1.squeeze(' ') }
-end
+import re
+import urllib.request
+desc = re.compile('<code>\s*(width=.*)\s*<\/code>', re.I)
+all = 'https://reveng.sourceforge.io/crc-catalogue/all.htm'
+for line in urllib.request.urlopen(all):
+    match = desc.search(line.decode('utf-8'))
+    if match:
+        print(re.sub(r' {2,}', ' ', match.group(1)))
