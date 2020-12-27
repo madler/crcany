@@ -114,7 +114,7 @@ local int pick(char *id) {
 
     // search for a matching CRC
     char hit[NUMALL];
-    int index, count = 0;
+    int index = -1, count = 0;
     for (size_t k = 0; k < NUMALL; k++) {
         char const *match = all[k].match;
         size_t di = digs(id), dm = digs(match);
