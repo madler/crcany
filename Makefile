@@ -1,4 +1,4 @@
-CFLAGS=-O3 -Wall -Wextra -Wcast-qual -std=gnu99 -pedantic
+CFLAGS=-O3 -Wall -Wextra -Wcast-qual -std=c99 -pedantic
 OBJS=$(patsubst %.c,%.o,$(wildcard src/crc*.c))
 all: src/allcrcs.c crctest mincrc
 src/allcrcs.c: crcgen allcrcs-abbrev.txt

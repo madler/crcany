@@ -195,7 +195,7 @@ int main(void)
     model_t model;
     char *line = NULL;
     size_t size;
-    ssize_t len;
+    ptrdiff_t len;
     FILE *out = stdout;
 
     model.name = NULL;

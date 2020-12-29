@@ -12,6 +12,7 @@
 #define _MODEL_H_
 
 #include <stdio.h>
+#include <stddef.h>
 #include <stdint.h>
 #include <limits.h>
 
@@ -162,6 +163,6 @@ void process_model(model_t *model);
    done.  The first call can be with *line == NULL, in which case a line buffer
    will be allocated.  *line will be reallocated as needed for longer input
    lines. */
-ssize_t getcleanline(char **line, size_t *size, FILE *in);
+ptrdiff_t getcleanline(char **line, size_t *size, FILE *in);
 
 #endif

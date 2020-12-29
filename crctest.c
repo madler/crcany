@@ -45,7 +45,7 @@ int main(void) {
     unsigned numall = 0, goodbyte = 0, goodword = 0;
     char *line = NULL;
     size_t size;
-    ssize_t len;
+    ptrdiff_t len;
     word_t crc_hi, crc;
     model_t model;
     unsigned char *test;

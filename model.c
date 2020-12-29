@@ -220,6 +220,20 @@ static int normal_big(word_t *low, word_t *high, unsigned width)
 #define NAME 256
 #define ALL (WIDTH|POLY|INIT|REFIN|REFOUT|XOROUT|CHECK|RES|NAME)
 
+/* A strncmp() that ignores case, like POSIX strncasecmp(). */
+static int strncmpi(char const *s1, char const *s2, size_t n) {
+    unsigned char const *a = (unsigned char const *)s1,
+                        *b = (unsigned char const *)s2;
+    for (size_t i = 0; i < n; i++) {
+        int diff = tolower(a[i]) - tolower(b[i]);
+        if (diff != 0)
+            return diff;
+        if (a[i] == 0)
+            break;
+    }
+    return 0;
+}
+
 /* See model.h. */
 int read_model(model_t *model, char *str)
 {
@@ -237,7 +251,7 @@ int read_model(model_t *model, char *str)
     while ((ret = read_var(&str, &name, &value)) == 1) {
         n = strlen(name);
         k = strlen(value);
-        if (strncasecmp(name, "width", n) == 0) {
+        if (strncmpi(name, "width", n) == 0) {
             if (got & WIDTH) {
                 rep |= WIDTH;
                 continue;
@@ -249,7 +263,7 @@ int read_model(model_t *model, char *str)
             model->width = lo;
             got |= WIDTH;
         }
-        else if (strncasecmp(name, "poly", n) == 0) {
+        else if (strncmpi(name, "poly", n) == 0) {
             if (got & POLY) {
                 rep |= POLY;
                 continue;
@@ -262,7 +276,7 @@ int read_model(model_t *model, char *str)
             model->poly_hi = hi;
             got |= POLY;
         }
-        else if (strncasecmp(name, "init", n) == 0) {
+        else if (strncmpi(name, "init", n) == 0) {
             if (got & INIT) {
                 rep |= INIT;
                 continue;
@@ -275,33 +289,33 @@ int read_model(model_t *model, char *str)
             model->init_hi = hi;
             got |= INIT;
         }
-        else if (strncasecmp(name, "refin", n) == 0) {
+        else if (strncmpi(name, "refin", n) == 0) {
             if (got & REFIN) {
                 rep |= REFIN;
                 continue;
             }
-            if (strncasecmp(value, "true", k) &&
-                    strncasecmp(value, "false", k)) {
+            if (strncmpi(value, "true", k) &&
+                strncmpi(value, "false", k)) {
                 bad |= REFIN;
                 continue;
             }
             model->ref = *value == 't' ? 1 : 0;
             got |= REFIN;
         }
-        else if (strncasecmp(name, "refout", n < 4 ? 4 : n) == 0) {
+        else if (strncmpi(name, "refout", n < 4 ? 4 : n) == 0) {
             if (got & REFOUT) {
                 rep |= REFOUT;
                 continue;
             }
-            if (strncasecmp(value, "true", k) &&
-                    strncasecmp(value, "false", k)) {
+            if (strncmpi(value, "true", k) &&
+                strncmpi(value, "false", k)) {
                 bad |= REFOUT;
                 continue;
             }
             model->rev = *value == 't' ? 1 : 0;
             got |= REFOUT;
         }
-        else if (strncasecmp(name, "xorout", n) == 0) {
+        else if (strncmpi(name, "xorout", n) == 0) {
             if (got & XOROUT) {
                 rep |= XOROUT;
                 continue;
@@ -314,7 +328,7 @@ int read_model(model_t *model, char *str)
             model->xorout_hi = hi;
             got |= XOROUT;
         }
-        else if (strncasecmp(name, "check", n) == 0) {
+        else if (strncmpi(name, "check", n) == 0) {
             if (got & CHECK) {
                 rep |= CHECK;
                 continue;
@@ -327,7 +341,7 @@ int read_model(model_t *model, char *str)
             model->check_hi = hi;
             got |= CHECK;
         }
-        else if (strncasecmp(name, "residue", n < 3 ? 3 : n) == 0) {
+        else if (strncmpi(name, "residue", n < 3 ? 3 : n) == 0) {
             if (got & RES) {
                 rep |= RES;
                 continue;
@@ -340,7 +354,7 @@ int read_model(model_t *model, char *str)
             model->res_hi = hi;
             got |= RES;
         }
-        else if (strncasecmp(name, "name", n) == 0) {
+        else if (strncmpi(name, "name", n) == 0) {
             if (got & NAME) {
                 rep |= NAME;
                 continue;
@@ -513,14 +527,38 @@ void process_model(model_t *model)
     model->rev ^= model->ref;
 }
 
+/* Like POSIX getline(). */
+ptrdiff_t fgetline(char **line, size_t *size, FILE *in) {
+    if (*line == NULL)
+        *size = 0;
+    int ch;
+    size_t len = 0;
+    while ((ch = getc(in)) != EOF) {
+        if (len + 1 >= *size) {
+            size_t more = *size == 0 ? 128 : *size << 1;
+            void *mem = realloc(*line, more);
+            if (mem == NULL)
+                return -1;
+            *line = mem;
+            *size = more;
+        }
+        (*line)[len++] = ch;
+        if (ch == '\n')
+            break;
+    }
+    (*line)[len] = 0;
+    ptrdiff_t ret = len;
+    return ret < 1 ? -1 : ret;
+}
+
 /* See model.h. */
-ssize_t getcleanline(char **line, size_t *size, FILE *in)
+ptrdiff_t getcleanline(char **line, size_t *size, FILE *in)
 {
-    ssize_t len, n, k;
+    ptrdiff_t len, n, k;
     char *ln;
 
     /* get a line, return -1 on EOF or error */
-    len = getline(line, size, in);    /* POSIX function */
+    len = fgetline(line, size, in);
     if (len == -1)
         return -1;
 
