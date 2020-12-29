@@ -79,6 +79,114 @@
 // Maximum line length (not including new line character) for printing tables.
 #define COLS 84
 
+// Generate a local function to reverse the low bits bits of an unsigned
+// integer. The name of the function will be revlow<n>, where <n> is bits. The
+// type of the argument and the return value will be the smallest unsigned
+// integer with at least bits bits. The function is written to src.
+#define DEC 10
+static void rev_gen(int bits, FILE *src) {
+    // Check for a valid argument.
+    if (bits < 2 || bits > 64)
+        return;
+
+    // Pick the argument and return type.
+    char *type;
+    if (bits <= 8)
+        type = "uint8_t";
+    else if (bits <= 16)
+        type = "uint16_t";
+    else if (bits <= 32)
+        type = "uint32_t";
+    else
+        type = "uint64_t";
+
+    // Open function with header.
+    fprintf(src,
+            "\n"
+            "static inline %s revlow%d(%s val) {\n",
+            type, bits, type);
+
+    // Pick optimal approach, based on counting arithmetic operations. For some
+    // values of bits, it is fewer operations to reverse the next power of two
+    // bits, and then shift down.
+    int down = 0;
+    if (bits == 31) {
+        down = 1;
+        bits = 32;
+    }
+    else if (bits == 47 || bits == 55 || bits == 59 || bits == 61 ||
+             bits == 62 || bits == 63) {
+        down = 64 - bits;
+        bits = 64;
+    }
+
+    // Mask of the low bits bits.
+    uintmax_t all = (((uintmax_t)1 << (bits - 1)) << 1) - 1;
+
+    // Generate shift, mask, and combine operations.
+    uintmax_t kept = 0;         // accumulator of the kept middle bits
+    uintmax_t mask = all;       // mask for left shift at each step
+    do {
+        // bits becomes the number of bits in each segment that is moved, and
+        // mid becomes 1 if there is a middle bit between segments to keep --
+        // the amount to shift becomes bits + mid
+        int mid = bits & 1;
+        bits >>= 1;
+
+        if (mid) {
+            // compute the locations of the new middle bits
+            uintmax_t keep = (mask >> bits) ^ (mask >> (bits + 1));
+
+            // create or update mid variable in generated code with middle bits
+            // to keep
+            if (kept)
+                fprintf(src,
+            "    mid |=");                              // update middle bits
+            else
+                fprintf(src,
+            "    %s mid =", type);                      // save middle bits
+            if (keep < DEC)
+                fprintf(src, " val & %ju;\n", keep);
+            else
+                fprintf(src, " val & 0x%jx;\n", keep);
+
+            // kept is the accumuation of middle bits so far
+            kept |= keep;
+        }
+
+        // update mask with the bits to keep for the left shift
+        mask ^= mask >> (bits + mid);
+
+        // compute the masks for the left and right shifts, removing the middle
+        // bits
+        uintmax_t left = mask & ~kept;
+        uintmax_t right = all ^ kept ^ left;
+
+        // update the value in the generated code with the masked shifts
+        if (right < DEC)
+            fprintf(src,
+            "    val = ((val >> %d) & %ju) | ", bits + mid, right);
+        else
+            fprintf(src,
+            "    val = ((val >> %d) & 0x%jx) | ", bits + mid, right);
+        if (left < DEC)
+            fprintf(src, "((val << %d) & %ju);\n", bits + mid, left);
+        else
+            fprintf(src, "((val << %d) & 0x%jx);\n", bits + mid, left);
+    } while (bits > 1);
+
+    // Finish with returned value and close function.
+    if (down)
+        fprintf(src,
+            "    return val >> %d;\n}\n", down);
+    else
+        fputs(kept ?
+            "    return val | mid;\n"
+            "}\n" :
+            "    return val;\n"
+            "}\n", src);
+}
+
 // Generate the header and code for the CRC described in model. name is the
 // prefix used for all externally visible names in the source files. The
 // generated code is written to head and code. The generated word-wise CRC code
@@ -141,28 +249,8 @@ static int crc_gen(model_t *model, char *name,
         "#include \"%s.h\"\n", name);
 
     // function to reverse the low model->width bits, if needed (unlikely)
-    if (model->rev) {
-        fprintf(code,
-        "\n"
-        "static inline %s revlow(%s crc) {\n", crc_type, crc_type);
-        unsigned dist = crc_bits;
-        uintmax_t mask = (((uintmax_t)1 << (dist - 1)) << 1) - 1;
-        uintmax_t pick = mask;
-        while (dist >>= 1) {
-            pick ^= pick << dist;
-            fprintf(code,
-        "    crc = ((crc >> %u) & %#"X") + ((crc << %u) & %#"X");\n",
-                    dist, pick & mask, dist, ~pick & mask);
-        }
-        if (crc_bits != model->width)
-            fprintf(code,
-        "    return crc >> %u;\n"
-        "}\n", crc_bits - model->width);
-        else
-            fputs(
-        "    return crc;\n"
-        "}\n", code);
-    }
+    if (model->rev)
+        rev_gen(model->width, code);
 
     // bit-wise CRC calculation function
     fprintf(head,
@@ -185,8 +273,8 @@ static int crc_gen(model_t *model, char *name,
         "    crc ^= %#"X";\n", model->xorout);
         }
     if (model->rev)
-        fputs(
-        "    crc = revlow(crc);\n", code);
+        fprintf(code,
+        "    crc = revlow%d(crc);\n", model->width);
     if (model->ref) {
         if (model->width != crc_bits && !model->rev)
             fprintf(code,
@@ -199,8 +287,8 @@ static int crc_gen(model_t *model, char *name,
         "        }\n"
         "    }\n", model->poly);
         if (model->rev)
-            fputs(
-        "    crc = revlow(crc);\n", code);
+            fprintf(code,
+        "    crc = revlow%d(crc);\n", model->width);
         if (model->xorout) {
             if (model->xorout == ONES(model->width) && crc_bits == model->width)
                 fputs(
@@ -225,8 +313,8 @@ static int crc_gen(model_t *model, char *name,
             fprintf(code,
         "    crc >>= %u;\n", 8 - model->width);
         if (model->rev)
-            fputs(
-        "    crc = revlow(crc);\n", code);
+            fprintf(code,
+        "    crc = revlow%d(crc);\n", model->width);
         if (model->xorout) {
             if (model->xorout == ONES(model->width) && !model->rev)
                 fputs(
@@ -249,8 +337,8 @@ static int crc_gen(model_t *model, char *name,
         "    }\n",
                 crc_type, model->width - 8, (word_t)1 << (model->width - 1), model->poly);
         if (model->rev)
-            fputs(
-        "    crc = revlow(crc);\n", code);
+            fprintf(code,
+        "    crc = revlow%d(crc);\n", model->width);
         if (model->xorout) {
             if (model->xorout == ONES(model->width) && !model->rev)
                 fputs(
@@ -286,8 +374,8 @@ static int crc_gen(model_t *model, char *name,
         "    crc ^= %#"X";\n", model->xorout);
         }
     if (model->rev)
-        fputs(
-        "    crc = revlow(crc);\n", code);
+        fprintf(code,
+        "    crc = revlow%d(crc);\n", model->width);
     if (model->ref) {
         if (model->width != crc_bits && !model->rev)
             fprintf(code,
@@ -299,8 +387,8 @@ static int crc_gen(model_t *model, char *name,
         "        crc = crc & 1 ? (crc >> 1) ^ %#"X" : crc >> 1;\n"
         "    }\n", model->poly);
         if (model->rev)
-            fputs(
-        "    crc = revlow(crc);\n", code);
+            fprintf(code,
+        "    crc = revlow%d(crc);\n", model->width);
         if (model->xorout) {
             if (model->xorout == ONES(model->width) && crc_bits == model->width)
                 fputs(
@@ -324,8 +412,8 @@ static int crc_gen(model_t *model, char *name,
             fprintf(code,
         "    crc >>= %u;\n", 8 - model->width);
         if (model->rev)
-            fputs(
-        "    crc = revlow(crc);\n", code);
+            fprintf(code,
+        "    crc = revlow%d(crc);\n", model->width);
         if (model->xorout) {
             if (model->xorout == ONES(model->width) && !model->rev)
                 fputs(
@@ -346,8 +434,8 @@ static int crc_gen(model_t *model, char *name,
         "        crc = crc & %#"X" ? (crc << 1) ^ %#"X" : crc << 1;\n"
         "    }\n", crc_type, model->width - 8, (word_t)1 << (model->width - 1), model->poly);
         if (model->rev)
-            fputs(
-        "    crc = revlow(crc);\n", code);
+            fprintf(code,
+        "    crc = revlow%d(crc);\n", model->width);
         if (model->xorout) {
             if (model->xorout == ONES(model->width) && !model->rev)
                 fputs(
@@ -360,8 +448,9 @@ static int crc_gen(model_t *model, char *name,
             fprintf(code,
         "    crc &= %#"X";\n", ONES(model->width));
     }
-    fputs("    return crc;\n"
-          "}\n", code);
+    fputs(
+        "    return crc;\n"
+        "}\n", code);
 
     // generate byte-wise and word-wise tables
     crc_table_wordwise(model, little, word_bits);
@@ -457,8 +546,8 @@ static int crc_gen(model_t *model, char *name,
         "    if (data == NULL)\n"
         "        return %#"X";\n", crc_type, name, crc_type, model->init);
     if (model->rev)
-        fputs(
-        "    crc = revlow(crc);\n", code);
+        fprintf(code,
+        "    crc = revlow%d(crc);\n", model->width);
     if (model->ref) {
         if (model->width != crc_bits && !model->rev)
             fprintf(code,
@@ -502,10 +591,11 @@ static int crc_gen(model_t *model, char *name,
         "    crc &= %#"X";\n", ONES(model->width));
     }
     if (model->rev)
-        fputs(
-        "    crc = revlow(crc);\n", code);
-    fputs("    return crc;\n"
-          "}\n", code);
+        fprintf(code,
+        "    crc = revlow%d(crc);\n", model->width);
+    fputs(
+        "    return crc;\n"
+        "}\n", code);
 
     // word-wise CRC calculation function
     unsigned shift = model->width <= 8 ? 8 - model->width : model->width - 8;
@@ -557,8 +647,8 @@ static int crc_gen(model_t *model, char *name,
         "        return %#"X";\n",
             little ? "little" : "big", crc_type, name, crc_type, model->init);
     if (model->rev)
-        fputs(
-        "    crc = revlow(crc);\n", code);
+        fprintf(code,
+        "    crc = revlow%d(crc);\n", model->width);
 
     // do bytes up to word boundary
     if (model->ref) {
@@ -711,8 +801,8 @@ static int crc_gen(model_t *model, char *name,
         "    crc &= %#"X";\n", ONES(model->width));
     }
     if (model->rev)
-        fputs(
-        "    crc = revlow(crc);\n", code);
+        fprintf(code,
+        "    crc = revlow%d(crc);\n", model->width);
     fputs(
         "    return crc;\n"
         "}\n", code);
@@ -756,15 +846,15 @@ static int test_gen(model_t *model, char *name,
     // write test code for small number of bits function
     if (model->ref)
         fprintf(test,
-            "    if (%s_bit(init, \"\\xda\", 1) !=\n"
-            "        %s_rem(%s_rem(init, 0xda, 3), 0x1b, 5))\n"
-            "        fputs(\"small bits mismatch for %s\\n\", stderr), err++;\n",
+        "    if (%s_bit(init, \"\\xda\", 1) !=\n"
+        "        %s_rem(%s_rem(init, 0xda, 3), 0x1b, 5))\n"
+        "        fputs(\"small bits mismatch for %s\\n\", stderr), err++;\n",
                 name, name, name, name);
     else
         fprintf(test,
-            "    if (%s_bit(init, \"\\xda\", 1) !=\n"
-            "        %s_rem(%s_rem(init, 0xda, 3), 0xd0, 5))\n"
-            "        fputs(\"small bits mismatch for %s\\n\", stderr), err++;\n",
+        "    if (%s_bit(init, \"\\xda\", 1) !=\n"
+        "        %s_rem(%s_rem(init, 0xda, 3), 0xd0, 5))\n"
+        "        fputs(\"small bits mismatch for %s\\n\", stderr), err++;\n",
                 name, name, name, name);
 
     // write test code for byte-wise function
