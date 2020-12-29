@@ -20,7 +20,7 @@ The bit-wise calculation can be done on CRCs up to twice the word length, e.g.
 can be done on CRCs up to the word size, e.g. up to 64-bit CRCs using 64-bit
 integers.
 
-_crcgen_ generates C code for each CRC definition read from stdin, putting the
+_crcall_ generates C code for each CRC definition read from stdin, putting the
 resulting code into .h and .c files for each definition in the src/
 subdirectory. Test code is also generated in src/crc_test.c. Code is generated
 for the machine being run on (i.e. with respect to the lengths of the integer

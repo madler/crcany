@@ -33,9 +33,11 @@
                      Reduce verbosity of testing
    1.5  23 Oct 2016  Improve use of data types and C99 compatibility
                      Add verifications summary message
-   1.6  10 Feb 2017  Add new residue parameter parsing and checking
-   1.7  xx Jul 2018  Change crcany to crctest
-                     Create new crcany utility
+   1.6  11 Feb 2017  Add creation of remaining bits function (_rem)
+                     Add and check the residue value of a model
+                     Improve the generated comments and prototypes
+   1.7  23 Dec 2017  Update to the latest CRC catalog
+                     Minor improvements to code generation
  */
 
 #include <stdio.h>

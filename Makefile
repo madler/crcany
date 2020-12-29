@@ -1,9 +1,9 @@
 CFLAGS=-O3 -Wall -Wextra -Wcast-qual -std=c99 -pedantic
 OBJS=$(patsubst %.c,%.o,$(wildcard src/crc*.c))
 all: src/allcrcs.c crctest mincrc
-src/allcrcs.c: crcgen allcrcs-abbrev.txt
+src/allcrcs.c: crcall allcrcs-abbrev.txt
 	@rm -rf src
-	./crcgen < allcrcs-abbrev.txt
+	./crcall < allcrcs-abbrev.txt
 	@cat src/allcrcs.h >> src/allcrcs.c
 	@rm src/allcrcs.h
 	make src
@@ -13,8 +13,9 @@ crcany: crcany.o $(OBJS)
 crcany.o: crcany.c src/allcrcs.c
 crctest: crctest.o crc.o crcdbl.o model.o
 crctest.o: crctest.c crc.h crcdbl.h model.h
-crcgen: crcgen.o crc.o model.o
-crcgen.o: crcgen.c crc.h model.h
+crcgen.o: crcgen.c crcgen.h crc.h model.h
+crcall.o: crcall.c crcgen.h crc.h model.h
+crcall: crcall.o crcgen.o crc.o model.o
 mincrc: mincrc.o model.o
 mincrc.o: mincrc.c model.h
 crc.o: crc.c crc.h model.h
@@ -26,4 +27,4 @@ test: src/allcrcs.c crctest mincrc allcrcs.txt allcrcs-abbrev.txt
 	./mincrc < allcrcs.txt | cmp - allcrcs-abbrev.txt
 	./getcrcs | diff - allcrcs.txt
 clean:
-	@rm -rf *.o crctest crcgen mincrc crcany src
+	@rm -rf *.o crctest crcall mincrc crcany src
