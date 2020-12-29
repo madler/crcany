@@ -1,5 +1,5 @@
 /* crctest.c -- Generic CRC tests
- * Copyright (C) 2014, 2016, 2017, 2018 Mark Adler
+ * Copyright (C) 2014, 2016, 2017, 2020 Mark Adler
  * For conditions of distribution and use, see copyright notice in crcany.c.
  */
 

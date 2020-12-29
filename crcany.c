@@ -1,7 +1,7 @@
 /*
-  crcany version 1.7, xx July 2018
+  crcany version 2.0, 29 December 2020
 
-  Copyright (C) 2014, 2016, 2017, 2018 Mark Adler
+  Copyright (C) 2014, 2016, 2017, 2020 Mark Adler
 
   This software is provided 'as-is', without any express or implied warranty.
   In no event will the authors be held liable for any damages arising from the
@@ -38,6 +38,14 @@
                      Improve the generated comments and prototypes
    1.7  23 Dec 2017  Update to the latest CRC catalog
                      Minor improvements to code generation
+   2.0  29 Dec 2020  Use fixed-width integers in generated code
+                     Normalize generated-code loop constructs
+                     Optimize the generated bit-reversal code
+                     Refactor to split tests from code generation
+                     Bring code into compliance with C99 standard
+                     Replace Ruby script with Python for portability
+                     Add copy of Greg Cook's all-CRCs page for safekeeping
+                     Update to the latest CRC catalog
  */
 
 #include <stdio.h>

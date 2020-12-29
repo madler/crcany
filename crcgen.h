@@ -1,7 +1,10 @@
-/* crcgen.h -- Generate CRC computation code
+/* crcgen.h -- Generate CRC code
  * Copyright (C) 2014, 2016, 2017, 2020 Mark Adler
  * For conditions of distribution and use, see copyright notice in crcany.c.
  */
+
+#ifndef _CRCGEN_H_
+#define _CRCGEN_H_
 
 #include "model.h"
 
@@ -23,3 +26,5 @@ int rev_gen(int, FILE *);
 // to the last argument. Return 0 on success, non-zero if word_bits and
 // model->width are invalid.
 int crc_gen(model_t *, char *, unsigned, unsigned, FILE *, FILE *);
+
+#endif

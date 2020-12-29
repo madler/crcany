@@ -1,7 +1,7 @@
 /*
-  mincrc version 1.2, 10 February 2017
+  mincrc version 1.3, 29 December 2020
 
-  Copyright (C) 2014, 2016, 2017 Mark Adler
+  Copyright (C) 2014, 2016, 2017, 2020 Mark Adler
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -28,6 +28,7 @@
    1.1  15 Jul 2016  Allow negative numbers
                      Move common code to model.[ch]
    1.2  10 Feb 2017  Add residue parameter
+   1.3  29 Dec 2020  Avoid use of ssize_t for C99 compliance
  */
 
 /* Maximally compress the CRC representations by abbreviating parameter names,
