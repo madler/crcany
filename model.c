@@ -235,7 +235,7 @@ static int strncmpi(char const *s1, char const *s2, size_t n) {
 }
 
 /* See model.h. */
-int read_model(model_t *model, char *str)
+int read_model(model_t *model, char *str, int lenient)
 {
     int ret;
     char *name, *value, *end;
@@ -392,6 +392,10 @@ int read_model(model_t *model, char *str)
         model->res = 0;
         model->res_hi = 0;
         got |= RES;
+    }
+    if (lenient && (got & CHECK) == 0) {
+        model->check = 0;
+        got |= CHECK;
     }
 
     /* check for parameter values out of range */

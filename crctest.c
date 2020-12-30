@@ -61,7 +61,7 @@ int main(void) {
     while ((len = getcleanline(&line, &size, stdin)) != -1) {
         if (len == 0)
             continue;
-        ret = read_model(&model, line);
+        ret = read_model(&model, line, 0);
         if (ret == 2) {
             fputs("out of memory -- aborting\n", stderr);
             break;

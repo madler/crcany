@@ -1,4 +1,4 @@
-/* crcall.c -- Generate CRC and test code for every model read from stdin
+/* crcadd.c -- Generate CRC code for models read from stdin
  * Copyright (C) 2020 Mark Adler
  * For conditions of distribution and use, see copyright notice in crcany.c.
  */
@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <inttypes.h>
+#include <stdint.h>
 #include <ctype.h>
 #include <errno.h>
 #include <sys/stat.h>
@@ -23,9 +23,6 @@
 #    error Unexpected maximum integer size
 #  endif
 #endif
-
-// printf() directive to print a uintmax_t in hexadecimal (e.g. "llx" or "jx").
-#define X PRIxMAX
 
 /* A strcpy() that returns a pointer to the terminating null, like stpcpy(). */
 static char *strcpytail(char *dst, char const *src) {
@@ -50,73 +47,6 @@ static int strncmpi(char const *s1, char const *s2, size_t n) {
         if (a[i] == 0)
             break;
     }
-    return 0;
-}
-
-// Generate test code for model and name. Append the include for the header
-// file for this model to defs, test code for each function for this model to
-// test, a unified interface to the word-wise function of this model to allc,
-// and a table of names, widths, and function pointers to allh. The test code
-// computes the CRC of "123456789" (nine bytes), and compares that to the
-// provided check value. If the check value does not match the computed CRC,
-// then the generated code prints an error to stderr.
-static int test_gen(model_t *model, char *name,
-                    FILE *defs, FILE *test, FILE *allc, FILE *allh) {
-    // write test and all code for bit-wise function
-    fprintf(defs,
-        "#include \"%s.h\"\n", name);
-    fprintf(test,
-        "\n"
-        "    // %s\n"
-        "    init = %s_bit(0, NULL, 0);\n"
-        "    blot = init | ~((((uintmax_t)1 << (%d - 1)) << 1) - 1);\n"
-        "    if (%s_bit(blot, \"123456789\", 9) != %#"X")\n"
-        "        fputs(\"bit-wise mismatch for %s\\n\", stderr), err++;\n"
-        "    crc = %s_bit(blot, data + 1, sizeof(data) - 1);\n",
-            name, name, model->width, name, model->check, name, name);
-    fprintf(allc,
-        "\n"
-        "#include \"%s.h\"\n"
-        "uintmax_t %s(uintmax_t crc, void const *mem, size_t len) {\n"
-        "    return %s_word(crc, mem, len);\n"
-        "}\n", name, name, name);
-    fprintf(allh,
-        "    {\"%s\", \"", model->name);
-    for (char *p = name + 3; *p; p++)
-        if (isalnum(*p))
-            putc(*p, allh);
-    fprintf(allh,
-        "\", %u, %s},\n", model->width, name);
-
-    // write test code for small number of bits function
-    if (model->ref)
-        fprintf(test,
-        "    if (%s_bit(blot, \"\\xda\", 1) !=\n"
-        "        %s_rem(%s_rem(blot, 0xda, 3), 0x1b, 5))\n"
-        "        fputs(\"small bits mismatch for %s\\n\", stderr), err++;\n",
-                name, name, name, name);
-    else
-        fprintf(test,
-        "    if (%s_bit(blot, \"\\xda\", 1) !=\n"
-        "        %s_rem(%s_rem(blot, 0xda, 3), 0xd0, 5))\n"
-        "        fputs(\"small bits mismatch for %s\\n\", stderr), err++;\n",
-                name, name, name, name);
-
-    // write test code for byte-wise function
-    fprintf(test,
-        "    if (%s_byte(0, NULL, 0) != init ||\n"
-        "        %s_byte(blot, \"123456789\", 9) != %#"X" ||\n"
-        "        %s_byte(blot, data + 1, sizeof(data) - 1) != crc)\n"
-        "        fputs(\"byte-wise mismatch for %s\\n\", stderr), err++;\n",
-            name, name, model->check, name, name);
-
-    // write test code for word-wise function
-    fprintf(test,
-        "    if (%s_word(0, NULL, 0) != init ||\n"
-        "        %s_word(blot, \"123456789\", 9) != %#"X" ||\n"
-        "        %s_word(blot, data + 1, sizeof(data) - 1) != crc)\n"
-        "        fputs(\"word-wise mismatch for %s\\n\", stderr), err++;\n",
-            name, name, model->check, name, name);
     return 0;
 }
 
@@ -226,48 +156,6 @@ int main(void) {
     unsigned little = 1;
     little = *((unsigned char *)(&little));
 
-    // create test source files
-    FILE *defs, *test, *allc, *allh;
-    if (create_source(SRC, "test_src", &defs, &test) ||
-        create_source(SRC, "allcrcs", &allh, &allc)) {
-        fputs("could not create test code files -- aborting\n", stderr);
-        return 1;
-    }
-    fputs(
-        "#include <stdio.h>\n"
-        "#include <stdlib.h>\n"
-        "#include <stdint.h>\n"
-        "#include <time.h>\n"
-        "#include \"test_src.h\"\n"
-        "\n"
-        "int main(void) {\n"
-        "    unsigned char data[31];\n"
-        "    srandom(time(NULL));\n"
-        "    {\n"
-        "        uint64_t ran = 1;\n"
-        "        size_t n = sizeof(data);\n"
-        "        do {\n"
-        "            if (ran < 0x100)\n"
-        "                ran = (ran << 31) + random();\n"
-        "            data[--n] = ran;\n"
-        "            ran >>= 8;\n"
-        "        } while (n);\n"
-        "    }\n"
-        "    uintmax_t init, blot, crc;\n"
-        "    int err = 0;\n", test);
-    fputs(
-        "#include <stdint.h>\n", allc);
-    fputs(
-        "\n"
-        "typedef uintmax_t (*crc_f)(uintmax_t, void const *, size_t);\n"
-        "\n"
-        "struct {\n"
-        "    char const *name;\n"
-        "    char const *match;\n"
-        "    unsigned short width;\n"
-        "    crc_f func;\n"
-        "} const all[] = {\n", allh);
-
     // read each line from stdin, process the CRC description
     char *line = NULL;
     size_t size;
@@ -277,9 +165,9 @@ int main(void) {
             continue;
         model_t model;
 
-        // read the model
+        // read the model, allowing for no check value
         model.name = NULL;
-        int ret = read_model(&model, line, 0);
+        int ret = read_model(&model, line, 1);
         if (ret == 2) {
             fputs("out of memory -- aborting\n", stderr);
             break;
@@ -309,7 +197,6 @@ int main(void) {
                         errno == 1 ? "create error" : "exists");
             else {
                 crc_gen(&model, name, little, INTMAX_BITS, head, code);
-                test_gen(&model, name, defs, test, allc, allh);
                 fclose(code);
                 fclose(head);
             }
@@ -318,20 +205,5 @@ int main(void) {
         free(model.name);
     }
     free(line);
-
-    fputs(
-        "    {\"\", \"\", 0, NULL}\n"
-        "};\n", allh);
-    fclose(allh);
-    fclose(allc);
-    fputs(
-        "\n"
-        "    // done\n"
-        "    fputs(err ? \"** verification failed\\n\" :\n"
-        "                \"-- all good\\n\", stderr);\n"
-        "    return 0;\n"
-        "}\n", test);
-    fclose(test);
-    fclose(defs);
     return 0;
 }

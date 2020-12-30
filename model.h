@@ -121,7 +121,8 @@ typedef struct {
    "init", "xorout", and "residue" are optional, and are set to zero if not
    provided.  Either "refin" or "refout" can be omitted, in which case the one
    missing is set to the one provided.  At least one of "refin" or "refout"
-   must be provided. All other parameters must be provided.
+   must be provided. All other parameters must be provided. If lenient is true,
+   then "check" can be omitted.
 
    Example (from the RevEng catalogue at
    http://reveng.sourceforge.net/crc-catalogue/all.htm ):
@@ -132,7 +133,7 @@ typedef struct {
 
       w=16 p=4129 r=t c=8585 n=KERMIT
  */
-int read_model(model_t *model, char *str);
+int read_model(model_t *model, char *str, int lenient);
 
 /* Return the reversal of the low n-bits of x.  1 <= n <= WORDBITS.  The high
    WORDBITS - n bits in x are ignored, and are set to zero in the returned
