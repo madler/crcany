@@ -42,6 +42,7 @@
                      Normalize generated-code loop constructs
                      Optimize the generated bit-reversal code
                      Refactor to split tests from code generation
+                     Add crcadd to generate CRC code without testing
                      Bring code into compliance with C99 standard
                      Replace Ruby script with Python for portability
                      Add copy of Greg Cook's all-CRCs page for safekeeping
