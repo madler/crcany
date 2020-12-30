@@ -26,7 +26,7 @@ model.o: model.c model.h
 test: src/allcrcs.c crctest mincrc allcrcs.txt allcrcs-abbrev.txt
 	./crctest < allcrcs-abbrev.txt
 	src/test_src
-	./mincrc < allcrcs.txt | cmp - allcrcs-abbrev.txt
+	./mincrc < allcrcs.txt | diff -qb - allcrcs-abbrev.txt
 	./getcrcs | diff - allcrcs.txt
 clean:
 	@rm -rf *.o crctest crcall mincrc crcany crcadd src
