@@ -1,11 +1,11 @@
 /* crctest.c -- Generic CRC tests
- * Copyright (C) 2014, 2016, 2017, 2020 Mark Adler
+ * Copyright (C) 2014, 2016, 2017, 2020, 2021 Mark Adler
  * For conditions of distribution and use, see copyright notice in crcany.c.
  */
 
 /*
    Use a generalized CRC algorithm for CRCs up to 128 bits long to take model
-   inputs as found in http://reveng.sourceforge.net/crc-catalogue/all.htm , and
+   inputs as found in https://reveng.sourceforge.io/crc-catalogue/all.htm , and
    verify the check values. This verifies all 102 CRCs on that page (as of the
    version date above). The lines on that page that start with "width=" can be
    fed verbatim to this program. The 128-bit limit assumes that uintmax_t is 64
@@ -18,6 +18,9 @@
    driven algorithms here only work for CRCs that fit in a word_t, though they
    could be extended in the same way the bit-wise algorithm is extended here.
 
+   Lastly, this code tests generalized CRC combination algorithms for all of
+   the models.
+
    The CRC parameters used in the linked catalogue were originally defined in
    Ross Williams' "A Painless Guide to CRC Error Detection Algorithms", which
    can be found here: http://zlib.net/crc_v3.txt .
@@ -27,6 +30,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stddef.h>
+#include <time.h>
 
 #include "model.h"
 #include "crc.h"
@@ -42,7 +46,7 @@ int main(void) {
     int ret;
     unsigned tests;
     unsigned inval = 0, num = 0, good = 0, goodres = 0;
-    unsigned numall = 0, goodbyte = 0, goodword = 0;
+    unsigned numall = 0, goodbyte = 0, goodword = 0, goodcomb = 0;
     char *line = NULL;
     size_t size;
     ptrdiff_t len;
@@ -57,6 +61,26 @@ int main(void) {
     }
     memcpy(test, "123456789", 9);       // test string for check value
     memcpy(test + 15, "123456789", 9);  // one off from word boundary
+    unsigned char random_data[65521];   // generate random test vector
+    {
+        // Yes, rand() is terrible. But it's good enough for this application,
+        // and it's part of the C99 standard. Avoid some of the problems by
+        // running it for a while before using it, and only using the high bits
+        // of the returned value.
+        unsigned max = (unsigned)RAND_MAX + 1;
+        int shft = 0;
+        do {
+            max >>= 1;
+            shft++;
+        } while (max > 256);
+        srand(time(NULL));
+        for (int i = 0; i < 997; i++)
+            (void)rand();
+        size_t n = sizeof(random_data);
+        do {
+            random_data[--n] = rand() >> shft;
+        } while (n);
+    }
     model.name = NULL;
     while ((len = getcleanline(&line, &size, stdin)) != -1) {
         if (len == 0)
@@ -119,6 +143,21 @@ int main(void) {
                     }
                 }
                 numall++;
+
+                // combine
+                crc_table_combine(&model);
+                size_t len = sizeof(random_data);
+                size_t len2 = 61417;
+                size_t len1 = sizeof(random_data) - len2;
+                crc = crc_bytewise(&model, 0, NULL, 0);
+                word_t crc1 = crc, crc2 = crc;
+                crc = crc_bytewise(&model, crc, random_data, len);
+                crc1 = crc_bytewise(&model, crc1, random_data, len1);
+                crc2 = crc_bytewise(&model, crc2, random_data + len1, len2);
+                if (crc == crc_combine(&model, crc1, crc2, len2)) {
+                    tests |= 32;
+                    goodcomb++;
+                }
             }
             num++;
             if (tests & 4)
@@ -129,8 +168,8 @@ int main(void) {
                        tests & 2 ? "" : " residue fail");
             else if (tests == 0)
                 printf("%s: all tests failed\n", model.name);
-            else if (tests != 1 + 2 + 8 + 16)
-                printf("%s:%s%s%s%s%s%s%s\n",
+            else if (tests != 1 + 2 + 8 + 16 + 32)
+                printf("%s:%s%s%s%s%s%s%s%s%s\n",
                        model.name,
                        tests & 1 ? "" : " bit fail",
                        tests & 3 ? "" : ",",
@@ -138,7 +177,9 @@ int main(void) {
                        (tests & 3) == 3 || (tests & 8) ? "" : ",",
                        tests & 8 ? "" : " byte fail",
                        (tests & 11) == 11 || (tests & 16) ? "" : ",",
-                       tests & 16 ? "" : " word fail");
+                       tests & 16 ? "" : " word fail",
+                       (tests & 27) || (tests & 32) ? "" : ",",
+                       tests & 32 ? "" : " combine fail");
         }
         free(model.name);
         model.name = NULL;
@@ -154,7 +195,10 @@ int main(void) {
     crc = 1;
     printf("%u models verified word-wise out of %u usable (%s-endian)\n",
            goodword, numall, *((unsigned char *)(&crc)) ? "little" : "big");
+    printf("%u models verified combine out of %u usable\n",
+           goodcomb, numall);
     puts(good == num && goodres == num && goodbyte == numall &&
-         goodword == numall ? "-- all good" : "** verification failed");
+         goodword == numall && goodcomb == numall ?
+            "-- all good" : "** verification failed");
     return 0;
 }

@@ -1,5 +1,5 @@
 /* model.h -- Generic CRC parameter model routines
- * Copyright (C) 2014, 2016, 2017, 2020 Mark Adler
+ * Copyright (C) 2014, 2016, 2017, 2020, 2021 Mark Adler
  * For conditions of distribution and use, see copyright notice in crcany.c.
  */
 
@@ -79,6 +79,7 @@ typedef struct {
     word_t check, check_hi;     /* CRC of the nine ASCII bytes "123456789" */
     word_t res, res_hi;         /* Residue of the CRC */
     char *name;                 /* text description of this CRC */
+    word_t table_comb[WORDBITS];        /* table for CRC combination */
     word_t table_byte[256];             /* table for byte-wise calculation */
     word_t table_word[WORDCHARS][256];  /* tables for word-wise calculation */
 } model_t;

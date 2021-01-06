@@ -1,5 +1,5 @@
 /* crc.c -- Generic CRC calculations
- * Copyright (C) 2014, 2016, 2017, 2020 Mark Adler
+ * Copyright (C) 2014, 2016, 2017, 2020, 2021 Mark Adler
  * For conditions of distribution and use, see copyright notice in crcany.c.
  */
 
@@ -353,6 +353,79 @@ word_t crc_wordwise(model_t *model, word_t crc, void const *dat, size_t len)
     }
 
     /* post-process and return the CRC */
+    if (model->rev)
+        crc = reverse(crc, model->width);
+    return crc;
+}
+
+// Return a(x) multiplied by b(x) modulo p(x), where p(x) is the CRC
+// polynomial. For speed, this requires that a not be zero.
+static word_t multmodp(model_t *model, word_t a, word_t b) {
+    word_t top = (word_t)1 << (model->width - 1);
+    word_t prod = 0;
+    if (model->ref) {
+        // reflected polynomial
+        word_t mask = top;          // x^0
+        for (;;) {
+            if (a & mask) {
+                prod ^= b;
+                if ((a & (mask - 1)) == 0)
+                    break;
+            }
+            mask >>= 1;
+            b = b & 1 ? (b >> 1) ^ model->poly : b >> 1;
+        }
+    }
+    else {
+        // normal polynomial
+        word_t mask = 1;            // x^0
+        for (;;) {
+            if (a & mask) {
+                prod ^= b;
+                if ((a ^ mask) < mask)
+                    break;
+            }
+            mask <<= 1;
+            b = b & top ? (b << 1) ^ model->poly : b << 1;
+        }
+        prod &= ((top << 1) - 1);
+    }
+    return prod;
+}
+
+void crc_table_combine(model_t *model) {
+    // Keep squaring x^1 modulo p(x), where p(x) is the CRC polynomial, to get
+    // x^2^n. Start saving values in the table with x^2^3, representing the
+    // action of one zero byte.
+    word_t sq = model->ref ? (word_t)1 << (model->width - 2) : 2;   // x^1
+    sq = multmodp(model, sq, sq);           // x^2^1
+    sq = multmodp(model, sq, sq);           // x^2^2
+    for (unsigned n = 0; n < WORDBITS; n++)
+        model->table_comb[n] = sq = multmodp(model, sq, sq);
+}
+
+// Return x^(8n) modulo p(x), where p(x) is the CRC polynomial. Requires that
+// model->table_comb[] has been initialized by crc_table_combine().
+static word_t x8nmodp(model_t *model, uintmax_t n) {
+    word_t xp = model->ref ? (word_t)1 << (model->width - 1) : 1;   // x^0
+    unsigned k = 0;
+    while (n) {
+        if (n & 1)
+            xp = multmodp(model, model->table_comb[k], xp);
+        n >>= 1;
+        k++;
+    }
+    return xp;
+}
+
+word_t crc_combine(model_t *model, word_t crc1, word_t crc2,
+                   uintmax_t len2) {
+    crc1 ^= model->init;
+    if (model->rev) {
+        crc1 = reverse(crc1, model->width);
+        crc2 = reverse(crc2, model->width);
+    }
+    word_t crc = multmodp(model, x8nmodp(model, len2), crc1) ^ crc2;
     if (model->rev)
         crc = reverse(crc, model->width);
     return crc;

@@ -1,5 +1,5 @@
 /* crc.h -- Generic CRC calculations
- * Copyright (C) 2014, 2016, 2017, 2020 Mark Adler
+ * Copyright (C) 2014, 2016, 2017, 2020, 2021 Mark Adler
  * For conditions of distribution and use, see copyright notice in crcany.c.
  */
 
@@ -69,5 +69,16 @@ void crc_table_wordwise(model_t *, unsigned, unsigned);
    approach.  This assumes that model->table_byte and model->table_word have
    been initialized using crc_table_wordwise(). */
 word_t crc_wordwise(model_t *, word_t, void const *, size_t);
+
+/* Fill in model->table_comb[n] for combining CRCs. Each entry is x raised to
+   the 2 to the n+3 power, modulo the CRC polynomial. */
+void crc_table_combine(model_t *);
+
+/* Combine the CRC of the first portion of the message in the second argument
+   with the CRC of the second portion in the third argument, returning the CRC
+   of the two portions concatenated. The fourth argument is the length of the
+   second portion of the message in bytes. This assumes that model->table_comb
+   has been filled in by crc_table_combine(). */
+word_t crc_combine(model_t *, word_t, word_t, uintmax_t);
 
 #endif
