@@ -737,5 +737,132 @@ int crc_gen(model_t *model, char *name,
     fputs(
         "    return crc;\n"
         "}\n", code);
+
+    // CRC combination table.
+    fprintf(head,
+        "\n"
+        "// Compute the combination of two CRCs.\n"
+        "%s %s_comb(%s crc1, %s crc2, uintmax_t len2);\n",
+            crc_type, name, crc_type, crc_type);
+    crc_table_combine(model);
+    fprintf(code,
+        "\n"
+        "static %s const table_comb[] = {\n", crc_type);
+    {
+        word_t most = 0;
+        for (unsigned k = 0; k < word_bits; k++)
+            if (model->table_comb[k] > most)
+                most = model->table_comb[k];
+        int hex = most > 9;
+        int digits = 0;
+        while (most) {
+            most >>= 4;
+            digits++;
+        }
+        char const *pre = "   ";    // this plus one space is line prefix
+        unsigned const max = COLS;  // maximum length before new line
+        unsigned n = 0;             // characters on this line, so far
+        for (unsigned k = 0; k < word_bits - 1; k++) {
+            if (n == 0)
+                n += fprintf(code, "%s", pre);
+            n += fprintf(code, " %s%0*"X",",
+                         hex ? "0x" : "", digits, model->table_comb[k]);
+            if (n + digits + (hex ? 4 : 2) > max) {
+                putc('\n', code);
+                n = 0;
+            }
+        }
+        fprintf(code, "%s %s%0*"X, n ? "" : pre,
+                hex ? "0x" : "", digits, model->table_comb[word_bits - 1]);
+    }
+    fputs(
+        "\n"
+        "};\n", code);
+
+    // Multiply mod poly for CRC combination.
+    if (model->ref)
+        fprintf(code,
+        "\n"
+        "static %s multmodp(%s a, %s b) {\n"
+        "    %s prod = 0;\n"
+        "    for (;;) {\n"
+        "        if (a & %#"X") {\n"
+        "            prod ^= b;\n"
+        "            if ((a & %#"X") == 0)\n"
+        "                break;\n"
+        "        }\n"
+        "        a <<= 1;\n"
+        "        b = b & 1 ? (b >> 1) ^ %#"X" : b >> 1;\n"
+        "    }\n"
+        "    return prod;\n"
+        "}\n",
+            crc_type, crc_type, crc_type, crc_type,
+                (word_t)1 << (model->width - 1),
+                ((word_t)1 << (model->width - 1)) - 1, model->poly);
+    else {
+        fprintf(code,
+        "\n"
+        "static %s multmodp(%s a, %s b) {\n"
+        "    %s prod = 0;\n"
+        "    for (;;) {\n"
+        "        if (a & 1) {\n"
+        "            prod ^= b;\n"
+        "            if (a == 1)\n"
+        "                break;\n"
+        "        }\n"
+        "        a >>= 1;\n"
+        "        b = b & %#"X" ? (b << 1) ^ %#"X" : b << 1;\n"
+        "    }\n",
+            crc_type, crc_type, crc_type, crc_type,
+            (word_t)1 << (model->width - 1), model->poly);
+        if (model->width != crc_bits)
+            fprintf(code,
+        "    prod &= %#"X";\n", ONES(model->width));
+        fputs(
+        "    return prod;\n"
+        "}\n", code);
+    }
+
+    // Calculate x^(8n) mod poly for CRC combination.
+    fprintf(code,
+        "\n"
+        "static %s x8nmodp(uintmax_t n) {\n", crc_type);
+    if (model->ref)
+        fprintf(code,
+        "    %s xp = %#"X";\n",
+        crc_type, (word_t)1 << (model->width - 1));
+    else
+        fprintf(code,
+        "    %s xp = 1;\n", crc_type);
+    fputs(
+        "    unsigned k = 0;\n"
+        "    while (n) {\n"
+        "        if (n & 1)\n"
+        "            xp = multmodp(table_comb[k], xp);\n"
+        "        n >>= 1;\n"
+        "        k++;\n"
+        "    }\n"
+        "    return xp;\n"
+        "}\n", code);
+
+    // Combine CRCs.
+    fprintf(code,
+        "\n"
+        "%s %s_comb(%s crc1, %s crc2,\n"
+        "        uintmax_t len2) {\n",
+        crc_type, name, crc_type, crc_type);
+    if (model->init)
+        fprintf(code,
+        "    crc1 ^= %#"X";\n",
+        model->init);
+    if (model->rev)
+        fprintf(code,
+        "    return revlow%u(multmodp(x8nmodp(len2), revlow%u(crc1)) ^ revlow%u(crc2));\n",
+            model->width, model->width, model->width);
+    else
+        fputs(
+        "    return multmodp(x8nmodp(len2), crc1) ^ crc2;\n", code);
+    fputs(
+        "}\n", code);
     return 0;
 }

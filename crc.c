@@ -365,27 +365,25 @@ static word_t multmodp(model_t *model, word_t a, word_t b) {
     word_t prod = 0;
     if (model->ref) {
         // reflected polynomial
-        word_t mask = top;          // x^0
         for (;;) {
-            if (a & mask) {
+            if (a & top) {
                 prod ^= b;
-                if ((a & (mask - 1)) == 0)
+                if ((a & (top - 1)) == 0)
                     break;
             }
-            mask >>= 1;
+            a <<= 1;
             b = b & 1 ? (b >> 1) ^ model->poly : b >> 1;
         }
     }
     else {
         // normal polynomial
-        word_t mask = 1;            // x^0
         for (;;) {
-            if (a & mask) {
+            if (a & 1) {
                 prod ^= b;
-                if ((a ^ mask) < mask)
+                if (a == 1)
                     break;
             }
-            mask <<= 1;
+            a >>= 1;
             b = b & top ? (b << 1) ^ model->poly : b << 1;
         }
         prod &= ((top << 1) - 1);

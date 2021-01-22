@@ -117,6 +117,14 @@ static int test_gen(model_t *model, char *name,
         "        %s_word(blot, data + 1, sizeof(data) - 1) != crc)\n"
         "        fputs(\"word-wise mismatch for %s\\n\", stderr), err++;\n",
             name, name, model->check, name, name);
+
+    // write test code for combination function
+    fprintf(test,
+        "    if (%s_comb(\n"
+        "            %s_byte(init, data + 1, cut - 1),\n"
+        "            %s_byte(init, data + cut, 23), 23) != crc)\n"
+        "        fputs(\"combination mismatch for %s\\n\", stderr), err++;\n",
+            name, name, name, name);
     return 0;
 }
 
@@ -258,6 +266,7 @@ int main(void) {
         "        } while (n);\n"
         "    }\n"
         "    uintmax_t init, blot, crc;\n"
+        "    size_t cut = sizeof(data) - 23;\n"
         "    int err = 0;\n", test);
     fputs(
         "#include <stdint.h>\n", allc);
