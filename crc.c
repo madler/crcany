@@ -394,16 +394,26 @@ static word_t multmodp(model_t *model, word_t a, word_t b) {
 void crc_table_combine(model_t *model) {
     // Keep squaring x^1 modulo p(x), where p(x) is the CRC polynomial, to get
     // x^2^n. Start saving values in the table with x^2^3, representing the
-    // action of one zero byte.
+    // action of one zero byte. Go until the sequence cycles, or WORDBITS
+    // entries have been filled in.
     word_t sq = model->ref ? (word_t)1 << (model->width - 2) : 2;   // x^1
     sq = multmodp(model, sq, sq);           // x^2^1
     sq = multmodp(model, sq, sq);           // x^2^2
-    for (unsigned n = 0; n < WORDBITS; n++)
-        model->table_comb[n] = sq = multmodp(model, sq, sq);
+    sq = multmodp(model, sq, sq);           // x^2^3
+    word_t x8 = model->table_comb[0] = sq;
+    for (unsigned n = 1; n < WORDBITS; n++) {
+        sq = multmodp(model, sq, sq);       // x^2^(n+3)
+        if (sq == x8) {
+            model->cycle = n;
+            return;
+        }
+        model->table_comb[n] = sq;
+    }
+    model->cycle = WORDBITS;
 }
 
-// Return x^(8n) modulo p(x), where p(x) is the CRC polynomial. Requires that
-// model->table_comb[] has been initialized by crc_table_combine().
+// Return x^(8n) modulo p(x), where p(x) is the CRC polynomial. model->cycle
+// and model->table_comb[] must first be initialized by crc_table_combine().
 static word_t x8nmodp(model_t *model, uintmax_t n) {
     word_t xp = model->ref ? (word_t)1 << (model->width - 1) : 1;   // x^0
     unsigned k = 0;
@@ -411,7 +421,8 @@ static word_t x8nmodp(model_t *model, uintmax_t n) {
         if (n & 1)
             xp = multmodp(model, model->table_comb[k], xp);
         n >>= 1;
-        k++;
+        if (++k == model->cycle)
+            k = 0;
     }
     return xp;
 }

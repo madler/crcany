@@ -750,7 +750,8 @@ int crc_gen(model_t *model, char *name,
         "static %s const table_comb[] = {\n", crc_type);
     {
         word_t most = 0;
-        for (unsigned k = 0; k < word_bits; k++)
+        unsigned len = model->cycle < word_bits ? model->cycle : word_bits;
+        for (unsigned k = 0; k < len; k++)
             if (model->table_comb[k] > most)
                 most = model->table_comb[k];
         int hex = most > 9;
@@ -762,7 +763,7 @@ int crc_gen(model_t *model, char *name,
         char const *pre = "   ";    // this plus one space is line prefix
         unsigned const max = COLS;  // maximum length before new line
         unsigned n = 0;             // characters on this line, so far
-        for (unsigned k = 0; k < word_bits - 1; k++) {
+        for (unsigned k = 0; k < len - 1; k++) {
             if (n == 0)
                 n += fprintf(code, "%s", pre);
             n += fprintf(code, " %s%0*"X",",
@@ -773,7 +774,7 @@ int crc_gen(model_t *model, char *name,
             }
         }
         fprintf(code, "%s %s%0*"X, n ? "" : pre,
-                hex ? "0x" : "", digits, model->table_comb[word_bits - 1]);
+                hex ? "0x" : "", digits, model->table_comb[len - 1]);
     }
     fputs(
         "\n"
@@ -839,8 +840,16 @@ int crc_gen(model_t *model, char *name,
         "    while (n) {\n"
         "        if (n & 1)\n"
         "            xp = multmodp(table_comb[k], xp);\n"
-        "        n >>= 1;\n"
-        "        k++;\n"
+        "        n >>= 1;\n", code);
+    if (model->cycle < word_bits)
+        fprintf(code,
+        "        if (++k == %u)\n"
+        "            k = 0;\n",
+                model->cycle);
+    else
+        fputs(
+        "        k++;\n", code);
+    fputs(
         "    }\n"
         "    return xp;\n"
         "}\n", code);

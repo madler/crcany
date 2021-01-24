@@ -71,7 +71,9 @@ void crc_table_wordwise(model_t *, unsigned, unsigned);
 word_t crc_wordwise(model_t *, word_t, void const *, size_t);
 
 /* Fill in model->table_comb[n] for combining CRCs. Each entry is x raised to
-   the 2 to the n+3 power, modulo the CRC polynomial. */
+   the 2 to the n+3 power, modulo the CRC polynomial. Set model->cycle to the
+   cycle length, or WORDBITS if the powers did not cycle. model->cycle entries
+   of model->table_comb[] will be filled in. */
 void crc_table_combine(model_t *);
 
 /* Combine the CRC of the first portion of the message in the second argument

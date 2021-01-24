@@ -71,6 +71,7 @@ typedef uintmax_t word_t;
 typedef struct {
     unsigned short width;       /* number of bits in the CRC (the degree of the
                                    polynomial) */
+    unsigned short cycle;       /* length of the table_comb[] cycle */
     char ref;                   /* if true, reflect input and output */
     char rev;                   /* if true, reverse output */
     word_t poly, poly_hi;       /* polynomial representation (sans x^width) */
