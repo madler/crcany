@@ -23,9 +23,10 @@ mincrc.o: mincrc.c model.h
 crc.o: crc.c crc.h model.h
 crcdbl.o: crcdbl.c crcdbl.h crc.h model.h
 model.o: model.c model.h
-test: src/allcrcs.c crctest mincrc allcrcs.txt allcrcs-abbrev.txt
+test: src/allcrcs.c crctest allcrcs-abbrev.txt
 	./crctest < allcrcs-abbrev.txt
 	src/test_src
+checklists: mincrc allcrcs.txt allcrcs-abbrev.txt
 	./mincrc < allcrcs.txt | diff -qb - allcrcs-abbrev.txt
 	./getcrcs | diff - allcrcs.txt
 clean:
