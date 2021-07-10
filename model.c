@@ -11,32 +11,29 @@
 #include <string.h>
 #include <ctype.h>
 
-/* Read one variable name and value from a string.  The format is name=value,
-   possibly preceded by white space, with the value ended by white space or the
-   end of the string.  White space is not permitted in the name, value, or
-   around the = sign.  Except that value can contain white space if it starts
-   with a double quote.  In that case, the value is taken from after the
-   initial double-quote to before the closing double quote.  A double-quote can
-   be included in the value with two adjacent double-quotes.  A double-quote in
-   a name or in a value when the first character isn't a double-quote is
-   treated like any other non-white-space character.  On return *str points
-   after the value, name is the zero-terminated name and value is the
-   zero-terminated value.  *str is modified to contain the zero-terminated name
-   and value.  read_vars() returns 1 on success, 0 on end of string, or -1 if
-   there was an error, such as no name, no "=", no value, or no closing quote.
-   If -1, *str is not modified, though *next and *value may be modified. */
-static int read_var(char **str, char **name, char **value)
-{
-    char *next, *copy;
-
-    /* skip any leading white space, check for end of string */
-    next = *str;
+// Read one variable name and value from a string.  The format is name=value,
+// possibly preceded by white space, with the value ended by white space or the
+// end of the string.  White space is not permitted in the name, value, or
+// around the = sign.  Except that value can contain white space if it starts
+// with a double quote.  In that case, the value is taken from after the
+// initial double-quote to before the closing double quote.  A double-quote can
+// be included in the value with two adjacent double-quotes.  A double-quote in
+// a name or in a value when the first character isn't a double-quote is
+// treated like any other non-white-space character.  On return *str points
+// after the value, name is the zero-terminated name and value is the
+// zero-terminated value.  *str is modified to contain the zero-terminated name
+// and value.  read_vars() returns 1 on success, 0 on end of string, or -1 if
+// there was an error, such as no name, no "=", no value, or no closing quote.
+// If -1, *str is not modified, though *next and *value may be modified.
+static int read_var(char **str, char **name, char **value) {
+    // Skip any leading white space, check for end of string.
+    char *next = *str;
     while (isspace(*next))
         next++;
     if (*next == 0)
         return 0;
 
-    /* get name */
+    // Get name.
     *name = next;
     while (*next && !isspace(*next) && *next != '=')
         next++;
@@ -44,16 +41,16 @@ static int read_var(char **str, char **name, char **value)
         return -1;
     *next++ = 0;
 
-    /* get value */
+    // Get value.
     if (*next == '"') {
-        /* get quoted value */
+        // Get quoted value.
         *value = ++next;
         next = strchr(next, '"');
         if (next == NULL)
             return -1;
 
-        /* handle embedded quotes */
-        copy = next;
+        // Handle embedded quotes.
+        char *copy = next;
         while (next[1] == '"') {
             next++;
             do {
@@ -65,7 +62,7 @@ static int read_var(char **str, char **name, char **value)
         }
     }
     else {
-        /* get non-quoted value */
+        // Get non-quoted value.
         *value = next;
         while (*next && !isspace(*next))
             next++;
@@ -73,20 +70,20 @@ static int read_var(char **str, char **name, char **value)
             return -1;
     }
 
-    /* skip terminating character if not end of string, terminate value */
+    // Skip terminating character if not end of string, terminate value.
     if (*next)
         *next++ = 0;
 
-    /* return updated string location */
+    // Return updated string location.
     *str = next;
     return 1;
 }
 
-/* Shift left a double-word quantity by n bits: r = a << n, 0 < n < WORDBITS.
-   Return NULL from the enclosing function on overflow.  rh and rl must be
-   word_t lvalues.  It is allowed for a to be r, shifting in place.  ah and al
-   are each used twice in this macro, so beware of side effects.  WORDBITS is
-   the number of bits in a word_t, which must be an unsigned integer type. */
+// Shift left a double-word quantity by n bits: r = a << n, 0 < n < WORDBITS.
+// Return NULL from the enclosing function on overflow.  rh and rl must be
+// word_t lvalues.  It is allowed for a to be r, shifting in place.  ah and al
+// are each used twice in this macro, so beware of side effects.  WORDBITS is
+// the number of bits in a word_t, which must be an unsigned integer type.
 #define SHLO(rh, rl, ah, al, n) \
     do { \
         if ((word_t)(ah) >> (WORDBITS - (n))) \
@@ -95,13 +92,12 @@ static int read_var(char **str, char **name, char **value)
         rl = (word_t)(al) << (n); \
     } while (0)
 
-/* Add two double-word quantities: r += a.  Return NULL from the enclosing
-   function on overflow.  rh and rl must be word_t lvalues.  Note that rh and
-   rl are referenced more than once, so beware of side effects. */
+// Add two double-word quantities: r += a.  Return NULL from the enclosing
+// function on overflow.  rh and rl must be word_t lvalues.  Note that rh and
+// rl are referenced more than once, so beware of side effects.
 #define ADDO(rh, rl, ah, al) \
     do { \
-        word_t t; \
-        t = rh; \
+        word_t t = rh; \
         rh += (ah); \
         if (rh < t) \
             return NULL; \
@@ -111,31 +107,29 @@ static int read_var(char **str, char **name, char **value)
             return NULL; \
     } while (0)
 
-/* Convert a string of digits to a double-word unsigned integer, that is, two
-   word_t unsigned integers making up a single unsigned integer with twice as
-   many bits.  If the string starts with "0x" or "0X", consider the string to
-   be hexadecimal.  If it starts with "0", consider it to be octal.  Otherwise
-   consider it to be decimal. If the string starts with "-", return the two's
-   complement of the number that follows. Return a pointer to the first
-   character in the string that is not a valid digit, or the end of the string
-   if all were valid.  If the provided digits result in an overflow of the
-   double-length integer, then NULL is returned.  If NULL is returned, *high
-   and *low are unaltered. */
-static char *strtobig(char *str, word_t *high, word_t *low)
-{
-    unsigned neg = 0;   /* true if "-" prefix */
-    unsigned k;         /* base, then digits */
-    word_t nh, nl;      /* double-length number accumulated */
-    word_t th, tl;      /* temporary double-length number */
+// Convert a string of digits to a double-word unsigned integer, that is, two
+// word_t unsigned integers making up a single unsigned integer with twice as
+// many bits.  If the string starts with "0x" or "0X", consider the string to
+// be hexadecimal.  If it starts with "0", consider it to be octal.  Otherwise
+// consider it to be decimal. If the string starts with "-", return the two's
+// complement of the number that follows. Return a pointer to the first
+// character in the string that is not a valid digit, or the end of the string
+// if all were valid.  If the provided digits result in an overflow of the
+// double-length integer, then NULL is returned.  If NULL is returned, *high
+// and *low are unaltered.
+static char *strtobig(char *str, word_t *high, word_t *low) {
+    unsigned neg = 0;   // true if "-" prefix
+    word_t nh, nl;      // double-length number accumulated
+    word_t th, tl;      // temporary double-length number
 
-    /* look for minus sign */
+    // Look for minus sign.
     if (*str == '-') {
         str++;
         neg = 1;
     }
 
-    /* determine base from prefix */
-    k = 10;
+    // Determine base from prefix.
+    unsigned k = 10;
     if (*str == '0') {
         str++;
         k = 8;
@@ -145,7 +139,7 @@ static char *strtobig(char *str, word_t *high, word_t *low)
         }
     }
 
-    /* accumulate digits until a non-digit */
+    // Accumulate digits until a non-digit.
     nh = nl = 0;
     switch (k) {
         case 8:
@@ -158,10 +152,10 @@ static char *strtobig(char *str, word_t *high, word_t *low)
         case 10:
             while (*str >= '0' && *str <= '9') {
                 k = *str++ - '0';
-                SHLO(nh, nl, nh, nl, 1);        /* n <<= 1 */
-                SHLO(th, tl, nh, nl, 2);        /* t = n << 2 */
-                ADDO(nh, nl, th, tl);           /* n += t */
-                ADDO(nh, nl, 0, k);             /* n += k */
+                SHLO(nh, nl, nh, nl, 1);        // n <<= 1
+                SHLO(th, tl, nh, nl, 2);        // t = n << 2
+                ADDO(nh, nl, th, tl);           // n += t
+                ADDO(nh, nl, 0, k);             // n += k
             }
             break;
         case 16:
@@ -174,23 +168,22 @@ static char *strtobig(char *str, word_t *high, word_t *low)
             }
     }
 
-    /* if negative, negate */
+    // If negative, negate.
     if (neg) {
         nl = ~nl + 1;
         nh = ~nh + (nl == 0 ? 1 : 0);
     }
 
-    /* return result and string position after number */
+    // Return result and string position after number.
     *high = nh;
     *low = nl;
     return str;
 }
 
-/* Check that high:low bits above width bits are either all zeros or all ones.
-   If they are all ones, make them all zeros.  Return true if those bits were
-   not all zeros or all ones. */
-static int normal_big(word_t *low, word_t *high, unsigned width)
-{
+// Check that high:low bits above width bits are either all zeros or all ones.
+// If they are all ones, make them all zeros.  Return true if those bits were
+// not all zeros or all ones.
+static int normal_big(word_t *low, word_t *high, unsigned width) {
     const word_t ones = (word_t)0 - 1;
     word_t mask_lo = width < WORDBITS ? ones << width : 0;
     word_t mask_hi = width <= WORDBITS ? ones :
@@ -208,7 +201,7 @@ static int normal_big(word_t *low, word_t *high, unsigned width)
 #include <stdio.h>
 #include <stdlib.h>
 
-/* Masks for parameters. */
+// Masks for parameters.
 #define WIDTH 1
 #define POLY 2
 #define INIT 4
@@ -220,7 +213,7 @@ static int normal_big(word_t *low, word_t *high, unsigned width)
 #define NAME 256
 #define ALL (WIDTH|POLY|INIT|REFIN|REFOUT|XOROUT|CHECK|RES|NAME)
 
-/* A strncmp() that ignores case, like POSIX strncasecmp(). */
+// A strncmp() that ignores case, like POSIX strncasecmp().
 static int strncmpi(char const *s1, char const *s2, size_t n) {
     unsigned char const *a = (unsigned char const *)s1,
                         *b = (unsigned char const *)s2;
@@ -234,23 +227,19 @@ static int strncmpi(char const *s1, char const *s2, size_t n) {
     return 0;
 }
 
-/* See model.h. */
-int read_model(model_t *model, char *str, int lenient)
-{
-    int ret;
-    char *name, *value, *end;
-    size_t n, k;
-    unsigned got, bad, rep;
-    char *unk;
-    word_t hi, lo;
-
-    /* read name=value pairs from line */
-    got = bad = rep = 0;
-    unk = NULL;
+// See model.h.
+int read_model(model_t *model, char *str, int lenient) {
+    // Read name=value pairs from line.
+    unsigned got = 0, bad = 0, rep = 0;
+    char *unk = NULL;
     model->name = NULL;
+    int ret;
+    char *name, *value;
     while ((ret = read_var(&str, &name, &value)) == 1) {
-        n = strlen(name);
-        k = strlen(value);
+        size_t n = strlen(name);
+        size_t k = strlen(value);
+        word_t hi, lo;
+        char *end;
         if (strncmpi(name, "width", n) == 0) {
             if (got & WIDTH) {
                 rep |= WIDTH;
@@ -369,7 +358,7 @@ int read_model(model_t *model, char *str, int lenient)
             unk = name;
     }
 
-    /* provide defaults for some parameters */
+    // Provide defaults for some parameters.
     if ((got & INIT) == 0) {
         model->init = 0;
         model->init_hi = 0;
@@ -398,7 +387,7 @@ int read_model(model_t *model, char *str, int lenient)
         got |= CHECK;
     }
 
-    /* check for parameter values out of range */
+    // Check for parameter values out of range.
     if (got & WIDTH) {
         if (model->width < 1 || model->width > WORDBITS*2)
             bad |= WIDTH;
@@ -420,8 +409,8 @@ int read_model(model_t *model, char *str, int lenient)
         }
     }
 
-    /* issue error messages for noted problems (this section can be safely
-       removed if error messages are not desired) */
+    // Issue error messages for noted problems (this section can be safely
+    // removed if error messages are not desired).
     if (ret == -1)
         fprintf(stderr, "bad syntax (not 'parm=value') at: '%s'\n", str);
     else {
@@ -430,28 +419,27 @@ int read_model(model_t *model, char *str, int lenient)
         name = model->name == NULL ? "<no name>" : model->name;
         if (unk != NULL)
             fprintf(stderr, "%s: unknown parameter %s\n", name, unk);
-        for (n = rep, k = 0; n; n >>= 1, k++)
+        for (size_t n = rep, k = 0; n; n >>= 1, k++)
             if (n & 1)
                 fprintf(stderr, "%s: %s repeated\n", name, parm[k]);
-        for (n = bad, k = 0; n; n >>= 1, k++)
+        for (size_t n = bad, k = 0; n; n >>= 1, k++)
             if (n & 1)
                 fprintf(stderr, "%s: %s out of range\n", name, parm[k]);
-        for (n = (got ^ ALL) & ~bad, k = 0; n; n >>= 1, k++)
+        for (size_t n = (got ^ ALL) & ~bad, k = 0; n; n >>= 1, k++)
             if (n & 1)
                 fprintf(stderr, "%s: %s missing\n", name, parm[k]);
     }
 
-    /* return error if model not fully specified and valid */
+    // Return error if model not fully specified and valid.
     if (ret == -1 || unk != NULL || rep || bad || got != ALL)
         return 1;
 
-    /* all good */
+    // All good.
     return 0;
 }
 
-/* See model.h. */
-word_t reverse(word_t x, unsigned n)
-{
+// See model.h.
+word_t reverse(word_t x, unsigned n) {
     if (n == 1)
         return x & 1;
     if (n == 2)
@@ -498,17 +486,14 @@ word_t reverse(word_t x, unsigned n)
     return n < 2*WORDBITS ? reverse(x, WORDBITS) << (n - WORDBITS) : 0;
 }
 
-/* See model.h. */
-void reverse_dbl(word_t *hi, word_t *lo, unsigned n)
-{
-    word_t tmp;
-
+// See model.h.
+void reverse_dbl(word_t *hi, word_t *lo, unsigned n) {
     if (n <= WORDBITS) {
         *lo = reverse(*lo, n);
         *hi = 0;
     }
     else {
-        tmp = reverse(*lo, WORDBITS);
+        word_t tmp = reverse(*lo, WORDBITS);
         *lo = reverse(*hi, n - WORDBITS);
         if (n < WORDBITS*2) {
             *lo |= tmp << (n - WORDBITS);
@@ -519,9 +504,8 @@ void reverse_dbl(word_t *hi, word_t *lo, unsigned n)
     }
 }
 
-/* See model.h. */
-void process_model(model_t *model)
-{
+// See model.h.
+void process_model(model_t *model) {
     if (model->ref)
         reverse_dbl(&model->poly_hi, &model->poly, model->width);
     if (model->rev)
@@ -531,7 +515,7 @@ void process_model(model_t *model)
     model->rev ^= model->ref;
 }
 
-/* Like POSIX getline(). */
+// Like POSIX getline().
 ptrdiff_t fgetline(char **line, size_t *size, FILE *in) {
     if (*line == NULL)
         *size = 0;
@@ -555,28 +539,24 @@ ptrdiff_t fgetline(char **line, size_t *size, FILE *in) {
     return ret < 1 ? -1 : ret;
 }
 
-/* See model.h. */
-ptrdiff_t getcleanline(char **line, size_t *size, FILE *in)
-{
-    ptrdiff_t len, n, k;
-    char *ln;
-
-    /* get a line, return -1 on EOF or error */
-    len = fgetline(line, size, in);
+// See model.h.
+ptrdiff_t getcleanline(char **line, size_t *size, FILE *in) {
+    // Get a line, return -1 on EOF or error.
+    ptrdiff_t len = fgetline(line, size, in);
     if (len == -1)
         return -1;
 
-    /* delete any embedded nulls */
-    ln = *line;
-    n = 0;
+    // Delete any embedded nulls.
+    char *ln = *line;
+    ptrdiff_t n = 0;
     while (n < len && ln[n])
         n++;
-    k = n;
+    ptrdiff_t k = n;
     while (++n < len)
         if (ln[n])
             ln[k++] = ln[n];
 
-    /* delete any trailing space */
+    // Delete any trailing space.
     while (k && isspace(ln[k - 1]))
         k--;
     ln[k] = 0;

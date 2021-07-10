@@ -27,7 +27,7 @@
 // printf() directive to print a uintmax_t in hexadecimal (e.g. "llx" or "jx").
 #define X PRIxMAX
 
-/* A strcpy() that returns a pointer to the terminating null, like stpcpy(). */
+// A strcpy() that returns a pointer to the terminating null, like stpcpy().
 static char *strcpytail(char *dst, char const *src) {
     size_t i = 0;
     for (;;) {
@@ -39,7 +39,7 @@ static char *strcpytail(char *dst, char const *src) {
     }
 }
 
-/* A strncmp() that ignores case, like POSIX strncasecmp(). */
+// A strncmp() that ignores case, like POSIX strncasecmp().
 static int strncmpi(char const *s1, char const *s2, size_t n) {
     unsigned char const *a = (unsigned char const *)s1,
                         *b = (unsigned char const *)s2;
@@ -62,7 +62,7 @@ static int strncmpi(char const *s1, char const *s2, size_t n) {
 // then the generated code prints an error to stderr.
 static int test_gen(model_t *model, char *name,
                     FILE *defs, FILE *test, FILE *allc, FILE *allh) {
-    // write test and all code for bit-wise function
+    // Write test and all code for bit-wise function.
     fprintf(defs,
         "#include \"%s.h\"\n", name);
     fprintf(test,
@@ -88,7 +88,7 @@ static int test_gen(model_t *model, char *name,
     fprintf(allh,
         "\", %u, %s},\n", model->width, name);
 
-    // write test code for small number of bits function
+    // Write test code for small number of bits function.
     if (model->ref)
         fprintf(test,
         "    if (%s_bit(blot, \"\\xda\", 1) !=\n"
@@ -102,7 +102,7 @@ static int test_gen(model_t *model, char *name,
         "        fputs(\"small bits mismatch for %s\\n\", stderr), err++;\n",
                 name, name, name, name);
 
-    // write test code for byte-wise function
+    // Write test code for byte-wise function.
     fprintf(test,
         "    if (%s_byte(0, NULL, 0) != init ||\n"
         "        %s_byte(blot, \"123456789\", 9) != %#"X" ||\n"
@@ -110,7 +110,7 @@ static int test_gen(model_t *model, char *name,
         "        fputs(\"byte-wise mismatch for %s\\n\", stderr), err++;\n",
             name, name, model->check, name, name);
 
-    // write test code for word-wise function
+    // Write test code for word-wise function.
     fprintf(test,
         "    if (%s_word(0, NULL, 0) != init ||\n"
         "        %s_word(blot, \"123456789\", 9) != %#"X" ||\n"
@@ -118,7 +118,7 @@ static int test_gen(model_t *model, char *name,
         "        fputs(\"word-wise mismatch for %s\\n\", stderr), err++;\n",
             name, name, model->check, name, name);
 
-    // write test code for combination function
+    // Write test code for combination function.
     fprintf(test,
         "    if (%s_comb(\n"
         "            %s_byte(init, data + 1, cut - 1),\n"
@@ -174,18 +174,18 @@ static char *crc_name(model_t *model) {
 // problem was a source file that already existed, then create_source() will
 // return 2. Otherwise it will return 1 on error, 0 on success.
 static int create_source(char *src, char *name, FILE **head, FILE **code) {
-    // for error return
+    // For error return.
     if (head != NULL)
         *head = NULL;
     if (code != NULL)
         *code = NULL;
 
-    // create the src directory if it does not exist
+    // Create the src directory if it does not exist.
     int ret = mkdir(src, 0755);
     if (ret && errno != EEXIST)
         return 1;
 
-    // construct the path for the source files, leaving suff pointing to the
+    // Construct the path for the source files, leaving suff pointing to the
     // position for the 'h' or 'c'.
     char path[strlen(src) + 1 + strlen(name) + 2 + 1];
     char *suff = strcpytail(path, src);
@@ -194,7 +194,7 @@ static int create_source(char *src, char *name, FILE **head, FILE **code) {
     *suff++ = '.';
     suff[1] = 0;
 
-    // create header file
+    // Create header file.
     if (head != NULL) {
         *suff = 'h';
         *head = fopen(path, "wx");
@@ -202,7 +202,7 @@ static int create_source(char *src, char *name, FILE **head, FILE **code) {
             return errno == EEXIST ? 2 : 1;
     }
 
-    // create code file
+    // Create code file.
     if (code != NULL) {
         *suff = 'c';
         *code = fopen(path, "wx");
@@ -218,7 +218,7 @@ static int create_source(char *src, char *name, FILE **head, FILE **code) {
         }
     }
 
-    // all good -- return handles for header and code
+    // All good -- return handles for header and code.
     return 0;
 }
 
@@ -229,12 +229,12 @@ static int create_source(char *src, char *name, FILE **head, FILE **code) {
 // to compute each one. Each CRC goes into it's own .h and .c source files in
 // the "src" subdirectory of the current directory.
 int main(void) {
-    // determine endianess of this machine (for testing on this machine, we
-    // need to match its endianess)
+    // Determine endianess of this machine (for testing on this machine, we
+    // need to match its endianess).
     unsigned little = 1;
     little = *((unsigned char *)(&little));
 
-    // create test source files
+    // Create test source files.
     FILE *defs, *test, *allc, *allh;
     if (create_source(SRC, "test_src", &defs, &test) ||
         create_source(SRC, "allcrcs", &allh, &allc)) {
@@ -281,7 +281,7 @@ int main(void) {
         "    crc_f func;\n"
         "} const all[] = {\n", allh);
 
-    // read each line from stdin, process the CRC description
+    // Read each line from stdin, process the CRC description.
     char *line = NULL;
     size_t size;
     ptrdiff_t len;
@@ -290,7 +290,7 @@ int main(void) {
             continue;
         model_t model;
 
-        // read the model
+        // Read the model.
         model.name = NULL;
         int ret = read_model(&model, line, 0);
         if (ret == 2) {
@@ -304,17 +304,17 @@ int main(void) {
             fprintf(stderr, "%s is too wide (%u bits) -- skipping\n",
                     model.name, model.width);
         else {
-            // convert the parameters to form for calculation
+            // Convert the parameters for calculation.
             process_model(&model);
 
-            // generate the routine name prefix for this model
+            // Generate the routine name prefix for this model.
             char *name = crc_name(&model);
             if (name == NULL) {
                 fputs("out of memory -- aborting\n", stderr);
                 break;
             }
 
-            // generate the code
+            // Generate the code.
             FILE *head, *code;
             int ret = create_source(SRC, name, &head, &code);
             if (ret)

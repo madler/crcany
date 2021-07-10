@@ -96,20 +96,20 @@ local size_t digs(char const *str) {
 // not found. Return -2 if help was requested. If id is NULL, then CRC-32 is
 // used.
 local int pick(char *id) {
-    // default CRC = standard PKZip/Ethernet CRC-32
+    // Default CRC = standard PKZip/Ethernet CRC-32.
     char def[] = "CRC-32";          // mutable string
     if (id == NULL)
         id = def;
 
-    // normalize the id to lower case letters and digits
+    // Normalize the id to lower case letters and digits.
     normalize(id);
     if (*id == 0) {
         fputs("CRC not found\n", stderr);
         return -1;
     }
 
-    // if asking for help or a list, list all of the CRCs -- return -2 to
-    // return 0 from the command
+    // If asking for help or a list, list all of the CRCs. Return -2 to
+    // return 0 from the command.
     if (strcmp(id, "help") == 0 || strcmp(id, "list") == 0) {
         int k = 0;
         while (all[k].func != NULL) {
@@ -119,11 +119,11 @@ local int pick(char *id) {
         return -2;
     }
 
-    // drop the leading "crc", if present
+    // Drop the leading "crc", if present.
     if (strncmp(id, "crc", 3) == 0)
         id += 3;
 
-    // search for a matching CRC
+    // Search for a matching CRC.
     char hit[NUMALL];
     int index = -1, count = 0;
     for (size_t k = 0; k < NUMALL; k++) {
@@ -140,11 +140,11 @@ local int pick(char *id) {
         }
     }
 
-    // if there was exactly one match, return it
+    // If there was exactly one match, return it.
     if (count == 1)
         return index;
 
-    // report multiple or no matches and return not found
+    // Report multiple or no matches and return not found.
     if (count) {
         fprintf(stderr, "%s matched multiple CRCs:\n", id);
         for (size_t k = 0; k < NUMALL; k++)
@@ -168,7 +168,7 @@ local uintmax_t crc_file(crc_f func, FILE *in) {
 
 // Print the specified CRC computed on the provided files or on stdin.
 int main(int argc, char **argv) {
-    // set the CRC to apply
+    // Set the CRC to apply.
     int n = 1;
     int x = pick(n < argc && argv[n][0] == '-' ? argv[n++] + 1 : NULL);
     if (x < 0)
@@ -177,9 +177,9 @@ int main(int argc, char **argv) {
     unsigned width = all[x].width;
     printf("%s\n", all[x].name);
 
-    // compute the CRC of the paths in the remaining arguments, or of stdin if
-    // there are no more arguments -- include the paths in the output if there
-    // are two or more
+    // Compute the CRC of the paths in the remaining arguments, or of stdin if
+    // there are no more arguments. Include the paths in the output if there
+    // are two or more.
     int ret = 0;                    // set to 1 if any file errors
     int name = argc - n > 1;        // true to print the path name with the CRC
     do {

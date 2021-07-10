@@ -43,18 +43,8 @@
 // algorithms. Checks are not done for those cases where word_t is not wide
 // enough to permit the calculation.
 int main(void) {
-    int ret;
-    unsigned tests;
-    unsigned inval = 0, num = 0, good = 0, goodres = 0;
-    unsigned numall = 0, goodbyte = 0, goodword = 0, goodcomb = 0;
-    char *line = NULL;
-    size_t size;
-    ptrdiff_t len;
-    word_t crc_hi, crc;
-    model_t model;
-    unsigned char *test;
-
-    test = malloc(32);                  // get memory on a word boundary
+    // Create test data.
+    unsigned char *test = malloc(32);       // get memory on a word boundary
     if (test == NULL) {
         fputs("out of memory -- aborting\n", stderr);
         return 1;
@@ -81,11 +71,19 @@ int main(void) {
             random_data[--n] = rand() >> shft;
         } while (n);
     }
-    model.name = NULL;
+
+    // Read and test models from stdin.
+    unsigned inval = 0, num = 0, good = 0, goodres = 0;
+    unsigned numall = 0, goodbyte = 0, goodword = 0, goodcomb = 0;
+    char *line = NULL;
+    size_t size;
+    ptrdiff_t len;
     while ((len = getcleanline(&line, &size, stdin)) != -1) {
         if (len == 0)
             continue;
-        ret = read_model(&model, line, 0);
+        model_t model;
+        model.name = NULL;
+        int ret = read_model(&model, line, 0);
         if (ret == 2) {
             fputs("out of memory -- aborting\n", stderr);
             break;
@@ -97,9 +95,10 @@ int main(void) {
         }
         else {
             process_model(&model);
-            tests = 0;
+            unsigned tests = 0;
 
-            // bit-wise
+            // Bit-wise.
+            word_t crc_hi, crc;
             crc_bitwise_dbl(&model, &crc_hi, &crc, NULL, 0);
             crc_bitwise_dbl(&model, &crc_hi, &crc, test, 9);
             if (crc == model.check && crc_hi == model.check_hi) {
@@ -117,12 +116,12 @@ int main(void) {
             if (model.width > WORDBITS)
                 tests |= 4;
             else {
-                // initialize tables for byte-wise and word-wise
+                // Initialize tables for byte-wise and word-wise.
                 unsigned little = 1;
                 little = *((unsigned char *)(&little));
                 crc_table_wordwise(&model, little, WORDBITS);
 
-                // byte-wise
+                // Byte-wise.
                 crc = crc_bytewise(&model, 0, NULL, 0);
                 crc = crc_bytewise(&model, crc, test, 9);
                 if (crc == model.check) {
@@ -130,8 +129,8 @@ int main(void) {
                     goodbyte++;
                 }
 
-                // word-wise (check on and off boundary in order to exercise
-                // all loops)
+                // Word-wise (check on and off boundary in order to exercise
+                // all loops).
                 crc = crc_wordwise(&model, 0, NULL, 0);
                 crc = crc_wordwise(&model, crc, test, 9);
                 if (crc == model.check) {
@@ -144,7 +143,7 @@ int main(void) {
                 }
                 numall++;
 
-                // combine
+                // Combine.
                 crc_table_combine(&model);
                 size_t len = sizeof(random_data);
                 size_t len2 = 61417;
@@ -182,19 +181,22 @@ int main(void) {
                        tests & 32 ? "" : " combine fail");
         }
         free(model.name);
-        model.name = NULL;
     }
+
+    // Clean up.
     free(line);
     free(test);
+
+    // Print test results.
     printf("%u models verified bit-wise out of %u usable "
            "(%u unusable models)\n", good, num, inval);
     printf("%u model residues verified out of %u usable "
            "(%u unusable models)\n", goodres, num, inval);
     printf("%u models verified byte-wise out of %u usable\n",
            goodbyte, numall);
-    crc = 1;
+    word_t endian = 1;
     printf("%u models verified word-wise out of %u usable (%s-endian)\n",
-           goodword, numall, *((unsigned char *)(&crc)) ? "little" : "big");
+           goodword, numall, *((unsigned char *)(&endian)) ? "little" : "big");
     printf("%u models verified combine out of %u usable\n",
            goodcomb, numall);
     puts(good == num && goodres == num && goodbyte == numall &&

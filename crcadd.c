@@ -24,7 +24,7 @@
 #  endif
 #endif
 
-/* A strcpy() that returns a pointer to the terminating null, like stpcpy(). */
+// A strcpy() that returns a pointer to the terminating null, like stpcpy().
 static char *strcpytail(char *dst, char const *src) {
     size_t i = 0;
     for (;;) {
@@ -36,7 +36,7 @@ static char *strcpytail(char *dst, char const *src) {
     }
 }
 
-/* A strncmp() that ignores case, like POSIX strncasecmp(). */
+// A strncmp() that ignores case, like POSIX strncasecmp().
 static int strncmpi(char const *s1, char const *s2, size_t n) {
     unsigned char const *a = (unsigned char const *)s1,
                         *b = (unsigned char const *)s2;
@@ -96,18 +96,18 @@ static char *crc_name(model_t *model) {
 // problem was a source file that already existed, then create_source() will
 // return 2. Otherwise it will return 1 on error, 0 on success.
 static int create_source(char *src, char *name, FILE **head, FILE **code) {
-    // for error return
+    // For error return.
     if (head != NULL)
         *head = NULL;
     if (code != NULL)
         *code = NULL;
 
-    // create the src directory if it does not exist
+    // Create the src directory if it does not exist.
     int ret = mkdir(src, 0755);
     if (ret && errno != EEXIST)
         return 1;
 
-    // construct the path for the source files, leaving suff pointing to the
+    // Construct the path for the source files, leaving suff pointing to the
     // position for the 'h' or 'c'.
     char path[strlen(src) + 1 + strlen(name) + 2 + 1];
     char *suff = strcpytail(path, src);
@@ -116,7 +116,7 @@ static int create_source(char *src, char *name, FILE **head, FILE **code) {
     *suff++ = '.';
     suff[1] = 0;
 
-    // create header file
+    // Create header file.
     if (head != NULL) {
         *suff = 'h';
         *head = fopen(path, "wx");
@@ -124,7 +124,7 @@ static int create_source(char *src, char *name, FILE **head, FILE **code) {
             return errno == EEXIST ? 2 : 1;
     }
 
-    // create code file
+    // Create code file.
     if (code != NULL) {
         *suff = 'c';
         *code = fopen(path, "wx");
@@ -140,7 +140,7 @@ static int create_source(char *src, char *name, FILE **head, FILE **code) {
         }
     }
 
-    // all good -- return handles for header and code
+    // All good -- return handles for header and code.
     return 0;
 }
 
@@ -186,7 +186,7 @@ int main(int argc, char **argv) {
             return 1;
         }
 
-    // read each line from stdin, process the CRC description
+    // Read each line from stdin, process the CRC description.
     char *line = NULL;
     size_t size;
     ptrdiff_t len;
@@ -195,7 +195,7 @@ int main(int argc, char **argv) {
             continue;
         model_t model;
 
-        // read the model, allowing for no check value
+        // Read the model, allowing for no check value.
         model.name = NULL;
         int ret = read_model(&model, line, 1);
         if (ret == 2) {
@@ -209,17 +209,17 @@ int main(int argc, char **argv) {
             fprintf(stderr, "%s is too wide (%u bits) -- skipping\n",
                     model.name, model.width);
         else {
-            // convert the parameters to form for calculation
+            // Convert the parameters to form for calculation.
             process_model(&model);
 
-            // generate the routine name prefix for this model
+            // Generate the routine name prefix for this model.
             char *name = crc_name(&model);
             if (name == NULL) {
                 fputs("out of memory -- aborting\n", stderr);
                 break;
             }
 
-            // generate the code
+            // Generate the code.
             FILE *head, *code;
             int ret = create_source(SRC, name, &head, &code);
             if (ret)
