@@ -131,9 +131,6 @@ int crc_gen(model_t *model, char *name,
     if ((word_bits != 32 && word_bits != 64) || model->width > word_bits)
         return 1;
 
-    // Fill in the combine table.
-    crc_table_combine(model);
-
     // Select the unsigned integer type to be used for CRC calculations.
     char *crc_type;
     unsigned crc_bits;

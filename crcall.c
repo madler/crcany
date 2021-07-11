@@ -11,6 +11,8 @@
 #include <errno.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include "model.h"
+#include "crc.h"
 #include "crcgen.h"
 
 // Define INTMAX_BITS.
@@ -304,8 +306,11 @@ int main(void) {
             fprintf(stderr, "%s is too wide (%u bits) -- skipping\n",
                     model.name, model.width);
         else {
-            // Convert the parameters for calculation.
+            // Convert the parameters for calculation, and fill in the tables
+            // that are independent of endianess and word length.
             process_model(&model);
+            crc_table_combine(&model);
+            crc_table_bytewise(&model);
 
             // Generate the routine name prefix for this model.
             char *name = crc_name(&model);

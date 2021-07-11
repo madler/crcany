@@ -45,13 +45,13 @@ void crc_table_bytewise(model_t *);
    crc_table_bytewise(). */
 word_t crc_bytewise(model_t *, word_t, void const *, size_t);
 
-/* Fill in the tables for a word-wise CRC calculation.  This also fills in the
-   byte-wise table since that is needed for the word-wise calculation. The
-   second parameter is 1 for little-endian, 0 for big endian. The third
-   parameter is the number of bits in a word to use for the tables, which must
-   be 32 or 64. The endian request must match the machine being run on for
-   crc_wordwise() to work. The endian request can be different than the machine
-   being run on when generating code for a different machine.
+/* Fill in the tables for a word-wise CRC calculation.  This assumes that the
+   byte-wise table has already been filled in. The second parameter is 1 for
+   little-endian, 0 for big endian. The third parameter is the number of bits
+   in a word to use for the tables, which must be 32 or 64. The endian request
+   must match the machine being run on for crc_wordwise() to work. The endian
+   request can be different than the machine being run on when generating code
+   for a different machine.
 
    The entry in table_word[n][k] is the CRC register contents for the sequence
    of bytes: k followed by n zero bytes.  For non-reflected CRCs, the CRC is

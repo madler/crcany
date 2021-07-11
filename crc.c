@@ -152,7 +152,6 @@ static inline word_t swap(word_t x) {
 }
 
 void crc_table_wordwise(model_t *model, unsigned little, unsigned word_bits) {
-    crc_table_bytewise(model);
     unsigned opp = little ^ model->ref;
     unsigned top =
         model->ref ? 0 :

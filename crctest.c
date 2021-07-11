@@ -94,7 +94,14 @@ int main(void) {
             inval++;
         }
         else {
+            // Convert the parameters for calculation, and fill in the tables
+            // that are independent of endianess and word length.
             process_model(&model);
+            crc_table_combine(&model);
+            crc_table_bytewise(&model);
+
+            // No tests have passed yet. Bits in tests are set for each
+            // successful or bypassed test.
             unsigned tests = 0;
 
             // Bit-wise.
@@ -144,7 +151,6 @@ int main(void) {
                 numall++;
 
                 // Combine.
-                crc_table_combine(&model);
                 size_t len = sizeof(random_data);
                 size_t len2 = 61417;
                 size_t len1 = sizeof(random_data) - len2;
