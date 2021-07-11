@@ -25,14 +25,8 @@ word_t crc_bitwise(model_t *model, word_t crc, void const *dat, size_t len)
         crc &= ONES(model->width);
         while (len--) {
             crc ^= *buf++;
-            crc = crc & 1 ? (crc >> 1) ^ poly : crc >> 1;
-            crc = crc & 1 ? (crc >> 1) ^ poly : crc >> 1;
-            crc = crc & 1 ? (crc >> 1) ^ poly : crc >> 1;
-            crc = crc & 1 ? (crc >> 1) ^ poly : crc >> 1;
-            crc = crc & 1 ? (crc >> 1) ^ poly : crc >> 1;
-            crc = crc & 1 ? (crc >> 1) ^ poly : crc >> 1;
-            crc = crc & 1 ? (crc >> 1) ^ poly : crc >> 1;
-            crc = crc & 1 ? (crc >> 1) ^ poly : crc >> 1;
+            for (int k = 0; k < 8; k++)
+                crc = crc & 1 ? (crc >> 1) ^ poly : crc >> 1;
         }
     }
     else if (model->width <= 8) {
@@ -43,14 +37,8 @@ word_t crc_bitwise(model_t *model, word_t crc, void const *dat, size_t len)
         crc <<= shift;
         while (len--) {
             crc ^= *buf++;
-            crc = crc & 0x80 ? (crc << 1) ^ poly : crc << 1;
-            crc = crc & 0x80 ? (crc << 1) ^ poly : crc << 1;
-            crc = crc & 0x80 ? (crc << 1) ^ poly : crc << 1;
-            crc = crc & 0x80 ? (crc << 1) ^ poly : crc << 1;
-            crc = crc & 0x80 ? (crc << 1) ^ poly : crc << 1;
-            crc = crc & 0x80 ? (crc << 1) ^ poly : crc << 1;
-            crc = crc & 0x80 ? (crc << 1) ^ poly : crc << 1;
-            crc = crc & 0x80 ? (crc << 1) ^ poly : crc << 1;
+            for (int k = 0; k < 8; k++)
+                crc = crc & 0x80 ? (crc << 1) ^ poly : crc << 1;
         }
         crc >>= shift;
         crc &= ONES(model->width);
@@ -63,14 +51,8 @@ word_t crc_bitwise(model_t *model, word_t crc, void const *dat, size_t len)
         shift = model->width - 8;           /* 1..WORDBITS-8 */
         while (len--) {
             crc ^= (word_t)(*buf++) << shift;
-            crc = crc & mask ? (crc << 1) ^ poly : crc << 1;
-            crc = crc & mask ? (crc << 1) ^ poly : crc << 1;
-            crc = crc & mask ? (crc << 1) ^ poly : crc << 1;
-            crc = crc & mask ? (crc << 1) ^ poly : crc << 1;
-            crc = crc & mask ? (crc << 1) ^ poly : crc << 1;
-            crc = crc & mask ? (crc << 1) ^ poly : crc << 1;
-            crc = crc & mask ? (crc << 1) ^ poly : crc << 1;
-            crc = crc & mask ? (crc << 1) ^ poly : crc << 1;
+            for (int k = 0; k < 8; k++)
+                crc = crc & mask ? (crc << 1) ^ poly : crc << 1;
         }
         crc &= ONES(model->width);
     }
