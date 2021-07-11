@@ -58,33 +58,6 @@ word_t crc_bitwise(model_t *model, word_t crc, void const *dat, size_t len) {
     return crc ^ model->xorout;
 }
 
-word_t crc_zeros(model_t *model, word_t crc, size_t count) {
-    word_t poly = model->poly;
-
-    // Pre-process the CRC./
-    crc ^= model->xorout;
-    if (model->rev)
-        crc = reverse(crc, model->width);
-
-    // Process count zeros.
-    if (model->ref) {
-        crc &= ONES(model->width);
-        while (count--)
-            crc = crc & 1 ? (crc >> 1) ^ poly : crc >> 1;
-    }
-    else {
-        word_t mask = (word_t)1 << (model->width - 1);
-        while (count--)
-            crc = crc & mask ? (crc << 1) ^ poly : crc << 1;
-        crc &= ONES(model->width);
-    }
-
-    // Post-process and return the CRC.
-    if (model->rev)
-        crc = reverse(crc, model->width);
-    return crc ^ model->xorout;
-}
-
 void crc_table_bytewise(model_t *model) {
     unsigned char k = 0;
     do {
@@ -400,6 +373,49 @@ void crc_table_combine(model_t *model) {
     fprintf(stderr, "%s never cycled?\n", model->name);
 #endif
 
+}
+
+word_t crc_zeros(model_t *model, word_t crc, uintmax_t n) {
+    // Pre-process the CRC.
+    crc ^= model->xorout;
+    if (model->rev)
+        crc = reverse(crc, model->width);
+
+    // Apply n zero bits to crc.
+    if (n < 128) {
+        word_t poly = model->poly;
+        if (model->ref) {
+            crc &= ONES(model->width);
+            while (n--)
+                crc = crc & 1 ? (crc >> 1) ^ poly : crc >> 1;
+        }
+        else {
+            word_t mask = (word_t)1 << (model->width - 1);
+            while (n--)
+                crc = crc & mask ? (crc << 1) ^ poly : crc << 1;
+            crc &= ONES(model->width);
+        }
+    }
+    else {
+        crc &= ONES(model->width);
+        int k = 0;
+        for (;;) {
+            if (n & 1)
+                crc = multmodp(model, model->table_comb[k], crc);
+            n >>= 1;
+            if (n == 0)
+                break;
+            if (++k == model->cycle) {
+                assert(model->back != -1);
+                k = model->back;
+            }
+        }
+    }
+
+    // Post-process and return the CRC.
+    if (model->rev)
+        crc = reverse(crc, model->width);
+    return crc ^ model->xorout;
 }
 
 // Return x^(8n) modulo p(x), where p(x) is the CRC polynomial. model->cycle

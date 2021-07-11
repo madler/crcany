@@ -138,7 +138,7 @@ void crc_zeros_dbl(model_t *model, word_t *crc_hi, word_t *crc_lo,
     word_t poly_lo = model->poly;
     word_t poly_hi = model->poly_hi;
 
-    // Use crc_bitwise() for CRCs that fit in a word_t.
+    // Use crc_zeros() for CRCs that fit in a word_t.
     if (model->width <= WORDBITS) {
         *crc_lo = crc_zeros(model, *crc_lo, count);
         *crc_hi = 0;
