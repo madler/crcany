@@ -161,7 +161,7 @@ int main(void) {
             }
             num++;
             if (tests & 4)
-                printf("%s:%s%s%s (CRC too long for byte, word)\n",
+                printf("%s:%s%s%s (CRC too long for byte, word, comb)\n",
                        model.name,
                        tests & 1 ? "" : " bit fail",
                        tests & 3 ? "" : ",",

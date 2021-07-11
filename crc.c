@@ -4,6 +4,7 @@
  */
 
 #include <stddef.h>
+#include <assert.h>
 #include "crc.h"
 
 word_t crc_bitwise(model_t *model, word_t crc, void const *dat, size_t len)
@@ -373,38 +374,73 @@ static word_t multmodp(model_t *model, word_t a, word_t b) {
     return prod;
 }
 
+// Build table_comb[] for model. Stop when a cycle is detected, or the table is
+// full. On return, model->cycle is the number of entries in the table, which
+// is the index at which to cycle. model->back is the index to go to when
+// model->cycle is reached. If no cycle was detected, then model->back is -1.
 void crc_table_combine(model_t *model) {
-    // Keep squaring x^1 modulo p(x), where p(x) is the CRC polynomial, to get
-    // x^2^n. Start saving values in the table with x^2^3, representing the
-    // action of one zero byte. Go until the sequence cycles, or WORDBITS
-    // entries have been filled in.
+    // Keep squaring x^1 modulo p(x), where p(x) is the CRC polynomial, to
+    // generate x^2^n modulo p(x).
     word_t sq = model->ref ? (word_t)1 << (model->width - 2) : 2;   // x^1
-    sq = multmodp(model, sq, sq);           // x^2^1
-    sq = multmodp(model, sq, sq);           // x^2^2
-    sq = multmodp(model, sq, sq);           // x^2^3
-    word_t x8 = model->table_comb[0] = sq;
-    for (unsigned n = 1; n < WORDBITS; n++) {
-        sq = multmodp(model, sq, sq);       // x^2^(n+3)
-        if (sq == x8) {
-            model->cycle = n;
-            return;
-        }
-        model->table_comb[n] = sq;
+    model->table_comb[0] = sq;
+    int n = 1;
+    while ((unsigned)n < sizeof(model->table_comb) / sizeof(word_t)) {
+        sq = multmodp(model, sq, sq);       // x^2^n
+
+        // If this value has already appeared, then done.
+        for (int j = 0; j < n; j++)
+            if (model->table_comb[j] == sq) {
+                model->cycle = n;
+                model->back = j;
+                return;
+            }
+
+        // New value -- append to table.
+        model->table_comb[n++] = sq;
     }
-    model->cycle = WORDBITS;
+
+    // No cycle was found, up to the size of the table.
+    model->cycle = n;
+    model->back = -1;
+
+#ifdef FIND_CYCLE
+#   define GIVEUP 10000
+    // Just out of curiosity, see when x^2^n cycles for this CRC.
+    word_t comb[GIVEUP];
+    for (int k = 0; k < n; k++)
+        comb[k] = model->table_comb[k];
+    while (n < GIVEUP) {
+        sq = multmodp(model, sq, sq);
+        for (int j = 0; j < n; j++)
+            if (comb[j] == sq) {
+                fprintf(stderr, "%s cycled at %u to %u\n",
+                        model->name, n, j);
+                return;
+            }
+        comb[n++] = sq;
+    }
+    fprintf(stderr, "%s never cycled?\n", model->name);
+#endif
+
 }
 
 // Return x^(8n) modulo p(x), where p(x) is the CRC polynomial. model->cycle
 // and model->table_comb[] must first be initialized by crc_table_combine().
 static word_t x8nmodp(model_t *model, uintmax_t n) {
     word_t xp = model->ref ? (word_t)1 << (model->width - 1) : 1;   // x^0
-    unsigned k = 0;
-    while (n) {
+    int k = model->cycle > 3 ? 3 :
+            model->cycle == 3 ? model->back :
+            model->cycle - 1;
+    for (;;) {
         if (n & 1)
             xp = multmodp(model, model->table_comb[k], xp);
         n >>= 1;
-        if (++k == model->cycle)
-            k = 0;
+        if (n == 0)
+            break;
+        if (++k == model->cycle) {
+            assert(model->back != -1);
+            k = model->back;
+        }
     }
     return xp;
 }

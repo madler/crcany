@@ -131,6 +131,9 @@ int crc_gen(model_t *model, char *name,
     if ((word_bits != 32 && word_bits != 64) || model->width > word_bits)
         return 1;
 
+    // fill in the combine table
+    crc_table_combine(model);
+
     // select the unsigned integer type to be used for CRC calculations
     char *crc_type;
     unsigned crc_bits;
@@ -174,9 +177,12 @@ int crc_gen(model_t *model, char *name,
         "#include <stddef.h>\n"
         "#include <stdint.h>\n", model->ref ? "low" : "high");
 
-    // include the header in the code
+    // include that header in the code
     fprintf(code,
         "#include \"%s.h\"\n", name);
+    if (model->back == -1)
+        fputs(
+        "#include <assert.h>\n", code);
 
     // function to reverse the low model->width bits, if needed (unlikely)
     if (model->rev)
@@ -738,48 +744,6 @@ int crc_gen(model_t *model, char *name,
         "    return crc;\n"
         "}\n", code);
 
-    // CRC combination table.
-    fprintf(head,
-        "\n"
-        "// Compute the combination of two CRCs.\n"
-        "%s %s_comb(%s crc1, %s crc2, uintmax_t len2);\n",
-            crc_type, name, crc_type, crc_type);
-    crc_table_combine(model);
-    fprintf(code,
-        "\n"
-        "static %s const table_comb[] = {\n", crc_type);
-    {
-        word_t most = 0;
-        unsigned len = model->cycle < word_bits ? model->cycle : word_bits;
-        for (unsigned k = 0; k < len; k++)
-            if (model->table_comb[k] > most)
-                most = model->table_comb[k];
-        int hex = most > 9;
-        int digits = 0;
-        while (most) {
-            most >>= 4;
-            digits++;
-        }
-        char const *pre = "   ";    // this plus one space is line prefix
-        unsigned const max = COLS;  // maximum length before new line
-        unsigned n = 0;             // characters on this line, so far
-        for (unsigned k = 0; k < len - 1; k++) {
-            if (n == 0)
-                n += fprintf(code, "%s", pre);
-            n += fprintf(code, " %s%0*"X",",
-                         hex ? "0x" : "", digits, model->table_comb[k]);
-            if (n + digits + (hex ? 4 : 2) > max) {
-                putc('\n', code);
-                n = 0;
-            }
-        }
-        fprintf(code, "%s %s%0*"X, n ? "" : pre,
-                hex ? "0x" : "", digits, model->table_comb[len - 1]);
-    }
-    fputs(
-        "\n"
-        "};\n", code);
-
     // Multiply mod poly for CRC combination.
     if (model->ref)
         fprintf(code,
@@ -824,6 +788,47 @@ int crc_gen(model_t *model, char *name,
         "}\n", code);
     }
 
+    // CRC combination table.
+    fprintf(head,
+        "\n"
+        "// Compute the combination of two CRCs.\n"
+        "%s %s_comb(%s crc1, %s crc2, uintmax_t len2);\n",
+            crc_type, name, crc_type, crc_type);
+    fprintf(code,
+        "\n"
+        "static %s const table_comb[] = {\n", crc_type);
+    {
+        word_t most = 0;
+        int len = model->cycle;
+        for (int k = 0; k < len; k++)
+            if (model->table_comb[k] > most)
+                most = model->table_comb[k];
+        int hex = most > 9;
+        int digits = 0;
+        while (most) {
+            most >>= 4;
+            digits++;
+        }
+        char const *pre = "   ";    // this plus one space is line prefix
+        unsigned const max = COLS;  // maximum length before new line
+        unsigned n = 0;             // characters on this line, so far
+        for (int k = 0; k < len - 1; k++) {
+            if (n == 0)
+                n += fprintf(code, "%s", pre);
+            n += fprintf(code, " %s%0*"X",",
+                         hex ? "0x" : "", digits, model->table_comb[k]);
+            if (n + digits + (hex ? 4 : 2) > max) {
+                putc('\n', code);
+                n = 0;
+            }
+        }
+        fprintf(code, "%s %s%0*"X, n ? "" : pre,
+                hex ? "0x" : "", digits, model->table_comb[len - 1]);
+    }
+    fputs(
+        "\n"
+        "};\n", code);
+
     // Calculate x^(8n) mod poly for CRC combination.
     fprintf(code,
         "\n"
@@ -835,20 +840,26 @@ int crc_gen(model_t *model, char *name,
     else
         fprintf(code,
         "    %s xp = 1;\n", crc_type);
+    fprintf(code,
+        "    int k = %d;\n", model->cycle > 3 ? 3 :
+                             model->cycle == 3 ? model->back :
+                             model->cycle - 1);
     fputs(
-        "    unsigned k = 0;\n"
-        "    while (n) {\n"
+        "    for (;;) {\n"
         "        if (n & 1)\n"
         "            xp = multmodp(table_comb[k], xp);\n"
-        "        n >>= 1;\n", code);
-    if (model->cycle < word_bits)
+        "        n >>= 1;\n"
+        "        if (n == 0)\n"
+        "            break;\n", code);
+    if (model->back != -1)
         fprintf(code,
-        "        if (++k == %u)\n"
-        "            k = 0;\n",
-                model->cycle);
+        "        if (++k == %d)\n"
+        "            k = %d;\n",
+                model->cycle, model->back);
     else
-        fputs(
-        "        k++;\n", code);
+        fprintf(code,
+        "        k++;\n"
+        "        assert(k < %d);\n", model->cycle);
     fputs(
         "    }\n"
         "    return xp;\n"
