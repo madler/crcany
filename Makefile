@@ -1,7 +1,7 @@
 CFLAGS=-O3 -Wall -Wextra -Wcast-qual -std=c99 -pedantic
 OBJS=$(patsubst %.c,%.o,$(wildcard src/crc*.c))
 all: src/allcrcs.c crctest crcadd mincrc
-src/allcrcs.c: crcall allcrcs-abbrev.txt
+src/allcrcs.c: crcall allcrcs-abbrev.txt crcany.c
 	@rm -rf src
 	./crcall < allcrcs-abbrev.txt
 	@cat src/allcrcs.h >> src/allcrcs.c
