@@ -1,5 +1,5 @@
 /*
-  crcany version 2.1, 18 September 2021
+  crcany version 2.1, 19 September 2021
 
   Copyright (C) 2014, 2016, 2017, 2020, 2021 Mark Adler
 
@@ -69,7 +69,10 @@
                      Replace Ruby script with Python for portability
                      Add copy of Greg Cook's all-CRCs page for safekeeping
                      Update to the latest CRC catalog
-   2.1  18 Sep 2021  Enhance crcany to compute multiple CRCs on the same input
+   2.1  19 Sep 2021  Generate code for combining CRCs
+                     Add options to crcadd for endianess and word size
+                     Split off checks of CRC lists to a checklists make target
+                     Enhance crcany to compute multiple CRCs on the same input
  */
 
 #include <stdio.h>
