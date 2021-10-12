@@ -534,7 +534,8 @@ ptrdiff_t fgetline(char **line, size_t *size, FILE *in) {
         if (ch == '\n')
             break;
     }
-    (*line)[len] = 0;
+    if (*line != NULL)
+        (*line)[len] = 0;
     ptrdiff_t ret = len;
     return ret < 1 ? -1 : ret;
 }
