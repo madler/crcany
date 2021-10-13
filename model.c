@@ -517,13 +517,18 @@ void process_model(model_t *model) {
 
 // Like POSIX getline().
 ptrdiff_t fgetline(char **line, size_t *size, FILE *in) {
-    if (*line == NULL)
-        *size = 0;
+    if (*line == NULL || *size == 0) {
+        free(*line);
+        *line = malloc(1);
+        if (*line == NULL)
+            return -1;
+        *size = 1;
+    }
     int ch;
     size_t len = 0;
     while ((ch = getc(in)) != EOF) {
         if (len + 1 >= *size) {
-            size_t more = *size == 0 ? 128 : *size << 1;
+            size_t more = *size << 1;
             void *mem = realloc(*line, more);
             if (mem == NULL)
                 return -1;
