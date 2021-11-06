@@ -156,9 +156,7 @@ int crc_gen(model_t *model, char *name,
     // exlusive-ored to the CRC at each step of the word-wise calculation.
     char *word_type = word_bits == 32 ? "uint32_t" : "uint64_t";
     unsigned word_bytes = word_bits >> 3;
-    unsigned word_shift = 0;
-    for (unsigned n = word_bytes; n > 1; n >>= 1)
-        word_shift++;
+    unsigned word_shift = word_bytes == 4 ? 2 : 3;
 
     // Provide usage information in the header, and define the integer types.
     fprintf(head,
