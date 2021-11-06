@@ -108,20 +108,24 @@ word_t crc_bytewise(model_t *model, word_t crc, void const *dat, size_t len) {
     return crc;
 }
 
-// Swap the bytes in a word_t.  This can be replaced by a byte-swap builtin, if
-// available on the compiler.  E.g. __builtin_bswap64() on gcc and clang.  The
-// speed of swap() is inconsequential however, being used at most twice per
-// crc_wordwise() call.  It is only used on little-endian machines if the CRC
-// is not reflected, or on big-endian machines if the CRC is reflected.
-static inline word_t swap(word_t x) {
-    unsigned n = WORDCHARS - 1;
+// Swap the low n bytes of x. Bytes above those are discarded.
+static inline word_t swaplow(word_t x, unsigned n) {
+    if (n == 0)
+        return 0;
     word_t y = x & 0xff;
-    while (x >>= 8) {
+    while (--n) {
+        x >>= 8;
         y <<= 8;
         y |= x & 0xff;
-        n--;
     }
-    return y << (n << 3);
+    return y;
+}
+
+// Swap the bytes in a word_t. swap() is used at most twice per crc_wordwise()
+// call, and then only on little-endian machines if the CRC is not reflected,
+// or on big-endian machines if the CRC is reflected.
+static inline word_t swap(word_t x) {
+    return swaplow(x, WORDCHARS);
 }
 
 void crc_table_wordwise(model_t *model, unsigned little, unsigned word_bits) {
@@ -132,20 +136,25 @@ void crc_table_wordwise(model_t *model, unsigned little, unsigned word_bits) {
     word_t xor = model->xorout;
     if (model->width < 8 && !model->ref)
         xor <<= 8 - model->width;
+    unsigned word_bytes = word_bits >> 3;
     for (unsigned k = 0; k < 256; k++) {
         word_t crc = model->table_byte[k];
-        model->table_word[0][k] = opp ? swap(crc << top) : crc << top;
+        model->table_word[0][k] = opp ? swaplow(crc << top, word_bytes) :
+                                        crc << top;
         for (unsigned n = 1; n < (word_bits >> 3); n++) {
             crc ^= xor;
             if (model->ref)
                 crc = (crc >> 8) ^ model->table_byte[crc & 0xff];
             else if (model->width <= 8)
                 crc = model->table_byte[crc];
-            else
+            else {
                 crc = (crc << 8) ^
                       model->table_byte[(crc >> (model->width - 8)) & 0xff];
+                crc &= ONES(model->width);
+            }
             crc ^= xor;
-            model->table_word[n][k] = opp ? swap(crc << top) : crc << top;
+            model->table_word[n][k] = opp ? swaplow(crc << top, word_bytes) :
+                                            crc << top;
         }
     }
 }
