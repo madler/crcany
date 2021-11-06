@@ -230,11 +230,33 @@ static int create_source(char *src, char *name, FILE **head, FILE **code) {
 // Read CRC models from stdin, one per line, and generate C tables and routines
 // to compute each one. Each CRC goes into it's own .h and .c source files in
 // the "src" subdirectory of the current directory.
-int main(void) {
+int main(int argc, char **argv) {
     // Determine endianess of this machine (for testing on this machine, we
     // need to match its endianess).
     unsigned little = 1;
     little = *((unsigned char *)(&little));
+    int bits = INTMAX_BITS;
+
+    // Process option for generated code word bits.
+    for (int i = 1; i < argc; i++)
+        if (argv[i][0] == '-')
+            for (char *opt = argv[i] + 1; *opt; opt++)
+                switch (*opt) {
+                case '4':
+                    bits = 32;
+                    break;
+                case 'h':
+                    fputs("usage: crcall [-4] < crc-defs\n"
+                          "    -4 for four-byte words\n", stderr);
+                    return 0;
+                default:
+                    fprintf(stderr, "unknown option: %c\n", *opt);
+                    return 1;
+                }
+        else {
+            fputs("must precede options with a dash\n", stderr);
+            return 1;
+        }
 
     // Create test source files.
     FILE *defs, *test, *allc, *allh;
@@ -302,7 +324,7 @@ int main(void) {
         else if (ret == 1)
             fprintf(stderr, "%s is an unusable model -- skipping\n",
                     model.name);
-        else if (model.width > INTMAX_BITS)
+        else if (model.width > bits)
             fprintf(stderr, "%s is too wide (%u bits) -- skipping\n",
                     model.name, model.width);
         else {
@@ -326,7 +348,7 @@ int main(void) {
                 fprintf(stderr, "%s/%s.[ch] %s -- skipping\n", SRC, name,
                         errno == 1 ? "create error" : "exists");
             else {
-                crc_gen(&model, name, little, INTMAX_BITS, head, code);
+                crc_gen(&model, name, little, bits, head, code);
                 test_gen(&model, name, defs, test, allc, allh);
                 fclose(code);
                 fclose(head);
