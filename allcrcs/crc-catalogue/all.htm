@@ -260,14 +260,25 @@
 <LI>Class: <SPAN CLASS="academic">academic</SPAN></LI>
 <LI>Alias: <A NAME="crc.cat.crc-7"><STRONG>CRC-7</STRONG></A></LI>
 <LI>Used in the MultiMediaCard interface.</LI>
+<LI>Additional reference courtesy of Greg Nelson, Grammatech Inc.</LI>
 <LI>JEDEC Standard <A HREF="https://www.jedec.org/sites/default/files/docs/JESD84-A441_0.pdf">JESD84-A441</A> (March 2010) (registration required)
 <UL>
 <LI><STRONG>I</STRONG> Full definition (Section 10.2, pp.157&ndash;8)</LI>
 <LI><STRONG>I</STRONG> Shift register diagram (Figure 53, p.158)</LI>
 </UL>
 </LI>
+<LI><A HREF="https://github.com/torvalds/linux/blob/master/CREDITS">Linux contributors</A> (14 January 2021), Linux module <A HREF="https://stuff.mit.edu/afs/sipb/contrib/linux/lib/crc7.c"><CODE>lib/crc7.c</CODE></A><!-- https://github.com/torvalds/linux/blob/master/lib/crc7.c -->
+<UL>
+<LI><STRONG>III</STRONG> Code: C</LI>
+</UL>
+</LI>
+<LI>Nokia Corporation (2008), Linux module <A HREF="https://stuff.mit.edu/afs/sipb/contrib/linux/drivers/net/wireless/ti/wl1251/spi.c"><CODE>drivers/net/wireless/ti/wl1251/spi.c</CODE></A><!-- https://elixir.bootlin.com/linux/v5.16/source/drivers/net/wireless/ti/wl1251/spi.c -->
+<UL>
+<LI><STRONG>III</STRONG> Definition: Init (l.104)</LI>
+</UL>
+</LI>
 <LI>Created: 7 October 2008</LI>
-<LI>Updated: 21 November 2018</LI>
+<LI>Updated: 11 January 2022</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-7-rohc">CRC-7/ROHC</A></H3>
@@ -307,7 +318,7 @@
 <P CLASS="attested"><CODE>width=8  poly=0x2f  init=0xff  refin=false  refout=false  xorout=0xff  check=0xdf  residue=0x42  name="CRC-8/AUTOSAR"</CODE></P>
 <UL>
 <LI>Class: <SPAN CLASS="attested">attested</SPAN></LI>
-<LI>AUTOSAR (1 November 2018), <A HREF="https://www.autosar.org/standards/classic-platform/classic-platform-440/">AUTOSAR Classic Platform release 4.4.0</A>, <A HREF="https://www.autosar.org/fileadmin/Releases_TEMP/Classic_Platform_4.4.0/Libraries.zip">Libraries</A> (Zip archive), document <CODE>Libraries/AUTOSAR_SWS_CRCLibrary.pdf</CODE>
+<LI>AUTOSAR (30 November 2020), <A HREF="https://www.autosar.org/standards/classic-platform/">AUTOSAR Classic Platform</A> release R20-11, <A HREF="https://www.autosar.org/fileadmin/user_upload/standards/classic/20-11/AUTOSAR_SWS_CRCLibrary.pdf">Specification of CRC Routines</A>
 <UL>
 <LI><STRONG>I</STRONG> Comprehensive primer on CRC theory (Section 7.1, pp.18&ndash;21)</LI>
 <LI><STRONG>I</STRONG> All parameters (Section 7.2.1.2, p.24)</LI>
@@ -326,7 +337,7 @@
 </LI>
 <LI>Unique effective solution of codeword set</LI>
 <LI>Created: 24 July 2016</LI>
-<LI>Updated: 20 March 2019</LI>
+<LI>Updated: 2 January 2021</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-8-bluetooth">CRC-8/BLUETOOTH</A></H3>
@@ -334,13 +345,13 @@
 <UL>
 <LI>Class: <SPAN CLASS="attested">attested</SPAN></LI>
 <LI>Used in Bluetooth header error correction (HEC).  Init=0x00 is used in the Inquiry Response substate.</LI>
-<LI>Bluetooth SIG (21 January 2019), <A HREF="https://www.bluetooth.com/specifications">Bluetooth Specification</A>, <A HREF="https://www.bluetooth.org/docman/handlers/downloaddoc.ashx?doc_id=457080">Core Version 5.1</A>
+<LI>Bluetooth SIG (31 December 2019), <A HREF="https://www.bluetooth.com/specifications/">Bluetooth Specification</A>, <A HREF="https://www.bluetooth.org/docman/handlers/downloaddoc.ashx?doc_id=478726">Core Version 5.2</A>
 <UL>
-<LI><STRONG>I</STRONG> Definition: Init (Section 2.B.1.2.1, p.383)</LI>
-<LI><STRONG>I</STRONG> Definition: Width, Poly (Section 2.B.7.1.1, p.454&ndash;5)</LI>
-<LI><STRONG>I</STRONG> Definition: RefIn; shift register diagram (Figure 2.B.7.3, p.455)</LI>
-<LI><STRONG>I</STRONG> Definition: Refin, RefOut, Residue (Figure 2.B.7.5, p.455)
-<LI><STRONG>IV</STRONG> 10 codewords (Section 2.G.4, p.1716)
+<LI><STRONG>I</STRONG> Definition: Init (Section 2.B.1.2.1, p.417)</LI>
+<LI><STRONG>I</STRONG> Definition: Width, Poly (Section 2.B.7.1.1, pp.488&ndash;9)</LI>
+<LI><STRONG>I</STRONG> Definition: RefIn; shift register diagram (Figure 2.B.7.3, p.489)</LI>
+<LI><STRONG>I</STRONG> Definition: Refin, RefOut, Residue (Figure 2.B.7.5, p.489)
+<LI><STRONG>IV</STRONG> 10 codewords (Section 2.G.4, p.898)
 <UL>
 <LI><CODE>11000100&#8203;10100001&#8203;11</CODE></LI>
 <LI><CODE>00100100&#8203;10010011&#8203;00</CODE></LI>
@@ -357,7 +368,7 @@
 </UL>
 </LI>
 <LI>Created: 20 June 2017</LI>
-<LI>Updated: 20 March 2019</LI>
+<LI>Updated: 3 January 2021</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-8-cdma2000">CRC-8/CDMA2000</A></H3>
@@ -436,7 +447,7 @@
 <LI><STRONG>I</STRONG> Full mathematical description (Section 3.1.1.1, pp.17&ndash;18)</LI>
 </UL>
 </LI>
-<LI>Michael Niedermayer, Aur&eacute;lien Jacobs <DFN>et al.</DFN> (6 September 2019), <A HREF="https://ffmpeg.org/releases/ffmpeg-4.2.1.tar.bz2">FFmpeg 4.2.1</A> (bzip2 compressed tarfile), module <A HREF="https://github.com/FFmpeg/FFmpeg/blob/master/libavutil/tests/crc.c"><CODE>ffmpeg-4.2.1/libavutil/tests/crc.c</CODE></A>
+<LI>Michael Niedermayer, Aur&eacute;lien Jacobs <DFN>et al.</DFN> (11 July 2020), <A HREF="https://ffmpeg.org/releases/ffmpeg-4.3.1.tar.xz">FFmpeg 4.3.1</A> (XZ compressed tarfile), module <A HREF="https://github.com/FFmpeg/FFmpeg/blob/master/libavutil/tests/crc.c"><CODE>ffmpeg-4.3.1/libavutil/tests/crc.c</CODE></A>
 <UL>
 <LI><STRONG>IV</STRONG> 1 codeword
 <UL>
@@ -445,7 +456,7 @@
 </LI>
 </UL>
 <LI>Created: 17 February 2017</LI>
-<LI>Updated: 28 December 2019</LI>
+<LI>Updated: 2 January 2021</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-8-gsm-b">CRC-8/GSM-B</A></H3>
@@ -458,6 +469,41 @@
 </UL>
 </LI>
 <LI>Created: 17 February 2017</LI>
+</UL>
+
+<H3><A NAME="crc.cat.crc-8-hitag">CRC-8/HITAG</A></H3>
+<P CLASS="attested"><CODE>width=8  poly=0x1d  init=0xff  refin=false  refout=false  xorout=0x00  check=0xb4  residue=0x00  name="CRC-8/HITAG"</CODE></P>
+<UL>
+<LI>Class: <SPAN CLASS="attested">attested</SPAN></LI>
+<LI>Contributed by Philippe Teuwen.</LI>
+<LI>Used in RFID applications.</LI>
+<LI>Philips Semiconductors (4 October 2001), <A HREF="https://media.digikey.com/pdf/Data%20Sheets/NXP%20PDFs/HTCM400.pdf">HITAG core module hardware HTCM400 Product Specification</A> (courtesy of Digi-Key Electronics)
+<UL>
+<LI><STRONG>I</STRONG> Definition: Width, Poly, Init (Section 7.6.1, p.10)</LI>
+</UL>
+</LI>
+<LI>Philips Semiconductors (18 July 2006), <A HREF="https://media.digikey.com/pdf/Data%20Sheets/NXP%20PDFs/HTS.pdf">HTS IC H32/HTS IC H56/HTS IC H48 transponder IC Product Specification</A>, revision 3.1 (courtesy of Digi-Key Electronics)<!-- A HREF="https://www.mouser.de/datasheet/2/302/ht079231-197083.pdf" -->
+<UL>
+<LI><STRONG>I</STRONG> Definition: Width, Poly, Init (Section 13.1, p.45 &mdash; Section 13.2.2, p.45)</LI>
+<LI><STRONG>I</STRONG> Code: C (Section 13.3, p.46)</LI>
+<LI><STRONG>IV</STRONG> 1 codeword (Section 13.3, p.46)
+<UL>
+<LI><CODE>00000001&#8203;01100011&#8203;01000000&#8203;01101101&#8203;10100100&#8203;11110</CODE> (source: <CODE>00000</CODE> + <CODE>2C680DB4&#8203;9E</CODE>)</LI>
+</UL>
+</LI>
+</UL>
+</LI>
+<LI>"Sixkay" (July&ndash;August 2015), Proxmark3 community <A HREF="http://proxmark.io/www.proxmark.org/forum/viewtopic.php%3Fpid=17406.html#p17406">forum post</A>
+<UL>
+<LI><STRONG>IV</STRONG> 1 codeword
+<UL>
+<LI><CODE>CA9340FF&#8203;C6</CODE></LI>
+</UL>
+</LI>
+</UL>
+</LI>
+<LI><SAMP>reveng -m CRC-8/HITAG -a 1 -A 8 -X -c 00000001&#8203;01100011&#8203;01000000&#8203;01101101&#8203;10100100&#8203;11110 11001010&#8203;10010011&#8203;01000000&#8203;11111111&#8203;11000110</SAMP> &rarr; <CODE>00 00</CODE></LI>
+<LI>Created: 23 December 2021</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-8-i-432-1">CRC-8/I-432-1</A></H3>
@@ -542,7 +588,7 @@
 <LI><STRONG>I</STRONG> Worked examples (pp.5&ndash;9)</LI>
 </UL>
 </LI>
-<LI>Maxim Integrated, Maxim iButton&reg; datasheets (for links see <A HREF="https://www.maximintegrated.com/en/app-notes/index.mvp/id/27">Application Note 27</A>)
+<LI>Maxim Integrated, Maxim iButton&reg; datasheets (for links see <A HREF="https://www.maximintegrated.com/en/design/technical-documents/app-notes/2/27.html">Application Note 27</A>)
 <UL>
 <LI><STRONG>IV</STRONG> 15 codewords
 <UL>
@@ -565,7 +611,7 @@
 </LI>
 </UL>
 <LI>Created: 26 April 2009</LI>
-<LI>Updated: 28 December 2019</LI>
+<LI>Updated: 2 January 2021</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-8-mifare-mad">CRC-8/MIFARE-MAD</A></H3>
@@ -724,7 +770,7 @@
 </LI>
 </UL>
 </LI>
-<LI>AUTOSAR (1 November 2018), <A HREF="https://www.autosar.org/standards/classic-platform/classic-platform-440/">AUTOSAR Classic Platform release 4.4.0</A>, <A HREF="https://www.autosar.org/fileadmin/Releases_TEMP/Classic_Platform_4.4.0/Libraries.zip">Libraries</A> (Zip archive), document <CODE>Libraries/AUTOSAR_SWS_CRCLibrary.pdf</CODE>
+<LI>AUTOSAR (30 November 2020), <A HREF="https://www.autosar.org/standards/classic-platform/">AUTOSAR Classic Platform</A> release R20-11, <A HREF="https://www.autosar.org/fileadmin/user_upload/standards/classic/20-11/AUTOSAR_SWS_CRCLibrary.pdf">Specification of CRC Routines</A>
 <UL>
 <LI><STRONG>I</STRONG> Comprehensive primer on CRC theory (Section 7.1, pp.18&ndash;21)</LI>
 <LI><STRONG>I</STRONG> All parameters (Section 7.2.1.1, p.23)</LI>
@@ -746,7 +792,7 @@
 </LI>
 <LI>Unique effective solution of codeword set</LI>
 <LI>Created: 17 February 2016</LI>
-<LI>Updated: 25 March 2019</LI>
+<LI>Updated: 2 January 2021</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-8-smbus">CRC-8/SMBUS</A></H3>
@@ -775,7 +821,7 @@
 <LI><STRONG>III</STRONG> Code: 6805 assembler (pp.14,18)</LI>
 </UL>
 </LI>
-<LI>Michael Niedermayer, Aur&eacute;lien Jacobs <DFN>et al.</DFN> (6 September 2019), <A HREF="https://ffmpeg.org/releases/ffmpeg-4.2.1.tar.bz2">FFmpeg 4.2.1</A> (bzip2 compressed tarfile), module <A HREF="https://github.com/FFmpeg/FFmpeg/blob/master/libavutil/tests/crc.c"><CODE>ffmpeg-4.2.1/libavutil/tests/crc.c</CODE></A>
+<LI>Michael Niedermayer, Aur&eacute;lien Jacobs <DFN>et al.</DFN> (11 July 2020), <A HREF="https://ffmpeg.org/releases/ffmpeg-4.3.1.tar.xz">FFmpeg 4.3.1</A> (XZ compressed tarfile), module <A HREF="https://github.com/FFmpeg/FFmpeg/blob/master/libavutil/tests/crc.c"><CODE>ffmpeg-4.3.1/libavutil/tests/crc.c</CODE></A>
 <UL>
 <LI><STRONG>IV</STRONG> 1 codeword
 <UL>
@@ -784,7 +830,7 @@
 </LI>
 </UL>
 <LI>Created: 30 March 2005</LI>
-<LI>Updated: 28 December 2019</LI>
+<LI>Updated: 2 January 2021</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-8-tech-3250">CRC-8/TECH-3250</A></H3>
@@ -947,7 +993,7 @@
 </LI>
 </UL>
 </LI>
-<LI>Robert Bosch GmbH (3 December 2007), E-Ray FlexRay IP Module, <A HREF="http://www.bosch-semiconductors.com/media/ip_modules/pdf_2/flexray/071203_an001_1r02.pdf">Application Note - Wakeup</A>
+<LI>Robert Bosch GmbH (3 December 2007), E-Ray FlexRay IP Module, <!-- A HREF="http://www.bosch-semiconductors.com/media/ip_modules/pdf_2/flexray/071203_an001_1r02.pdf" --><!-- https://www.yumpu.com/en/document/view/26236135/flexray-ip-module-application-note-an001-wakeup-bosch- --><A HREF="https://www.yumpu.com/en/document/read/26236135/flexray-ip-module-application-note-an001-wakeup-bosch-">Application Note - Wakeup</A> (embedded content; courtesy of Yumpu)
 <UL>
 <LI><STRONG>IV</STRONG> 3 codewords (Section 4.4.3, pp.26&ndash;30; researched by Vivek Rajan)
 <UL>
@@ -959,7 +1005,7 @@
 </UL>
 </LI>
 <LI>Created: 3 November 2007</LI>
-<LI>Updated: 21 November 2018</LI>
+<LI>Updated: 2 January 2021</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-11-umts">CRC-11/UMTS</A></H3>
@@ -1123,7 +1169,7 @@
 </LI>
 </UL>
 </LI>
-<LI>"whiteox11" (28 December 2011), <A HREF="https://www.youtube.com/watch?v=u0i9A8c8PNo">"mpt1327 decoding"</A> (courtesy of YouTube) (video, embedded content)
+<LI>"whiteox11" (28 December 2011), <A HREF="https://www.youtube.com/watch?v=u0i9A8c8PNo">"mpt1327 decoding"</A> (video, embedded content; courtesy of YouTube)
 <UL>
 <LI><STRONG>II</STRONG> Transcript confirming implementation with 25 codewords (selection)
 <UL>
@@ -1136,7 +1182,7 @@
 </LI>
 </UL>
 </LI>
-<LI>"radiowavemaniac" (21 November 2012), <A HREF="https://www.youtube.com/watch?v=faG_SnEH0u4">"RTL-SDR Trunkview Decoder MPT1327"</A> (courtesy of YouTube) (video, embedded content)
+<LI>"radiowavemaniac" (21 November 2012), <A HREF="https://www.youtube.com/watch?v=faG_SnEH0u4">"RTL-SDR Trunkview Decoder MPT1327"</A> (video, embedded content; courtesy of YouTube)
 <UL>
 <LI><STRONG>II</STRONG> Transcript confirming implementation with 10 codewords
 <UL>
@@ -1164,7 +1210,7 @@
 <LI><SAMP>reveng -m CRC-15/MPT1327 -t -X -c 9FD2B4F3&#8203;FB44</SAMP> &rarr; <CODE>4F2C</CODE></LI>
 <LI>Unique effective solution of codeword set</LI>
 <LI>Created: 16 July 2012</LI>
-<LI>Updated: 17 March 2020</LI>
+<LI>Updated: 29 December 2021</LI>
 </UL>
 
 <H3><A NAME="crc.cat-bits.16"></A><A NAME="crc.cat.crc-16-arc">CRC-16/ARC</A></H3>
@@ -1172,7 +1218,7 @@
 <UL>
 <LI>Class: <SPAN CLASS="attested">attested</SPAN></LI>
 <LI>Alias: <A NAME="crc.cat.arc"><STRONG>ARC</STRONG></A>, <A NAME="crc.cat.crc-16"><STRONG>CRC-16</STRONG></A>, <A NAME="crc.cat.crc-16-lha"><STRONG>CRC-16/LHA</STRONG></A>, <A NAME="crc.cat.crc-ibm"><STRONG>CRC-IBM</STRONG></A></LI>
-<LI>AUTOSAR (1 November 2018), <A HREF="https://www.autosar.org/standards/classic-platform/classic-platform-440/">AUTOSAR Classic Platform release 4.4.0</A>, <A HREF="https://www.autosar.org/fileadmin/Releases_TEMP/Classic_Platform_4.4.0/Libraries.zip">Libraries</A> (Zip archive), document <CODE>Libraries/AUTOSAR_SWS_CRCLibrary.pdf</CODE>
+<LI>AUTOSAR (30 November 2020), <A HREF="https://www.autosar.org/standards/classic-platform/">AUTOSAR Classic Platform</A> release R20-11, <A HREF="https://www.autosar.org/fileadmin/user_upload/standards/classic/20-11/AUTOSAR_SWS_CRCLibrary.pdf">Specification of CRC Routines</A>
 <UL>
 <LI><STRONG>I</STRONG> Comprehensive primer on CRC theory (Section 7.1, pp.18&ndash;21)</LI>
 <LI><STRONG>I</STRONG> All parameters (Section 7.2.2.2, p.25)</LI>
@@ -1230,7 +1276,7 @@
 </LI>
 <LI>Unique effective solution of codeword set</LI>
 <LI>Created: 30 March 2005</LI>
-<LI>Updated: 28 December 2019</LI>
+<LI>Updated: 2 January 2021</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-16-cdma2000">CRC-16/CDMA2000</A></H3>
@@ -1384,7 +1430,7 @@
 <LI><STRONG>I</STRONG> Definition: Residue; full mathematical description (Section 6.2.5.4, pp.99&ndash;101)</LI>
 <LI><STRONG>I</STRONG> Performance of polynomial (Annex B, p.297)</LI>
 </UL>
-<LI>"user521925" (27 November 2010), StackOverflow <A HREF="https://stackoverflow.com/questions/4289611/crc-16-dect-with-poly-x16-x10-x8-x7-x3-1">submitted question</A>
+<LI>"Nick" (27 November 2010), StackOverflow <A HREF="https://stackoverflow.com/questions/4289611/crc-16-dect-with-poly-x16-x10-x8-x7-x3-1">submitted question</A>
 <UL>
 <LI><STRONG>IV</STRONG> 1 codeword
 <UL>
@@ -1394,7 +1440,7 @@
 </UL>
 </LI>
 <LI>Created: 30 July 2010</LI>
-<LI>Updated: 15 February 2017</LI>
+<LI>Updated: 2 January 2021</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-16-dnp">CRC-16/DNP</A></H3>
@@ -1551,7 +1597,7 @@
 </LI>
 <LI>Scott McLaughlin (24 September 2008), Computer Interfacing Forum <A HREF="https://web.archive.org/web/20181116150244/https://www.lammertbies.nl/forum/viewtopic.php?t=907">topic 907</A> (courtesy of the Internet Archive)
 <UL>
-<LI><STRONG>III</STRONG> Reported definition for TI Tag-It: full (except Check)</LI>
+<LI><STRONG>III</STRONG> Reported definition for TI Tag-It: full (except Check, Residue)</LI>
 <LI><STRONG>IV</STRONG> 4 codewords cited for TI Tag-It
 <UL>
 <LI><CODE>00000000&#8203;01000000&#8203;00010110&#8203;00111100&#8203;10111</CODE></LI>
@@ -1564,7 +1610,7 @@
 </LI>
 <LI>Unique effective solution of codeword set</LI>
 <LI>Created: 2 November 2007</LI>
-<LI>Updated: 28 December 2019</LI>
+<LI>Updated: 3 January 2021</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-16-gsm">CRC-16/GSM</A></H3>
@@ -1611,7 +1657,7 @@
 <LI>Class: <SPAN CLASS="attested">attested</SPAN></LI>
 <LI>Alias: <A NAME="crc.cat.crc-16-autosar"><STRONG>CRC-16/AUTOSAR</STRONG></A>, <A NAME="crc.cat.crc-16-ccitt-false"><STRONG>CRC-16/CCITT-FALSE</STRONG></A></LI>
 <LI>An algorithm commonly misidentified as CRC-CCITT.  CRC-CCITT customarily refers to the LSB-first form of the algorithm in ITU-T Recommendation V.41 (see <A HREF="#crc.cat.crc-16-kermit">CRC-16/KERMIT</A>); its MSB-first counterpart is <A HREF="#crc.cat.crc-16-xmodem">CRC-16/XMODEM</A>.</LI>
-<LI>AUTOSAR (1 November 2018), <A HREF="https://www.autosar.org/standards/classic-platform/classic-platform-440/">AUTOSAR Classic Platform release 4.4.0</A>, <A HREF="https://www.autosar.org/fileadmin/Releases_TEMP/Classic_Platform_4.4.0/Libraries.zip">Libraries</A> (Zip archive), document <CODE>Libraries/AUTOSAR_SWS_CRCLibrary.pdf</CODE>
+<LI>AUTOSAR (30 November 2020), <A HREF="https://www.autosar.org/standards/classic-platform/">AUTOSAR Classic Platform</A> release R20-11, <A HREF="https://www.autosar.org/fileadmin/user_upload/standards/classic/20-11/AUTOSAR_SWS_CRCLibrary.pdf">Specification of CRC Routines</A>
 <UL>
 <LI><STRONG>I</STRONG> Comprehensive primer on CRC theory (Section 7.1, pp.18&ndash;21)</LI>
 <LI><STRONG>I</STRONG> All parameters (Section 7.2.2.1, pp.24&ndash;5)</LI>
@@ -1664,7 +1710,7 @@
 </LI>
 <LI>Unique effective solution of codeword set</LI>
 <LI>Created: 30 March 2005</LI>
-<LI>Updated: 28 December 2019</LI>
+<LI>Updated: 2 January 2021</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-16-ibm-sdlc">CRC-16/IBM-SDLC</A></H3>
@@ -1706,7 +1752,7 @@
 <LI><STRONG>I</STRONG> Code: C (Appendix C.2, pp.19&ndash;21)</LI>
 </UL>
 </LI>
-<LI>William H. Press, Brian P. Flannery, Saul A. Teukolsky, William T. Vetterling (1992), <A HREF="http://apps.nrbook.com/c/index.html"><CITE>Numerical recipes in C: The art of scientific computing</CITE></A>, 2nd ed., Cambridge University Press, ISBN 0-521-43108-5 (embedded content)
+<LI>William H. Press, Brian P. Flannery, Saul A. Teukolsky, William T. Vetterling (1992), <!-- A HREF="http://apps.nrbook.com/c/index.html" --><CITE>Numerical recipes in C: The art of scientific computing</CITE><!-- /A -->, 2nd ed., Cambridge University Press, ISBN 0-521-43108-5
 <UL>
 <LI><STRONG>III</STRONG> All parameters (except Check) (p.898)</LI>
 <LI><STRONG>III</STRONG> Code: C (pp.900&ndash;1)</LI>
@@ -1745,7 +1791,7 @@
 </LI>
 <LI>Unique effective solution of codeword set</LI>
 <LI>Created: 10 September 2005</LI>
-<LI>Updated: 25 March 2019</LI>
+<LI>Updated: 2 January 2021</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-16-iso-iec-14443-3-a">CRC-16/ISO-IEC-14443-3-A</A></H3>
@@ -1781,9 +1827,32 @@
 </LI>
 </UL>
 </LI>
+<LI>Flavio D. Garcia, <DFN>et al.</DFN> (October 2008), <A HREF="https://www.sos.cs.ru.nl/applications/rfid/2008-esorics.pdf">Dismantling MIFARE Classic</A>, Proceedings of the Thirteenth European Symposium on Research in Computer Security (ESORICS 2008)
+<UL>
+<LI><STRONG>IV</STRONG> 6 codewords (Figure 2, p.100; Section 4.1, p.102, referencing ISO/IEC 14443; Figure 6, p.105)
+<UL>
+<LI><CODE>9370C2A8&#8203;2DF4B3BA&#8203;A3</CODE></LI>
+<LI><CODE>08B6DD</CODE></LI>
+<LI><CODE>6030764A</CODE></LI>
+<LI><CODE>500057CD</CODE></LI>
+<LI><CODE>93700000&#8203;0000009C&#8203;D9</CODE></LI>
+<LI><CODE>6000F57B</CODE></LI>
+</UL>
+</LI>
+</UL>
+</LI>
+<LI>Flavio D. Garcia, <DFN>et al.</DFN> (October 2008), <A HREF="https://www.sos.cs.ru.nl/applications/rfid/2008-esorics-slides-updated.pdf">Dismantling MIFARE Classic</A>, slide presentation, ESORICS 2008 conference
+<UL>
+<LI><STRONG>IV</STRONG> 1 additional codeword (p.13)
+<UL>
+<LI><CODE>93701DFB&#8203;E03335D3&#8203;55</CODE></LI>
+</UL>
+</LI>
+</UL>
+</LI>
 <LI>Unique effective solution of codeword set</LI>
 <LI>Created: 30 April 2011</LI>
-<LI>Updated: 21 February 2019</LI>
+<LI>Updated: 29 December 2021</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-16-kermit">CRC-16/KERMIT</A></H3>
@@ -1839,7 +1908,7 @@
 <LI><STRONG>III</STRONG> Shift register diagram (Figure 7.4, p.223)</LI>
 </UL>
 </LI>
-<LI>William H. Press, Brian P. Flannery, Saul A. Teukolsky, William T. Vetterling (1992), <A HREF="http://apps.nrbook.com/c/index.html"><CITE>Numerical recipes in C: The art of scientific computing</CITE></A>, 2nd ed., Cambridge University Press, ISBN 0-521-43108-5 (embedded content)
+<LI>William H. Press, Brian P. Flannery, Saul A. Teukolsky, William T. Vetterling (1992), <!-- A HREF="http://apps.nrbook.com/c/index.html" --><CITE>Numerical recipes in C: The art of scientific computing</CITE><!-- /A -->, 2nd ed., Cambridge University Press, ISBN 0-521-43108-5
 <UL>
 <LI><STRONG>III</STRONG> All parameters (except Check) (p.898)</LI>
 <LI><STRONG>III</STRONG> Code: C (pp.900&ndash;1)</LI>
@@ -1851,9 +1920,19 @@
 </LI>
 </UL>
 </LI>
+<LI>Atmel Corporation (30 March 2015), <A HREF="https://www.mcselec.com/pub/an/Atmel-9114-ATAN0086-Using-ATA5577-in-Animal-Identification-Application_Application-Note.pdf">Application Note ATAN0086: Using Atmel ATA5577 in Animal Identification Application according to ISO11784/85</A> (courtesy of MCS Electronics)
+<UL>
+<LI><STRONG>IV</STRONG> 2 codewords (Figure 2-2, p.5; Figure 3-1, p.6)
+<UL>
+<LI><CODE>10000000&#8203;00000000&#8203;00000000&#8203;00000000&#8203;00000011&#8203;10011111&#8203;00000000&#8203;00000001&#8203;00100010&#8203;01110100</CODE></LI>
+<LI><CODE>10001110&#8203;11000100&#8203;11000110&#8203;00000010&#8203;00000011&#8203;10011111&#8203;00000000&#8203;00000001&#8203;01111100&#8203;11100100</CODE></LI>
+</UL>
+</LI>
+</UL>
+</LI>
 <LI>Unique effective solution of codeword set</LI>
 <LI>Created: 10 September 2005</LI>
-<LI>Updated: 28 December 2019</LI>
+<LI>Updated: 23 December 2021</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-16-lj1200">CRC-16/LJ1200</A></H3>
@@ -1912,7 +1991,7 @@
 <LI><STRONG>III</STRONG> Worked example</LI>
 </UL>
 </LI>
-<LI>William H. Press, Brian P. Flannery, Saul A. Teukolsky, William T. Vetterling (1992), <A HREF="http://apps.nrbook.com/c/index.html"><CITE>Numerical recipes in C: The art of scientific computing</CITE></A>, 2nd ed., Cambridge University Press, ISBN 0-521-43108-5 (embedded content)
+<LI>William H. Press, Brian P. Flannery, Saul A. Teukolsky, William T. Vetterling (1992), <!-- A HREF="http://apps.nrbook.com/c/index.html" --><CITE>Numerical recipes in C: The art of scientific computing</CITE><!-- /A -->, 2nd ed., Cambridge University Press, ISBN 0-521-43108-5
 <UL>
 <LI><STRONG>III</STRONG> All parameters (except Check) (p.898)</LI>
 <LI><STRONG>III</STRONG> Code: C (pp.900&ndash;1)</LI>
@@ -1936,7 +2015,7 @@
 </LI>
 <LI>Unique effective solution of codeword set</LI>
 <LI>Created: 18 January 2008</LI>
-<LI>Updated: 28 December 2019</LI>
+<LI>Updated: 2 January 2021</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-16-modbus">CRC-16/MODBUS</A></H3>
@@ -1945,7 +2024,7 @@
 <LI>Class: <SPAN CLASS="attested">attested</SPAN></LI>
 <LI>Alias: <A NAME="crc.cat.modbus"><STRONG>MODBUS</STRONG></A></LI>
 <LI>CRC presented low byte first.</LI>
-<LI>MODICON Inc. (June 1996), <A HREF="http://modbus.org/docs/PI_MBUS_300.pdf">Modbus Protocol Reference Guide</A>, Rev. J
+<LI>MODICON Inc. (June 1996), <A HREF="https://modbus.org/docs/PI_MBUS_300.pdf">Modbus Protocol Reference Guide</A>, Rev. J
 <UL>
 <LI><STRONG>I</STRONG> Algorithm (pp.112&ndash;3)</LI>
 <LI><STRONG>I</STRONG> Code: C (pp.113&ndash;5)</LI>
@@ -1967,7 +2046,7 @@
 </UL>
 </LI>
 <LI>Created: 27 February 2007</LI>
-<LI>Updated: 28 December 2019</LI>
+<LI>Updated: 2 January 2021</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-16-nrsc-5">CRC-16/NRSC-5</A></H3>
@@ -2145,13 +2224,13 @@
 <UL>
 <LI>Class: <SPAN CLASS="attested">attested</SPAN></LI>
 <LI>Used in the SCSI Data Integrity Field.  XorOut = <CODE>0xBADB</CODE> is proposed to mark known bad blocks.</LI>
-<LI>Gerald Houlder, INCITS Technical Committee T10 (2 May 2003), <A HREF="http://www.t10.org/ftp/t10/document.03/03-111r0.pdf">End-to-End Data Protection Proposal</A>
+<LI>Gerald Houlder, INCITS Technical Committee T10 (2 May 2003), <A HREF="https://www.t10.org/ftp/t10/document.03/03-111r0.pdf">End-to-End Data Protection Proposal</A>
 <UL>
 <LI><STRONG>I</STRONG> Definition: Poly, Init (p.6)</LI>
 <LI><STRONG>I</STRONG> Shift register diagram (p.18)</LI>
 </UL>
 </LI>
-<LI>George O. Penokie, INCITS Technical Committee T10 (22 October 2003), <A HREF="http://www.t10.org/ftp/t10/document.03/03-176r9.pdf">Simplified End-to-End Data Protection</A>
+<LI>George O. Penokie, INCITS Technical Committee T10 (22 October 2003), <A HREF="https://www.t10.org/ftp/t10/document.03/03-176r9.pdf">Simplified End-to-End Data Protection</A>
 <UL>
 <LI><STRONG>I</STRONG> Definition: Residue; full mathematical description (Sections 4.5.3&ndash;4.5.4, pp.4&ndash;5)</LI>
 <LI><STRONG>IV</STRONG> 5 codewords (Section 4.5.6, p.6)
@@ -2165,13 +2244,13 @@
 </LI>
 </UL>
 </LI>
-<LI>Ralph Weber, John Lohmeyer, INCITS Technical Committee T10 (20 August 2003), <A HREF="http://www.t10.org/ftp/t10/document.03/03-281r0.pdf">Minutes of Data Integrity Study Group - Aug 19-20, 2003</A>
+<LI>Ralph Weber, John Lohmeyer, INCITS Technical Committee T10 (20 August 2003), <A HREF="https://www.t10.org/ftp/t10/document.03/03-281r0.pdf">Minutes of Data Integrity Study Group - Aug 19-20, 2003</A>
 <UL>
 <LI><STRONG>I</STRONG> Definition: Init, XorOut (Item 4.6, p.3)</LI>
 <LI><STRONG>I</STRONG> Acceptance of previous two documents (Item 4.7, p.3)</LI>
 </UL>
 </LI>
-<LI>Pat Thaler, INCITS Technical Committee T10 (28 August 2003), <A HREF="http://www.t10.org/ftp/t10/document.03/03-290r0.pdf">16-bit CRC polynomial selection</A>
+<LI>Pat Thaler, INCITS Technical Committee T10 (28 August 2003), <A HREF="https://www.t10.org/ftp/t10/document.03/03-290r0.pdf">16-bit CRC polynomial selection</A>
 <UL>
 <LI><STRONG>I</STRONG> Properties of polynomial</LI>
 </UL>
@@ -2182,7 +2261,7 @@
 </UL>
 </LI>
 <LI>Created: 29 September 2009</LI>
-<LI>Updated: 28 February 2017</LI>
+<LI>Updated: 2 January 2021</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-16-teledisk">CRC-16/TELEDISK</A></H3>
@@ -2275,7 +2354,7 @@
 <LI><STRONG>III</STRONG> Code: 16C54B assembler (Appendix A, pp.7&ndash;11; Appendix B, pp.12&ndash;22)</LI>
 </UL>
 </LI>
-<LI>Michael Niedermayer, Aur&eacute;lien Jacobs <DFN>et al.</DFN> (6 September 2019), <A HREF="https://ffmpeg.org/releases/ffmpeg-4.2.1.tar.bz2">FFmpeg 4.2.1</A> (bzip2 compressed tarfile), module <A HREF="https://github.com/FFmpeg/FFmpeg/blob/master/libavutil/tests/crc.c"><CODE>ffmpeg-4.2.1/libavutil/tests/crc.c</CODE></A>
+<LI>Michael Niedermayer, Aur&eacute;lien Jacobs <DFN>et al.</DFN> (11 July 2020), <A HREF="https://ffmpeg.org/releases/ffmpeg-4.3.1.tar.xz">FFmpeg 4.3.1</A> (XZ compressed tarfile), module <A HREF="https://github.com/FFmpeg/FFmpeg/blob/master/libavutil/tests/crc.c"><CODE>ffmpeg-4.3.1/libavutil/tests/crc.c</CODE></A>
 <UL>
 <LI><STRONG>IV</STRONG> 1 codeword
 <UL>
@@ -2310,7 +2389,7 @@
 </LI>
 <LI>Unique effective solution of codeword set</LI>
 <LI>Created: 4 June 2008</LI>
-<LI>Updated: 28 December 2019</LI>
+<LI>Updated: 2 January 2021</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-16-usb">CRC-16/USB</A></H3>
@@ -2401,7 +2480,7 @@
 <LI><STRONG>III</STRONG> All parameters (except Residue) cited for ZMODEM (p.6)</LI>
 </UL>
 </LI>
-<LI>William H. Press, Brian P. Flannery, Saul A. Teukolsky, William T. Vetterling (1992), <A HREF="http://apps.nrbook.com/c/index.html"><CITE>Numerical recipes in C: The art of scientific computing</CITE></A>, 2nd ed., Cambridge University Press, ISBN 0-521-43108-5 (embedded content)
+<LI>William H. Press, Brian P. Flannery, Saul A. Teukolsky, William T. Vetterling (1992), <!-- A HREF="http://apps.nrbook.com/c/index.html" --><CITE>Numerical recipes in C: The art of scientific computing</CITE><!-- /A -->, 2nd ed., Cambridge University Press, ISBN 0-521-43108-5
 <UL>
 <LI><STRONG>III</STRONG> All parameters (except Check) (p.898)</LI>
 <LI><STRONG>III</STRONG> Code: C (pp.900&ndash;1)</LI>
@@ -2414,7 +2493,7 @@
 </UL>
 </LI>
 <LI>Created: 30 March 2005</LI>
-<LI>Updated: 28 December 2019</LI>
+<LI>Updated: 2 January 2021</LI>
 </UL>
 
 <H3><A NAME="crc.cat-bits.17"></A><A NAME="crc.cat.crc-17-can-fd">CRC-17/CAN-FD</A></H3>
@@ -2423,10 +2502,11 @@
 <LI>Class: <SPAN CLASS="academic">academic</SPAN></LI>
 <LI>Robert Bosch GmbH (17 April 2012), <A HREF="https://web.archive.org/web/20151017122935/http://www.bosch-semiconductors.de/media/pdf_1/canliteratur/can_fd_spec.pdf">CAN with Flexible Data-Rate: Specification</A>, version 1.0 (courtesy of the Internet Archive)
 <UL>
-<LI><STRONG>I</STRONG> Full definition (except Check); pseudocode (Section 3.2.1, pp.13&ndash;4)</LI>
+<LI><STRONG>I</STRONG> Full definition (except Check); pseudocode (Section 3.2.1, pp.13&ndash;14)</LI>
 </UL>
 </LI>
 <LI>Created: 20 June 2017</LI>
+<LI>Updated: 3 January 2021</LI>
 </UL>
 
 <H3><A NAME="crc.cat-bits.21"></A><A NAME="crc.cat.crc-21-can-fd">CRC-21/CAN-FD</A></H3>
@@ -2435,7 +2515,7 @@
 <LI>Class: <SPAN CLASS="academic">academic</SPAN></LI>
 <LI>Robert Bosch GmbH (17 April 2012), <A HREF="https://web.archive.org/web/20151017122935/http://www.bosch-semiconductors.de/media/pdf_1/canliteratur/can_fd_spec.pdf">CAN with Flexible Data-Rate: Specification</A>, version 1.0 (courtesy of the Internet Archive)
 <UL>
-<LI><STRONG>I</STRONG> Full definition (except Check); pseudocode (Section 3.2.1, pp.13&ndash;4)</LI>
+<LI><STRONG>I</STRONG> Full definition (except Check); pseudocode (Section 3.2.1, pp.13&ndash;14)</LI>
 </UL>
 </LI>
 <LI>Robert Bosch GmbH (23 December 2011), CRC for CAN with flexible data rate (CAN FD)
@@ -2444,7 +2524,7 @@
 </UL>
 </LI>
 <LI>Created: 20 June 2017</LI>
-<LI>Updated: 6 June 2018</LI>
+<LI>Updated: 3 January 2021</LI>
 </UL>
 
 <H3><A NAME="crc.cat-bits.24"></A><A NAME="crc.cat.crc-24-ble">CRC-24/BLE</A></H3>
@@ -2454,10 +2534,10 @@
 <LI>Reference from named polynomial in Prof. Koopman's <A HREF="https://users.ece.cmu.edu/~koopman/crc/notes.html">CRC Polynomial Zoo</A>.</LI>
 <LI>The Init value applies to Bluetooth Low Energy (BLE) test packets and (device-) advertising channel packets.  Data channel packets use a custom Init value defined at connection time.</LI>
 <LI>BLE sniffer screenshot reference from "volta77" (29 May 2014), <A HREF="https://devzone.nordicsemi.com/question/2104/ble-crc-calculation/">Nordic Developer Zone post</A></LI>
-<LI>Bluetooth SIG (21 January 2019), <A HREF="https://www.bluetooth.com/specifications">Bluetooth Specification</A>, <A HREF="https://www.bluetooth.org/docman/handlers/downloaddoc.ashx?doc_id=457080">Core Version 5.1</A>
+<LI>Bluetooth SIG (31 December 2019), <A HREF="https://www.bluetooth.com/specifications/">Bluetooth Specification</A>, <A HREF="https://www.bluetooth.org/docman/handlers/downloaddoc.ashx?doc_id=478726">Core Version 5.2</A>
 <UL>
-<LI><STRONG>I</STRONG> Full definition (except Check) (Section 6.B.3.1.1, p.2737&ndash;8)</LI>
-<LI><STRONG>I</STRONG> Shift register diagram (Figure 6.B.3.3, p.2738)</LI>
+<LI><STRONG>I</STRONG> Full definition (except Check) (Section 6.B.3.1.1, pp.2923&ndash;4)</LI>
+<LI><STRONG>I</STRONG> Shift register diagram (Figure 6.B.3.3, p.2924)</LI>
 </UL>
 </LI>
 <LI>Texas Instruments, Inc. (12 March 2013), Processors wiki, <!-- A HREF="http://processors.wiki.ti.com/index.php/BLE_sniffer_guide" -->BLE sniffer guide<!-- /A -->
@@ -2494,7 +2574,7 @@
 </LI>
 <LI>Unique effective solution of codeword set</LI>
 <LI>Created: 7 February 2016</LI>
-<LI>Updated: 20 March 2019</LI>
+<LI>Updated: 3 January 2021</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-24-flexray-a">CRC-24/FLEXRAY-A</A></H3>
@@ -2652,7 +2732,7 @@
 <LI><STRONG>I</STRONG> Code: C (Section 10.1.4, p.52)</LI>
 </UL>
 </LI>
-<LI>Microware Systems Corporation (August 2000), <A HREF="http://rab.ict.pwr.wroc.pl/dydaktyka/supwa/os9/MWARE/pdf/os9k_tech.pdf">OS-9 Technical Manual, version 2.2</A>, revision I (courtesy of <SPAN LANG="pl">Laboratorium Robotyki, Politechnika Wroc&#322;awska</SPAN>, Poland)
+<LI>Microware Systems Corporation (August 2000), <A HREF="https://web.archive.org/web/20140829020824/http://rab.ict.pwr.wroc.pl/dydaktyka/supwa/os9/MWARE/pdf/os9k_tech.pdf">OS-9 Technical Manual, version 2.2</A>, revision I (courtesy of the Internet Archive)
 <UL>
 <LI><STRONG>I</STRONG> Definition: Init, Residue (Chapter 8, p.228)</LI>
 </UL>
@@ -2689,11 +2769,11 @@
 <LI>Reference from named polynomial in Prof. Koopman's <A HREF="https://users.ece.cmu.edu/~koopman/crc/notes.html">CRC Polynomial Zoo</A>.</LI>
 <LI>CCSA Telecommunication Industry Standard <A HREF="http://www.ccsa.org.cn/english/yd1838/Technical%20Requirements%20of%20Link%20Access%20Control%20(LAC)%20for%20the%20CDMA-based%20Digital%20Trunking%20Mobile%20Communication%20System.pdf">YD/T 1838.3-2008</A> (5 November 2008)
 <UL>
-<LI><STRONG>I</STRONG> Full definition (except Check) (Section 2.1.1.5.1.2, pp.2-44&ndash;5)</LI>
+<LI><STRONG>I</STRONG> Full definition (except Check, Residue) (Section 2.1.1.5.1.2, pp.2-44&ndash;5)</LI>
 </UL>
 </LI>
 <LI>Created: 20 February 2016</LI>
-<LI>Updated: 6 February 2017</LI>
+<LI>Updated: 3 January 2021</LI>
 </UL>
 
 <H3><A NAME="crc.cat-bits.31"></A><A NAME="crc.cat.crc-31-philips">CRC-31/PHILIPS</A></H3>
@@ -2721,7 +2801,7 @@
 <LI>Class: <SPAN CLASS="attested">attested</SPAN></LI>
 <LI>Alias: <A NAME="crc.cat.crc-32q"><STRONG>CRC-32Q</STRONG></A></LI>
 <LI>Used for aeronautical data.  Recognised by the ICAO.</LI>
-<LI>EUROCONTROL (20 March 2006), <A HREF="http://www.aixm.aero/sites/aixm.aero/files/imce/library/aixm_primer_4-5.pdf">AIXM Primer 4.5</A>
+<LI>EUROCONTROL (20 March 2006), <A HREF="https://www.aixm.aero/sites/aixm.aero/files/imce/library/aixm_primer_4-5.pdf">AIXM Primer 4.5</A>
 <UL>
 <LI><STRONG>I</STRONG> Definition: Width, Poly, Init, XorOut, RefIn (Section 6.2, pp.23&ndash;5)</LI>
 <LI><STRONG>I</STRONG> Flowchart (p.24)</LI>
@@ -2741,17 +2821,17 @@
 </UL>
 </LI>
 <LI>Created: 29 April 2009</LI>
-<LI>Updated: 28 December 2019</LI>
+<LI>Updated: 2 January 2021</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-32-autosar">CRC-32/AUTOSAR</A></H3>
 <P CLASS="attested"><CODE>width=32  poly=0xf4acfb13  init=0xffffffff  refin=true  refout=true  xorout=0xffffffff  check=0x1697d06a  residue=0x904cddbf  name="CRC-32/AUTOSAR"</CODE></P>
 <UL>
 <LI>Class: <SPAN CLASS="attested">attested</SPAN></LI>
-<LI>AUTOSAR (1 November 2018), <A HREF="https://www.autosar.org/standards/classic-platform/classic-platform-440/">AUTOSAR Classic Platform release 4.4.0</A>, <A HREF="https://www.autosar.org/fileadmin/Releases_TEMP/Classic_Platform_4.4.0/Libraries.zip">Libraries</A> (Zip archive), document <CODE>Libraries/AUTOSAR_SWS_CRCLibrary.pdf</CODE>
+<LI>AUTOSAR (30 November 2020), <A HREF="https://www.autosar.org/standards/classic-platform/">AUTOSAR Classic Platform</A> release R20-11, <A HREF="https://www.autosar.org/fileadmin/user_upload/standards/classic/20-11/AUTOSAR_SWS_CRCLibrary.pdf">Specification of CRC Routines</A>
 <UL>
 <LI><STRONG>I</STRONG> Comprehensive primer on CRC theory (Section 7.1, pp.18&ndash;21)</LI>
-<LI><STRONG>I</STRONG> All parameters (Section 7.2.3.2, pp.25&ndash;6)</LI>
+<LI><STRONG>I</STRONG> All parameters (Section 7.2.3.2, pp.26&ndash;7)</LI>
 <LI><STRONG>IV</STRONG> 7 codewords (Section 7.2.3.2, p.27)
 <UL>
 <LI><CODE>00000000&#8203;4022B36F</CODE></LI>
@@ -2767,7 +2847,7 @@
 </LI>
 <LI>Unique effective solution of codeword set</LI>
 <LI>Created: 24 July 2016</LI>
-<LI>Updated: 20 March 2019</LI>
+<LI>Updated: 2 January 2021</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-32-base91-d">CRC-32/BASE91-D</A></H3>
@@ -2890,7 +2970,7 @@
 <LI>The <CODE>cksum</CODE> program processes a representation of the input stream length following the input.  It returns <CODE>930766865</CODE> (<CODE>0x377A6011</CODE>) on the check string, processed internally as <CODE>31 32 33 34 35 36 37 38 39 09</CODE>.  See the definition for details.</LI>
 <LI>The Open Group (1997), Single Unix Specification, version 2, Commands &amp; Utilities Issue 5, Reference Pages: <A HREF="https://pubs.opengroup.org/onlinepubs/7990989775/xcu/cksum.html">cksum</A>
 <UL>
-<LI><STRONG>I</STRONG> Full definition (except Check)</LI>
+<LI><STRONG>I</STRONG> Full definition (except Check, Residue)</LI>
 </UL>
 </LI>
 <LI>Q. Frank Xia (December 1999), GNU cksum 2.0a
@@ -2898,7 +2978,7 @@
 <LI><STRONG>II</STRONG> Implementation</LI>
 </UL>
 </LI>
-<LI>Michael Niedermayer, Aur&eacute;lien Jacobs <DFN>et al.</DFN> (6 September 2019), <A HREF="https://ffmpeg.org/releases/ffmpeg-4.2.1.tar.bz2">FFmpeg 4.2.1</A> (bzip2 compressed tarfile), module <A HREF="https://github.com/FFmpeg/FFmpeg/blob/master/libavutil/tests/crc.c"><CODE>ffmpeg-4.2.1/libavutil/tests/crc.c</CODE></A>
+<LI>Michael Niedermayer, Aur&eacute;lien Jacobs <DFN>et al.</DFN> (11 July 2020), <A HREF="https://ffmpeg.org/releases/ffmpeg-4.3.1.tar.xz">FFmpeg 4.3.1</A> (XZ compressed tarfile), module <A HREF="https://github.com/FFmpeg/FFmpeg/blob/master/libavutil/tests/crc.c"><CODE>ffmpeg-4.3.1/libavutil/tests/crc.c</CODE></A>
 <UL>
 <LI><STRONG>IV</STRONG> 1 codeword (before XorOut stage)
 <UL>
@@ -2908,7 +2988,7 @@
 </UL>
 </LI>
 <LI>Created: 30 March 2005</LI>
-<LI>Updated: 28 December 2019</LI>
+<LI>Updated: 2 January 2021</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-32-iscsi">CRC-32/ISCSI</A></H3>
@@ -2969,7 +3049,7 @@
 <LI><STRONG>I</STRONG> Definition: Residue; full mathematical description (Section 8.1.1.6.2, p.17)</LI>
 </UL>
 </LI>
-<LI>AUTOSAR (1 November 2018), <A HREF="https://www.autosar.org/standards/classic-platform/classic-platform-440/">AUTOSAR Classic Platform release 4.4.0</A>, <A HREF="https://www.autosar.org/fileadmin/Releases_TEMP/Classic_Platform_4.4.0/Libraries.zip">Libraries</A> (Zip archive), document <CODE>Libraries/AUTOSAR_SWS_CRCLibrary.pdf</CODE>
+<LI>AUTOSAR (30 November 2020), <A HREF="https://www.autosar.org/standards/classic-platform/">AUTOSAR Classic Platform</A> release R20-11, <A HREF="https://www.autosar.org/fileadmin/user_upload/standards/classic/20-11/AUTOSAR_SWS_CRCLibrary.pdf">Specification of CRC Routines</A>
 <UL>
 <LI><STRONG>I</STRONG> Comprehensive primer on CRC theory (Section 7.1, pp.18&ndash;21)</LI>
 <LI><STRONG>I</STRONG> All parameters (Section 7.2.3.1, p.26)</LI>
@@ -3056,7 +3136,7 @@
 </LI>
 <LI>Unique effective solution of codeword set</LI>
 <LI>Created: 30 March 2005</LI>
-<LI>Updated: 28 December 2019</LI>
+<LI>Updated: 2 January 2021</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-32-jamcrc">CRC-32/JAMCRC</A></H3>
@@ -3078,6 +3158,37 @@
 <LI>Updated: 21 November 2018</LI>
 </UL>
 
+<H3><A NAME="crc.cat.crc-32-mef">CRC-32/MEF</A></H3>
+<P CLASS="attested"><CODE>width=32  poly=0x741b8cd7  init=0xffffffff  refin=true  refout=true  xorout=0x00000000  check=0xd2c22f51  residue=0x00000000  name="CRC-32/MEF"</CODE></P>
+<UL>
+<LI>Class: <SPAN CLASS="attested">attested</SPAN></LI>
+<LI>Reference courtesy of Greg Nelson, Grammatech Inc.</LI>
+<LI>Mayo Foundation (19 February 2016), <A HREF="https://github.com/msel-source/meflib/raw/multiplatform/MEF%203%20Specification.pdf">Multiscale Electrophysiology File Format Version 3.0 (MEF3) specification</A> (courtesy of GitHub) <!-- does not name its authors, but uploaded to GitHub by Ben Brinkmann and formerly hosted on the Mayo Foundation web site. Version at https://web.archive.org/web/20170528095458/http://msel.mayo.edu/files/codes/MEF%203%20Specification.pdf is dated 7 October 2015 -->
+<UL>
+<LI><STRONG>I</STRONG> Definition: Init (p.90), Width (p.91)</LI>
+<LI><STRONG>I</STRONG> Citation for Poly: "Koopman" (p.91)</LI>
+</UL>
+</LI>
+<LI>Dan Crepeau (27 Sep 2021), <A HREF="https://github.com/msel-source/sampledata/raw/master/sample_data.mefd.tar">Sample MEF 3.0 data</A> (tar archive)
+<UL>
+<LI><STRONG>II</STRONG> Recording confirming implementation with at least 32 codewords (selection)
+<UL>
+<LI><CODE>4E6F7465&#8203;00010000&#8203;30000000&#8203;40F2E0C8&#8203;E6740400&#8203;54686973&#8203;20697320&#8203;74686520&#8203;74657874&#8203;206F6620&#8203;74686520&#8203;66697273&#8203;74206E6F&#8203;74652E00&#8203;7E7E7E7E&#8203;7E7E7E7E&#8203;7E7E7E7E&#8203;42342AB7</CODE></LI>
+<LI><CODE>4E6F7465&#8203;00010000&#8203;30000000&#8203;C08879C9&#8203;E6740400&#8203;54686973&#8203;20697320&#8203;74686520&#8203;74657874&#8203;206F6620&#8203;74686520&#8203;7365636F&#8203;6E64206E&#8203;6F74652E&#8203;007E7E7E&#8203;7E7E7E7E&#8203;7E7E7E7E&#8203;78CE3BA8</CODE></LI>
+<LI><CODE>42342AB7&#8203;4E6F7465&#8203;00010000&#8203;30000000&#8203;40F2E0C8&#8203;E6740400&#8203;54686973&#8203;20697320&#8203;74686520&#8203;74657874&#8203;206F6620&#8203;74686520&#8203;66697273&#8203;74206E6F&#8203;74652E00&#8203;7E7E7E7E&#8203;7E7E7E7E&#8203;7E7E7E7E&#8203;78CE3BA8&#8203;4E6F7465&#8203;00010000&#8203;30000000&#8203;C08879C9&#8203;E6740400&#8203;54686973&#8203;20697320&#8203;74686520&#8203;74657874&#8203;206F6620&#8203;74686520&#8203;7365636F&#8203;6E64206E&#8203;6F74652E&#8203;007E7E7E&#8203;7E7E7E7E&#8203;7E7E7E7E&#8203;266D44ED</CODE></LI>
+<LI><CODE>4E6F7465&#8203;00010000&#8203;00040000&#8203;00000000&#8203;40F2E0C8&#8203;E6740400&#8203;4E6F7465&#8203;00010000&#8203;48040000&#8203;00000000&#8203;C08879C9&#8203;E6740400&#8203;D1D99813</CODE></LI>
+</UL>
+</LI>
+</UL>
+</LI>
+<LI>Matt Stead, Ben Brinkmann, Dan Crepeau, Mayo Foundation (2013), Multiscale Electrophysiology Format (MEF) version 3.0 library, modules <A HREF="https://github.com/msel-source/meflib/blob/multiplatform/meflib/meflib.c"><CODE>meflib/meflib.c</CODE></A>, <A HREF="https://github.com/msel-source/meflib/blob/multiplatform/meflib/meflib.h"><CODE>meflib/meflib.h</CODE></A>
+<UL>
+<LI><STRONG>III</STRONG> Code: C</LI>
+</UL>
+</LI>
+<LI>Created: 10 January 2022</LI>
+</UL>
+
 <H3><A NAME="crc.cat.crc-32-mpeg-2">CRC-32/MPEG-2</A></H3>
 <P CLASS="attested"><CODE>width=32  poly=0x04c11db7  init=0xffffffff  refin=false  refout=false  xorout=0x00000000  check=0x0376e6e7  residue=0x00000000  name="CRC-32/MPEG-2"</CODE></P>
 <UL>
@@ -3094,13 +3205,13 @@
 <LI><STRONG>II</STRONG> Implementation</LI>
 </UL>
 </LI>
-<LI>VideoLAN Organization (19 August 2019), <A HREF="https://www.videolan.org/vlc/">VLC 3.0.8</A> module <A HREF="https://www.videolan.org/developers/vlc/modules/mux/mpeg/ps.c"><CODE>vlc-3.0.8/modules/mux/mpeg/ps.c</CODE></A>
+<LI>VideoLAN Organization (10 June 2020), <A HREF="https://www.videolan.org/vlc/">VLC 3.0.11</A> module <A HREF="https://www.videolan.org/developers/vlc/modules/mux/mpeg/ps.c"><CODE>vlc-3.0.11/modules/mux/mpeg/ps.c</CODE></A>
 <UL>
 <LI><STRONG>III</STRONG> Code: C</LI>
 </UL>
 </LI>
 <LI>Created: 8 October 2008</LI>
-<LI>Updated: 28 December 2019</LI>
+<LI>Updated: 2 January 2021</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-32-xfer">CRC-32/XFER</A></H3>
@@ -3113,13 +3224,13 @@
 <LI><STRONG>II</STRONG> Implementation</LI>
 </UL>
 </LI>
-<LI>William H. Press, Brian P. Flannery, Saul A. Teukolsky, William T. Vetterling (1992), <A HREF="http://apps.nrbook.com/c/index.html"><CITE>Numerical recipes in C: The art of scientific computing</CITE></A>, 2nd ed., Cambridge University Press, ISBN 0-521-43108-5 (embedded content)
+<LI>William H. Press, Brian P. Flannery, Saul A. Teukolsky, William T. Vetterling (1992), <!-- A HREF="http://apps.nrbook.com/c/index.html" --><CITE>Numerical recipes in C: The art of scientific computing</CITE><!-- /A -->, 2nd ed., Cambridge University Press, ISBN 0-521-43108-5
 <UL>
 <LI><STRONG>III</STRONG> Presents polynomial and its properties (p.299)</LI>
 </UL>
 </LI>
 <LI>Created: 30 March 2005</LI>
-<LI>Updated: 21 November 2018</LI>
+<LI>Updated: 2 January 2021</LI>
 </UL>
 
 <H3><A NAME="crc.cat-bits.40"></A><A NAME="crc.cat.crc-40-gsm">CRC-40/GSM</A></H3>
@@ -3204,6 +3315,43 @@
 <LI>Updated: 5 June 2018</LI>
 </UL>
 
+<H3><A NAME="crc.cat.crc-64-ms">CRC-64/MS</A></H3>
+<P CLASS="attested"><CODE>width=64  poly=0x259c84cba6426349  init=0xffffffffffffffff  refin=true  refout=true  xorout=0x0000000000000000  check=0x75d4b74f024eceea  residue=0x0000000000000000  name="CRC-64/MS"</CODE></P>
+<UL>
+<LI>Class: <SPAN CLASS="attested">attested</SPAN></LI>
+<LI>Reference courtesy of Greg Nelson, Grammatech Inc.</LI>
+<LI>Reportedly also used in <CITE>AppID</CITE> hashes and the <CODE>thumbcache.dll</CODE> file.</LI>
+<LI>Microsoft Corporation (25 June 2021), <A HREF="https://winprotocoldoc.blob.core.windows.net/productionwindowsarchives/MS-FCIADS/%5bMS-FCIADS%5d.pdf">[MS-FCIADS]: File Classification Infrastructure Alternate Data Stream (ADS) File Format</A>
+<UL>
+<LI><STRONG>I</STRONG> Full mathematical description (Section 2.8, pp.11&ndash;12)</LI>
+<LI><STRONG>IV</STRONG> 1 codeword (Section 3, pp.13&ndash;15)
+<UL>
+<LI><CODE>EBDBF499&#8203;B234C901&#8203;8A000000&#8203;00000000&#8203;00000000&#8203;02000000&#8203;D8AE24AF&#8203;CF9C941F&#8203;01000000&#8203;08000000&#8203;36000000&#8203;2E000000&#8203;42007500&#8203;73006900&#8203;6E006500&#8203;73007300&#8203;49006D00&#8203;70006100&#8203;63007400&#8203;00004800&#8203;42004900&#8203;00000700&#8203;00000800&#8203;00001C00&#8203;00001800&#8203;00005000&#8203;49004900&#8203;00003100&#8203;00005365&#8203;C6807317&#8203;DACE</CODE></LI>
+</UL>
+</LI>
+</UL>
+</LI>
+<LI>Hexacorn Ltd (30 April 2013), <A HREF="https://www.hexacorn.com/blog/2013/04/30/jumplists-file-names-and-appid-calculator/">JumpLists file names and AppID calculator</A>
+<UL>
+<LI><STRONG>II</STRONG> Implementation (with <CITE>AppID</CITE> string translation)</LI>
+<LI><STRONG>III</STRONG> Code: Perl</LI>
+<LI><STRONG>IV</STRONG> 7 codewords
+<UL>
+<LI><CODE>4D004900&#8203;43005200&#8203;4F005300&#8203;4F004600&#8203;54002E00&#8203;49004E00&#8203;54004500&#8203;52004E00&#8203;45005400&#8203;45005800&#8203;50004C00&#8203;4F005200&#8203;45005200&#8203;2E004400&#8203;45004600&#8203;41005500&#8203;4C005400&#8203;A149B5EA&#8203;6DB8C828</CODE></LI>
+<LI><CODE>4D004900&#8203;43005200&#8203;4F005300&#8203;4F004600&#8203;54002E00&#8203;57004900&#8203;4E004400&#8203;4F005700&#8203;53002E00&#8203;53005400&#8203;49004300&#8203;4B005900&#8203;4E004F00&#8203;54004500&#8203;530058C7&#8203;73F29AD5&#8203;7E33</CODE></LI>
+<LI><CODE>7B003100&#8203;41004300&#8203;31003400&#8203;45003700&#8203;37002D00&#8203;30003200&#8203;45003700&#8203;2D003400&#8203;45003500&#8203;44002D00&#8203;42003700&#8203;34003400&#8203;2D003200&#8203;45004200&#8203;31004100&#8203;45003500&#8203;31003900&#8203;38004200&#8203;37007D00&#8203;5C004E00&#8203;4F005400&#8203;45005000&#8203;41004400&#8203;2E004500&#8203;58004500&#8203;2B4EC2C1&#8203;69DC9C9B</CODE></LI>
+<LI><CODE>7B004400&#8203;36003500&#8203;32003300&#8203;31004200&#8203;30002D00&#8203;42003200&#8203;46003100&#8203;2D003400&#8203;38003500&#8203;37002D00&#8203;41003400&#8203;43004500&#8203;2D004100&#8203;38004500&#8203;37004300&#8203;36004500&#8203;41003700&#8203;44003200&#8203;37007D00&#8203;5C004E00&#8203;4F005400&#8203;45005000&#8203;41004400&#8203;2E004500&#8203;58004500&#8203;237ED143&#8203;CB0E8E91</CODE></LI>
+<LI><CODE>7B003900&#8203;30003500&#8203;45003600&#8203;33004200&#8203;36002D00&#8203;43003100&#8203;42004600&#8203;2D003400&#8203;39003400&#8203;45002D00&#8203;42003200&#8203;39004300&#8203;2D003600&#8203;35004200&#8203;37003300&#8203;32004400&#8203;33004400&#8203;32003100&#8203;41007D00&#8203;5C004900&#8203;45005800&#8203;50004C00&#8203;4F005200&#8203;45002E00&#8203;45005800&#8203;450006B6&#8203;151674EB&#8203;A0C3</CODE></LI>
+<LI><CODE>7B003600&#8203;44003800&#8203;30003900&#8203;33003700&#8203;37002D00&#8203;36004100&#8203;46003000&#8203;2D003400&#8203;34003400&#8203;42002D00&#8203;38003900&#8203;35003700&#8203;2D004100&#8203;33003700&#8203;37003300&#8203;46003000&#8203;32003200&#8203;30003000&#8203;45007D00&#8203;5C004900&#8203;45005800&#8203;50004C00&#8203;4F005200&#8203;45002E00&#8203;45005800&#8203;4500CE6D&#8203;913EB0E3&#8203;70E2</CODE></LI>
+<LI><CODE>7B003700&#8203;43003500&#8203;41003400&#8203;30004500&#8203;46002D00&#8203;41003000&#8203;46004200&#8203;2D003400&#8203;42004600&#8203;43002D00&#8203;38003700&#8203;34004100&#8203;2D004300&#8203;30004600&#8203;32004500&#8203;30004200&#8203;39004600&#8203;41003800&#8203;45007D00&#8203;5C004900&#8203;45005800&#8203;50004C00&#8203;4F005200&#8203;45002E00&#8203;45005800&#8203;4500A5A7&#8203;93B7B47F&#8203;220E</CODE></LI>
+</UL>
+</LI>
+</UL>
+</LI>
+<LI>Unique effective solution of codeword set</LI>
+<LI>Created: 7 January 2022</LI>
+</UL>
+
 <H3><A NAME="crc.cat.crc-64-we">CRC-64/WE</A></H3>
 <P CLASS="confirmed"><CODE>width=64  poly=0x42f0e1eba9ea3693  init=0xffffffffffffffff  refin=false  refout=false  xorout=0xffffffffffffffff  check=0x62ec59e3f1a4f00a  residue=0xfcacbebd5931a992  name="CRC-64/WE"</CODE></P>
 <UL>
@@ -3224,11 +3372,11 @@
 <LI>Alias: <A NAME="crc.cat.crc-64-go-ecma"><STRONG>CRC-64/GO-ECMA</STRONG></A></LI>
 <LI>An algorithm commonly misidentified as ECMA.  For the true ECMA algorithm see <A HREF="#crc.cat.crc-64-ecma-182">CRC-64/ECMA-182</A>.</LI>
 <LI>Go implementation reference contributed by "freetrader".</LI>
-<LI>AUTOSAR (1 November 2018), <A HREF="https://www.autosar.org/standards/classic-platform/classic-platform-440/">AUTOSAR Classic Platform release 4.4.0</A>, <A HREF="https://www.autosar.org/fileadmin/Releases_TEMP/Classic_Platform_4.4.0/Libraries.zip">Libraries</A> (Zip archive), document <CODE>Libraries/AUTOSAR_SWS_CRCLibrary.pdf</CODE>
+<LI>AUTOSAR (30 November 2020), <A HREF="https://www.autosar.org/standards/classic-platform/">AUTOSAR Classic Platform</A> release R20-11, <A HREF="https://www.autosar.org/fileadmin/user_upload/standards/classic/20-11/AUTOSAR_SWS_CRCLibrary.pdf">Specification of CRC Routines</A>
 <UL>
 <LI><STRONG>I</STRONG> Comprehensive primer on CRC theory (Section 7.1, pp.18&ndash;21)</LI>
 <LI><STRONG>I</STRONG> All parameters (Section 7.2.4.1, p.28)</LI>
-<LI><STRONG>IV</STRONG> 7 codewords (Section 7.2.4.1, pp.28&ndash;9)
+<LI><STRONG>IV</STRONG> 7 codewords (Section 7.2.4.1, p.29)
 <UL>
 <LI><CODE>00000000&#8203;4B9F1B1E&#8203;3586A5F4</CODE></LI>
 <LI><CODE>F20183C6&#8203;F1648166&#8203;279C31</CODE></LI>
@@ -3295,7 +3443,7 @@
 <LI>ETSI <A HREF="https://www.etsi.org/deliver/etsi_en/300700_300799/300751/01.02.01_60/en_300751v010201p.pdf">EN 300 751</A> version 1.2.1 (January 2003)
 <UL>
 <LI><STRONG>I</STRONG> Definition: Width, Poly (Section 11.1, p.67)</LI>
-<LI><STRONG>I</STRONG> Definition: RefIn, RefOut (Section 12, p.69&ndash;70)</LI>
+<LI><STRONG>I</STRONG> Definition: RefIn, RefOut (Section 12, pp.69&ndash;70)</LI>
 <LI><STRONG>IV</STRONG> 1 codeword (Section 11.1, p.67)
 <UL>
 <LI><CODE>02000102&#8203;37205052&#8203;4F4A4543&#8203;54204D41&#8203;494E4D45&#8203;4E553B48&#8203;42406500&#8203;1049B5FB&#8203;9ADE</CODE> (source: <CODE>40008040&#8203;EC040A4A&#8203;F252A2C2&#8203;2A04B282&#8203;9272B2A2&#8203;72AADC12&#8203;4202A600&#8203;0892ADDF&#8203;597B</CODE>)</LI>
@@ -3304,10 +3452,10 @@
 <LI>See section 12 for details of the transmission order.</LI>
 </UL>
 </LI>
-<LI><SAMP>reveng -m CRC-82/DARC -c 02000102&#8203;37205052&#8203;4F4A4543&#8203;54204D41&#8203;494E4D45&#8203;4E553B48&#8203;42406500&#8203;1049B5FB&#8203;9ADE</SAMP> &rarr; <CODE>00000000&#8203;00000000&#8203;000000</CODE></LI>
+<LI><SAMP>reveng -m CRC-82/DARC -X -c 02000102&#8203;37205052&#8203;4F4A4543&#8203;54204D41&#8203;494E4D45&#8203;4E553B48&#8203;42406500&#8203;1049B5FB&#8203;9ADE</SAMP> &rarr; <CODE>00000000&#8203;00000000&#8203;000000</CODE></LI>
 <LI><SAMP>reveng -m CRC-82/DARC -a 1 -A 8 -r -X -c 01000000&#8203;00000000&#8203;10000000&#8203;01000000&#8203;11101100&#8203;00000100&#8203;00001010&#8203;01001010&#8203;11110010&#8203;01010010&#8203;10100010&#8203;11000010&#8203;00101010&#8203;00000100&#8203;10110010&#8203;10000010&#8203;10010010&#8203;01110010&#8203;10110010&#8203;10100010&#8203;01110010&#8203;10101010&#8203;11011100&#8203;000100</SAMP> &rarr; <CODE>40424065&#8203;001049B5&#8203;FB9ADE</CODE>
 <LI>Created: 14 December 2009</LI>
-<LI>Updated: 17 November 2018</LI>
+<LI>Updated: 23 December 2021</LI>
 </UL>
 
 <H2><A NAME="crc.cat-summary">Summary</A></H2>
@@ -3330,7 +3478,7 @@
 <TR ALIGN="RIGHT" VALIGN="TOP"><TD><A HREF="#crc.cat-bits.5">5</A></TD><TD>1</TD><TD>&ndash;</TD><TD>1</TD><TD>1</TD><TD>3</TD></TR>
 <TR ALIGN="RIGHT" VALIGN="TOP"><TD><A HREF="#crc.cat-bits.6">6</A></TD><TD>2</TD><TD>&ndash;</TD><TD>3</TD><TD>&ndash;</TD><TD>5</TD></TR>
 <TR ALIGN="RIGHT" VALIGN="TOP"><TD><A HREF="#crc.cat-bits.7">7</A></TD><TD>&ndash;</TD><TD>&ndash;</TD><TD>3</TD><TD>&ndash;</TD><TD>3</TD></TR>
-<TR ALIGN="RIGHT" VALIGN="TOP"><TD><A HREF="#crc.cat-bits.8">8</A></TD><TD>11</TD><TD>&ndash;</TD><TD>7</TD><TD>1</TD><TD>19</TD></TR>
+<TR ALIGN="RIGHT" VALIGN="TOP"><TD><A HREF="#crc.cat-bits.8">8</A></TD><TD>12</TD><TD>&ndash;</TD><TD>7</TD><TD>1</TD><TD>20</TD></TR>
 <TR ALIGN="RIGHT" VALIGN="TOP"><TD><A HREF="#crc.cat-bits.10">10</A></TD><TD>1</TD><TD>&ndash;</TD><TD>2</TD><TD>&ndash;</TD><TD>3</TD></TR>
 <TR ALIGN="RIGHT" VALIGN="TOP"><TD><A HREF="#crc.cat-bits.11">11</A></TD><TD>1</TD><TD>&ndash;</TD><TD>1</TD><TD>&ndash;</TD><TD>2</TD></TR>
 <TR ALIGN="RIGHT" VALIGN="TOP"><TD><A HREF="#crc.cat-bits.12">12</A></TD><TD>&ndash;</TD><TD>&ndash;</TD><TD>4</TD><TD>&ndash;</TD><TD>4</TD></TR>
@@ -3343,11 +3491,11 @@
 <TR ALIGN="RIGHT" VALIGN="TOP"><TD><A HREF="#crc.cat-bits.24">24</A></TD><TD>5</TD><TD>&ndash;</TD><TD>3</TD><TD>&ndash;</TD><TD>8</TD></TR>
 <TR ALIGN="RIGHT" VALIGN="TOP"><TD><A HREF="#crc.cat-bits.30">30</A></TD><TD>&ndash;</TD><TD>&ndash;</TD><TD>1</TD><TD>&ndash;</TD><TD>1</TD></TR>
 <TR ALIGN="RIGHT" VALIGN="TOP"><TD><A HREF="#crc.cat-bits.31">31</A></TD><TD>&ndash;</TD><TD>1</TD><TD>&ndash;</TD><TD>&ndash;</TD><TD>1</TD></TR>
-<TR ALIGN="RIGHT" VALIGN="TOP"><TD><A HREF="#crc.cat-bits.32">32</A></TD><TD>7</TD><TD>3</TD><TD>1</TD><TD>&ndash;</TD><TD>11</TD></TR>
+<TR ALIGN="RIGHT" VALIGN="TOP"><TD><A HREF="#crc.cat-bits.32">32</A></TD><TD>8</TD><TD>3</TD><TD>1</TD><TD>&ndash;</TD><TD>12</TD></TR>
 <TR ALIGN="RIGHT" VALIGN="TOP"><TD><A HREF="#crc.cat-bits.40">40</A></TD><TD>&ndash;</TD><TD>&ndash;</TD><TD>1</TD><TD>&ndash;</TD><TD>1</TD></TR>
-<TR ALIGN="RIGHT" VALIGN="TOP"><TD><A HREF="#crc.cat-bits.64">64</A></TD><TD>1</TD><TD>2</TD><TD>1</TD><TD>&ndash;</TD><TD>4</TD></TR>
+<TR ALIGN="RIGHT" VALIGN="TOP"><TD><A HREF="#crc.cat-bits.64">64</A></TD><TD>2</TD><TD>2</TD><TD>1</TD><TD>&ndash;</TD><TD>5</TD></TR>
 <TR ALIGN="RIGHT" VALIGN="TOP"><TD><A HREF="#crc.cat-bits.82">82</A></TD><TD>1</TD><TD>&ndash;</TD><TD>&ndash;</TD><TD>&ndash;</TD><TD>1</TD></TR>
-<TR ALIGN="RIGHT" VALIGN="TOP"><TH>Total</TH><TD>55</TD><TD>9</TD><TD>37</TD><TD>6</TD><TD>107</TD></TR>
+<TR ALIGN="RIGHT" VALIGN="TOP"><TH>Total</TH><TD>58</TD><TD>9</TD><TD>37</TD><TD>6</TD><TD>110</TD></TR>
 </TBODY>
 </TABLE>
 
@@ -3408,7 +3556,7 @@
 <H3><A NAME="crc.legend.notes">Model notes</A></H3>
 <DL>
 <DT><DFN>Unique effective solution of codeword set</DFN></DT>
-<DD>This model is the only one at the specified width that solves all the codewords listed in the model entry.  Equivalent forms of the model may exist (differing in Init, XorOut and Residue values) but they produce identical CRCs at all message lengths.  (If (<VAR>x</VAR> + 1) appears <VAR>n</VAR> times in the factorisation of <VAR>G</VAR>(<VAR>x</VAR>), then there shall be 2<SUP><VAR>n</VAR></SUP> &minus; 1 equivalent forms.)</DD>
+<DD>This model is the only one at the specified width that solves all the codewords listed in the model entry.  Equivalent forms of the model may exist (differing in Init, XorOut and Residue values) but they produce identical CRCs at all message lengths.  (If (<VAR>x</VAR> + 1)<SUP><VAR>n</VAR></SUP> appears in the factorisation of <VAR>G</VAR>(<VAR>x</VAR>), then there shall be 2<SUP><VAR>n</VAR></SUP> &minus; 1 equivalent forms.)</DD>
 </DL>
 
 <H2><A NAME="crc.refs">References</A></H2>
@@ -3429,9 +3577,7 @@
 </UL>
 
 <P>William H. Press, Brian P. Flannery, Saul A. Teukolsky, William T. Vetterling (1992), <CITE>Numerical recipes in C: The art of scientific computing</CITE>.  2nd ed.  Cambridge: Cambridge University Press.  ISBN 0-521-43108-5</P>
-<UL>
-<LI><A HREF="http://apps.nrbook.com/c/index.html">http://apps.nrbook.com/c/index.html</A></LI>
-</UL>
+<!-- http://apps.nrbook.com/c/index.html -->
 
 <P>Dr Ross N. Williams (19 August 1993), "A Painless Guide to CRC Error Detection Algorithms" (courtesy of the Internet Archive).</P>
 <UL>
@@ -3563,86 +3709,88 @@ unwillingness to use, this software or documentation.</P>
 <TH>Reflected</TH>
 <TH>Koopman</TH>
 </TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc3.html">3</A></TD><TD><CODE>0x3</CODE></TD><TD><CODE>0x6</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c03/0x5_len.txt"><CODE>0x5</CODE></A></TD><TD>(*p) CRC-3K; RFC 3095; FP-3</TD><TD><A HREF="#crc.cat.crc-3-gsm"><CODE>CRC-3/GSM</CODE></A>, <A HREF="#crc.cat.crc-3-rohc"><CODE>CRC-3/ROHC</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc4.html">4</A></TD><TD><CODE>0x3</CODE></TD><TD><CODE>0xc</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c04/0x9_len.txt"><CODE>0x9</CODE></A></TD><TD>(*p) CCITT-4; FP-4; ITU-T G.704</TD><TD><A HREF="#crc.cat.crc-4-g-704"><CODE>CRC-4/G-704</CODE></A>, <A HREF="#crc.cat.crc-4-interlaken"><CODE>CRC-4/INTERLAKEN</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc5.html">5</A></TD><TD><CODE>0x05</CODE></TD><TD><CODE>0x14</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c05/0x12_len.txt"><CODE>0x12</CODE></A></TD><TD>(*p) CRC-5-EPC; CRC-5-USB; FP-5</TD><TD><A HREF="#crc.cat.crc-5-usb"><CODE>CRC-5/USB</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc5.html">5</A></TD><TD><CODE>0x09</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c05/0x12_len.txt"><CODE>0x12</CODE></A></TD><TD><CODE>0x14</CODE>**</TD><TD>(*p) CRC-5-EPC; CRC-5-USB; FP-5</TD><TD><A HREF="#crc.cat.crc-5-epc-c1g2"><CODE>CRC-5/EPC-C1G2</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc5.html">5</A></TD><TD><CODE>0x15</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c05/0x15_len.txt"><CODE>0x15</CODE></A></TD><TD><CODE>0x1a</CODE>**</TD><TD>(*op) CRC-5; CRC-5-ITU; CRC-5F/4; FOP-5 ("65")</TD><TD><A HREF="#crc.cat.crc-5-g-704"><CODE>CRC-5/G-704</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc6.html">6</A></TD><TD><CODE>0x03</CODE></TD><TD><CODE>0x30</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c06/0x21_len.txt"><CODE>0x21</CODE></A></TD><TD>(*p) CRC-6; CRC-6-ITU; FP-6</TD><TD><A HREF="#crc.cat.crc-6-g-704"><CODE>CRC-6/G-704</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc6.html">6</A></TD><TD><CODE>0x07</CODE></TD><TD><CODE>0x38</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c06/0x23_len.txt"><CODE>0x23</CODE></A></TD><TD>(*op) CRC-6-CDMA2000-B; FOP-6</TD><TD><A HREF="#crc.cat.crc-6-cdma2000-b"><CODE>CRC-6/CDMA2000-B</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc6.html">6</A></TD><TD><CODE>0x19</CODE></TD><TD><CODE>0x26</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c06/0x2c_len.txt"><CODE>0x2c</CODE></A>*</TD><TD>(*op) DARC-6</TD><TD><A HREF="#crc.cat.crc-6-darc"><CODE>CRC-6/DARC</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc6.html">6</A></TD><TD><CODE>0x27</CODE></TD><TD><CODE>0x39</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c06/0x33_len.txt"><CODE>0x33</CODE></A></TD><TD>(*p) CRC-6-CDMA2000-A; CRC-6F/3 ("147p")</TD><TD><A HREF="#crc.cat.crc-6-cdma2000-a"><CODE>CRC-6/CDMA2000-A</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc6.html">6</A></TD><TD><CODE>0x2f</CODE></TD><TD><CODE>0x3d</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c06/0x37_len.txt"><CODE>0x37</CODE></A></TD><TD>(*op) CRC-6-GSM; CRC-6F/4 ("157")</TD><TD><A HREF="#crc.cat.crc-6-gsm"><CODE>CRC-6/GSM</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc7.html">7</A></TD><TD><CODE>0x09</CODE></TD><TD><CODE>0x48</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c07/0x44_len.txt"><CODE>0x44</CODE></A></TD><TD>(*p) CRC-7</TD><TD><A HREF="#crc.cat.crc-7-mmc"><CODE>CRC-7/MMC</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc7.html">7</A></TD><TD><CODE>0x45</CODE></TD><TD><CODE>0x51</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c07/0x62_len.txt"><CODE>0x62</CODE></A>*</TD><TD>(*op) CRC-7P</TD><TD><A HREF="#crc.cat.crc-7-umts"><CODE>CRC-7/UMTS</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc7.html">7</A></TD><TD><CODE>0x4f</CODE></TD><TD><CODE>0x79</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c07/0x67_len.txt"><CODE>0x67</CODE></A></TD><TD>(*o) RFC 3095</TD><TD><A HREF="#crc.cat.crc-7-rohc"><CODE>CRC-7/ROHC</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc8.html">8</A></TD><TD><CODE>0x07</CODE></TD><TD><CODE>0xe0</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c08/0x83_len.txt"><CODE>0x83</CODE></A></TD><TD>(*op) FOP-8; ATM-8; CRC-8P</TD><TD><A HREF="#crc.cat.crc-8-i-432-1"><CODE>CRC-8/I-432-1</CODE></A>, <A HREF="#crc.cat.crc-8-rohc"><CODE>CRC-8/ROHC</CODE></A>, <A HREF="#crc.cat.crc-8-smbus"><CODE>CRC-8/SMBUS</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc8.html">8</A></TD><TD><CODE>0x31</CODE></TD><TD><CODE>0x8c</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c08/0x98_len.txt"><CODE>0x98</CODE></A>*</TD><TD>(*op) DOWCRC</TD><TD><A HREF="#crc.cat.crc-8-maxim-dow"><CODE>CRC-8/MAXIM-DOW</CODE></A>, <A HREF="#crc.cat.crc-8-nrsc-5"><CODE>CRC-8/NRSC-5</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc8.html">8</A></TD><TD><CODE>0x1d</CODE></TD><TD><CODE>0xb8</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c08/0x8e_len.txt"><CODE>0x8e</CODE></A></TD><TD>(*p) SAE J-1850; FP-8</TD><TD><A HREF="#crc.cat.crc-8-gsm-a"><CODE>CRC-8/GSM-A</CODE></A>, <A HREF="#crc.cat.crc-8-i-code"><CODE>CRC-8/I-CODE</CODE></A>, <A HREF="#crc.cat.crc-8-mifare-mad"><CODE>CRC-8/MIFARE-MAD</CODE></A>, <A HREF="#crc.cat.crc-8-sae-j1850"><CODE>CRC-8/SAE-J1850</CODE></A>, <A HREF="#crc.cat.crc-8-tech-3250"><CODE>CRC-8/TECH-3250</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc8.html">8</A></TD><TD><CODE>0x49</CODE></TD><TD><CODE>0x92</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c08/0xa4_len.txt"><CODE>0xa4</CODE></A>*</TD><TD>(*o) CRC-8-GSM-B</TD><TD><A HREF="#crc.cat.crc-8-gsm-b"><CODE>CRC-8/GSM-B</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc8.html">8</A></TD><TD><CODE>0x2f</CODE></TD><TD><CODE>0xf4</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c08/0x97_len.txt"><CODE>0x97</CODE></A></TD><TD>(*op) C2; CRC-8-AUTOSAR; CRC-8F/4.2 ("457")</TD><TD><A HREF="#crc.cat.crc-8-autosar"><CODE>CRC-8/AUTOSAR</CODE></A>, <A HREF="#crc.cat.crc-8-opensafety"><CODE>CRC-8/OPENSAFETY</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc8.html">8</A></TD><TD><CODE>0x39</CODE></TD><TD><CODE>0x9c</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c08/0x9c_len.txt"><CODE>0x9c</CODE></A></TD><TD>DARC-8</TD><TD><A HREF="#crc.cat.crc-8-darc"><CODE>CRC-8/DARC</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc8.html">8</A></TD><TD><CODE>0xd5</CODE></TD><TD><CODE>0xab</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c08/0xea_len.txt"><CODE>0xea</CODE></A>*</TD><TD>(*o) CRC-8</TD><TD><A HREF="#crc.cat.crc-8-dvb-s2"><CODE>CRC-8/DVB-S2</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc8.html">8</A></TD><TD><CODE>0x9b</CODE></TD><TD><CODE>0xd9</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c08/0xcd_len.txt"><CODE>0xcd</CODE></A></TD><TD>(*op) WCDMA-8</TD><TD><A HREF="#crc.cat.crc-8-cdma2000"><CODE>CRC-8/CDMA2000</CODE></A>, <A HREF="#crc.cat.crc-8-lte"><CODE>CRC-8/LTE</CODE></A>, <A HREF="#crc.cat.crc-8-wcdma"><CODE>CRC-8/WCDMA</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc8.html">8</A></TD><TD><CODE>0xa7</CODE></TD><TD><CODE>0xe5</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c08/0xd3_len.txt"><CODE>0xd3</CODE></A></TD><TD>(*op) CRC-8-Bluetooth</TD><TD><A HREF="#crc.cat.crc-8-bluetooth"><CODE>CRC-8/BLUETOOTH</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc10.html">10</A></TD><TD><CODE>0x3d9</CODE></TD><TD><CODE>0x26f</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c10/0x3ec_len.txt"><CODE>0x3ec</CODE></A>*</TD><TD>(*op) CRC-10-CMDA2000</TD><TD><A HREF="#crc.cat.crc-10-cdma2000"><CODE>CRC-10/CDMA2000</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc10.html">10</A></TD><TD><CODE>0x175</CODE></TD><TD><CODE>0x2ba</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c10/0x2ba_len.txt"><CODE>0x2ba</CODE></A></TD><TD>CRC-10-GSM</TD><TD><A HREF="#crc.cat.crc-10-gsm"><CODE>CRC-10/GSM</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc10.html">10</A></TD><TD><CODE>0x233</CODE></TD><TD><CODE>0x331</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c10/0x319_len.txt"><CODE>0x319</CODE></A></TD><TD>(*op) CRC-10</TD><TD><A HREF="#crc.cat.crc-10-atm"><CODE>CRC-10/ATM</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc11.html">11</A></TD><TD><CODE>0x385</CODE></TD><TD><CODE>0x50e</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c11/0x5c2_len.txt"><CODE>0x5c2</CODE></A>*</TD><TD>(*o) FlexRay-11</TD><TD><A HREF="#crc.cat.crc-11-flexray"><CODE>CRC-11/FLEXRAY</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc11.html">11</A></TD><TD><CODE>0x307</CODE></TD><TD><CODE>0x706</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c11/0x583_len.txt"><CODE>0x583</CODE></A></TD><TD>(*op) CRC-11F/4.2 "7015"</TD><TD><A HREF="#crc.cat.crc-11-umts"><CODE>CRC-11/UMTS</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc12.html">12</A></TD><TD><CODE>0xd31</CODE></TD><TD><CODE>0x8cb</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c12/0xe98_len.txt"><CODE>0xe98</CODE></A>*</TD><TD>CRC-12-GSM</TD><TD><A HREF="#crc.cat.crc-12-gsm"><CODE>CRC-12/GSM</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc12.html">12</A></TD><TD><CODE>0x80f</CODE></TD><TD><CODE>0xf01</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c12/0xc07_len.txt"><CODE>0xc07</CODE></A></TD><TD>(*op) CRC-12</TD><TD><A HREF="#crc.cat.crc-12-dect"><CODE>CRC-12/DECT</CODE></A>, <A HREF="#crc.cat.crc-12-umts"><CODE>CRC-12/UMTS</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc12.html">12</A></TD><TD><CODE>0xf13</CODE></TD><TD><CODE>0xc8f</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c12/0xf89_len.txt"><CODE>0xf89</CODE></A>*</TD><TD>(*op) CRC-12-CMDA2000</TD><TD><A HREF="#crc.cat.crc-12-cdma2000"><CODE>CRC-12/CDMA2000</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc13.html">13</A></TD><TD><CODE>0x1cf5</CODE></TD><TD><CODE>0x15e7</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c13/0x1e7a_len.txt"><CODE>0x1e7a</CODE></A>*</TD><TD>(*o) CRC-13-BBC</TD><TD><A HREF="#crc.cat.crc-13-bbc"><CODE>CRC-13/BBC</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc14.html">14</A></TD><TD><CODE>0x0805</CODE></TD><TD><CODE>0x2804</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c14/0x2402_len.txt"><CODE>0x2402</CODE></A></TD><TD>(*op) DARC-14 (*op)</TD><TD><A HREF="#crc.cat.crc-14-darc"><CODE>CRC-14/DARC</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc14.html">14</A></TD><TD><CODE>0x202d</CODE></TD><TD><CODE>0x2d01</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c14/0x3016_len.txt"><CODE>0x3016</CODE></A>*</TD><TD>(*op) CRC-14-GSM</TD><TD><A HREF="#crc.cat.crc-14-gsm"><CODE>CRC-14/GSM</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc15.html">15</A></TD><TD><CODE>0x4599</CODE></TD><TD><CODE>0x4cd1</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c15/0x62cc_len.txt"><CODE>0x62cc</CODE></A>*</TD><TD>(*o) CAN</TD><TD><A HREF="#crc.cat.crc-15-can"><CODE>CRC-15/CAN</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc15.html">15</A></TD><TD><CODE>0x6815</CODE></TD><TD><CODE>0x540b</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c15/0x740a_len.txt"><CODE>0x740a</CODE></A>*</TD><TD>CRC-15-MPT1327</TD><TD><A HREF="#crc.cat.crc-15-mpt1327"><CODE>CRC-15/MPT1327</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc16.html">16</A></TD><TD><CODE>0x0589</CODE></TD><TD><CODE>0x91a0</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c16/0x82c4_len.txt"><CODE>0x82c4</CODE></A></TD><TD>(*o) CRC-16-DECT</TD><TD><A HREF="#crc.cat.crc-16-dect-r"><CODE>CRC-16/DECT-R</CODE></A>, <A HREF="#crc.cat.crc-16-dect-x"><CODE>CRC-16/DECT-X</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc16.html">16</A></TD><TD><CODE>0x080b</CODE></TD><TD><CODE>0xd010</CODE></TD><TD><CODE>0x8405</CODE></TD><TD>&ndash;</TD><TD><A HREF="#crc.cat.crc-16-nrsc-5"><CODE>CRC-16/NRSC-5</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc16.html">16</A></TD><TD><CODE>0x1021</CODE></TD><TD><CODE>0x8408</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c16/0x8810_len.txt"><CODE>0x8810</CODE></A>*</TD><TD>(*op) CCITT-16</TD><TD><A HREF="#crc.cat.crc-16-genibus"><CODE>CRC-16/GENIBUS</CODE></A>, <A HREF="#crc.cat.crc-16-gsm"><CODE>CRC-16/GSM</CODE></A>, <A HREF="#crc.cat.crc-16-ibm-3740"><CODE>CRC-16/IBM-3740</CODE></A>, <A HREF="#crc.cat.crc-16-ibm-sdlc"><CODE>CRC-16/IBM-SDLC</CODE></A>, <A HREF="#crc.cat.crc-16-iso-iec-14443-3-a"><CODE>CRC-16/ISO-IEC-14443-3-A</CODE></A>, <A HREF="#crc.cat.crc-16-kermit"><CODE>CRC-16/KERMIT</CODE></A>, <A HREF="#crc.cat.crc-16-mcrf4xx"><CODE>CRC-16/MCRF4XX</CODE></A>, <A HREF="#crc.cat.crc-16-riello"><CODE>CRC-16/RIELLO</CODE></A>, <A HREF="#crc.cat.crc-16-spi-fujitsu"><CODE>CRC-16/SPI-FUJITSU</CODE></A>, <A HREF="#crc.cat.crc-16-tms37157"><CODE>CRC-16/TMS37157</CODE></A>, <A HREF="#crc.cat.crc-16-xmodem"><CODE>CRC-16/XMODEM</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc16.html">16</A></TD><TD><CODE>0x1dcf</CODE></TD><TD><CODE>0xf3b8</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c16/0x8ee7_len.txt"><CODE>0x8ee7</CODE></A></TD><TD>ProfiBus</TD><TD><A HREF="#crc.cat.crc-16-profibus"><CODE>CRC-16/PROFIBUS</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc16.html">16</A></TD><TD><CODE>0x3d65</CODE></TD><TD><CODE>0xa6bc</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c16/0x9eb2_len.txt"><CODE>0x9eb2</CODE></A></TD><TD>(*o) C1; CRC-16-DNP; CRC-16F/6.2 ("236545")</TD><TD><A HREF="#crc.cat.crc-16-dnp"><CODE>CRC-16/DNP</CODE></A>, <A HREF="#crc.cat.crc-16-en-13757"><CODE>CRC-16/EN-13757</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc16.html">16</A></TD><TD><CODE>0x8005</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c16/0xa001_len.txt"><CODE>0xa001</CODE></A></TD><TD><CODE>0xc002</CODE>**</TD><TD>(*op) CRC-16; CRC-16-IBM</TD><TD><A HREF="#crc.cat.crc-16-arc"><CODE>CRC-16/ARC</CODE></A>, <A HREF="#crc.cat.crc-16-cms"><CODE>CRC-16/CMS</CODE></A>, <A HREF="#crc.cat.crc-16-dds-110"><CODE>CRC-16/DDS-110</CODE></A>, <A HREF="#crc.cat.crc-16-maxim-dow"><CODE>CRC-16/MAXIM-DOW</CODE></A>, <A HREF="#crc.cat.crc-16-modbus"><CODE>CRC-16/MODBUS</CODE></A>, <A HREF="#crc.cat.crc-16-umts"><CODE>CRC-16/UMTS</CODE></A>, <A HREF="#crc.cat.crc-16-usb"><CODE>CRC-16/USB</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc16.html">16</A></TD><TD><CODE>0x5935</CODE></TD><TD><CODE>0xac9a</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c16/0xac9a_len.txt"><CODE>0xac9a</CODE></A></TD><TD>C3; CRC-16F/5 ("254465s")</TD><TD><A HREF="#crc.cat.crc-16-opensafety-a"><CODE>CRC-16/OPENSAFETY-A</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc16.html">16</A></TD><TD><CODE>0x6f63</CODE></TD><TD><CODE>0xc6f6</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c16/0xb7b1_len.txt"><CODE>0xb7b1</CODE></A></TD><TD>IEEE WG77.1</TD><TD><A HREF="#crc.cat.crc-16-lj1200"><CODE>CRC-16/LJ1200</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc16.html">16</A></TD><TD><CODE>0x755b</CODE></TD><TD><CODE>0xdaae</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c16/0xbaad_len.txt"><CODE>0xbaad</CODE></A></TD><TD>CRC-16K/4</TD><TD><A HREF="#crc.cat.crc-16-opensafety-b"><CODE>CRC-16/OPENSAFETY-B</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc16.html">16</A></TD><TD><CODE>0x8bb7</CODE></TD><TD><CODE>0xedd1</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c16/0xc5db_len.txt"><CODE>0xc5db</CODE></A></TD><TD>(*p) CRC-16-T10-DIF</TD><TD><A HREF="#crc.cat.crc-16-t10-dif"><CODE>CRC-16/T10-DIF</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc16.html">16</A></TD><TD><CODE>0xa097</CODE></TD><TD><CODE>0xe905</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c16/0xd04b_len.txt"><CODE>0xd04b</CODE></A></TD><TD>(*o) IBM-16</TD><TD><A HREF="#crc.cat.crc-16-teledisk"><CODE>CRC-16/TELEDISK</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc16.html">16</A></TD><TD><CODE>0xc867</CODE></TD><TD><CODE>0xe613</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c16/0xe433_len.txt"><CODE>0xe433</CODE></A></TD><TD>(*p) CRC-16-CMDA2000</TD><TD><A HREF="#crc.cat.crc-16-cdma2000"><CODE>CRC-16/CDMA2000</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc17.html">17</A></TD><TD><CODE>0x1685b</CODE></TD><TD><CODE>0x1b42d</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c17/0x1b42d_len.txt"><CODE>0x1b42d</CODE></A></TD><TD>(*o) CRC-17-CAN</TD><TD><A HREF="#crc.cat.crc-17-can-fd"><CODE>CRC-17/CAN-FD</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc21.html">21</A></TD><TD><CODE>0x102899</CODE></TD><TD><CODE>0x132281</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c21/0x18144c_len.txt"><CODE>0x18144c</CODE></A>*</TD><TD>(*o) CRC-21-CAN</TD><TD><A HREF="#crc.cat.crc-21-can-fd"><CODE>CRC-21/CAN-FD</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc24.html">24</A></TD><TD><CODE>0x00065b</CODE></TD><TD><CODE>0xda6000</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c24/0x80032d_len.txt"><CODE>0x80032d</CODE></A></TD><TD>(*op) BLE-24 (Bluetooth Low Energy)</TD><TD><A HREF="#crc.cat.crc-24-ble"><CODE>CRC-24/BLE</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc24.html">24</A></TD><TD><CODE>0x328b63</CODE></TD><TD><CODE>0xc6d14c</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c24/0x9945b1_len.txt"><CODE>0x9945b1</CODE></A></TD><TD>(*op) CRC-24/4</TD><TD><A HREF="#crc.cat.crc-24-interlaken"><CODE>CRC-24/INTERLAKEN</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc24.html">24</A></TD><TD><CODE>0x5d6dcb</CODE></TD><TD><CODE>0xd3b6ba</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c24/0xaeb6e5_len.txt"><CODE>0xaeb6e5</CODE></A></TD><TD>(*o) CRC-24; CRC-24/6.1; FlexRay-24</TD><TD><A HREF="#crc.cat.crc-24-flexray-a"><CODE>CRC-24/FLEXRAY-A</CODE></A>, <A HREF="#crc.cat.crc-24-flexray-b"><CODE>CRC-24/FLEXRAY-B</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc24.html">24</A></TD><TD><CODE>0x800063</CODE></TD><TD><CODE>0xc60001</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c24/0xc00031_len.txt"><CODE>0xc00031</CODE></A></TD><TD>(*op) WCDMA-24</TD><TD><A HREF="#crc.cat.crc-24-lte-b"><CODE>CRC-24/LTE-B</CODE></A>, <A HREF="#crc.cat.crc-24-os-9"><CODE>CRC-24/OS-9</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc24.html">24</A></TD><TD><CODE>0x864cfb</CODE></TD><TD><CODE>0xdf3261</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c24/0xc3267d_len.txt"><CODE>0xc3267d</CODE></A></TD><TD>(*op) CRC-24-Radix-64</TD><TD><A HREF="#crc.cat.crc-24-lte-a"><CODE>CRC-24/LTE-A</CODE></A>, <A HREF="#crc.cat.crc-24-openpgp"><CODE>CRC-24/OPENPGP</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc30.html">30</A></TD><TD><CODE>0x2030b9c7</CODE></TD><TD><CODE>0x38e74301</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c30/0x30185ce3_len.txt"><CODE>0x30185ce3</CODE></A></TD><TD>(*op) CRC-30</TD><TD><A HREF="#crc.cat.crc-30-cdma"><CODE>CRC-30/CDMA</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc31.html">31</A></TD><TD><CODE>0x04c11db7</CODE></TD><TD><CODE>0x76dc4190</CODE></TD><TD><CODE>0x42608edb</CODE></TD><TD>&ndash;</TD><TD><A HREF="#crc.cat.crc-31-philips"><CODE>CRC-31/PHILIPS</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc32.html">32</A></TD><TD><CODE>0x000000af</CODE></TD><TD><CODE>0xf5000000</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c32/0x80000057_len.txt"><CODE>0x80000057</CODE></A></TD><TD>(*p) FP-32, CRC-32K/3</TD><TD><A HREF="#crc.cat.crc-32-xfer"><CODE>CRC-32/XFER</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc32.html">32</A></TD><TD><CODE>0x04c11db7</CODE></TD><TD><CODE>0xedb88320</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c32/0x82608edb_len.txt"><CODE>0x82608edb</CODE></A></TD><TD>(*p) IEEE 802.3; CRC-32</TD><TD><A HREF="#crc.cat.crc-32-bzip2"><CODE>CRC-32/BZIP2</CODE></A>, <A HREF="#crc.cat.crc-32-cksum"><CODE>CRC-32/CKSUM</CODE></A>, <A HREF="#crc.cat.crc-32-iso-hdlc"><CODE>CRC-32/ISO-HDLC</CODE></A>, <A HREF="#crc.cat.crc-32-jamcrc"><CODE>CRC-32/JAMCRC</CODE></A>, <A HREF="#crc.cat.crc-32-mpeg-2"><CODE>CRC-32/MPEG-2</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc32.html">32</A></TD><TD><CODE>0x1edc6f41</CODE></TD><TD><CODE>0x82f63b78</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c32/0x8f6e37a0_len.txt"><CODE>0x8f6e37a0</CODE></A>*</TD><TD>(*op) iSCSI; CRC-32C; CRC-32/4</TD><TD><A HREF="#crc.cat.crc-32-iscsi"><CODE>CRC-32/ISCSI</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc32.html">32</A></TD><TD><CODE>0x8001801b</CODE></TD><TD><CODE>0xd8018001</CODE></TD><TD><CODE>0xc000c00d</CODE></TD><TD>&ndash;</TD><TD><A HREF="#crc.cat.crc-32-cd-rom-edc"><CODE>CRC-32/CD-ROM-EDC</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc32.html">32</A></TD><TD><CODE>0x814141ab</CODE></TD><TD><CODE>0xd5828281</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c32/0xc0a0a0d5_len.txt"><CODE>0xc0a0a0d5</CODE></A></TD><TD>(*op) CRC-32Q</TD><TD><A HREF="#crc.cat.crc-32-aixm"><CODE>CRC-32/AIXM</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc32.html">32</A></TD><TD><CODE>0xf4acfb13</CODE></TD><TD><CODE>0xc8df352f</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c32/0xfa567d89_len.txt"><CODE>0xfa567d89</CODE></A>*</TD><TD>(*o) CRC-32/6 corrected</TD><TD><A HREF="#crc.cat.crc-32-autosar"><CODE>CRC-32/AUTOSAR</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc32.html">32</A></TD><TD><CODE>0xa833982b</CODE></TD><TD><CODE>0xd419cc15</CODE></TD><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/c32/0xd419cc15_len.txt"><CODE>0xd419cc15</CODE></A></TD><TD>CRC-32/5.1</TD><TD><A HREF="#crc.cat.crc-32-base91-d"><CODE>CRC-32/BASE91-D</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc40.html">40</A></TD><TD><CODE>0x0004820009</CODE></TD><TD><CODE>0x9000412000</CODE></TD><TD><CODE>0x8002410004</CODE></TD><TD>&ndash;</TD><TD><A HREF="#crc.cat.crc-40-gsm"><CODE>CRC-40/GSM</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc64.html">64</A></TD><TD><CODE>0x000000000000001b</CODE></TD><TD><CODE>0xd800000000000000</CODE></TD><TD><CODE>0x800000000000000d</CODE></TD><TD>(*p) FP-64, CRC-64-ISO</TD><TD><A HREF="#crc.cat.crc-64-go-iso"><CODE>CRC-64/GO-ISO</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc64.html">64</A></TD><TD><CODE>0x42f0e1eba9ea3693</CODE></TD><TD><CODE>0xc96c5795d7870f42</CODE></TD><TD><CODE>0xa17870f5d4f51b49</CODE></TD><TD>(*o) CRC-64-ECMA</TD><TD><A HREF="#crc.cat.crc-64-ecma-182"><CODE>CRC-64/ECMA-182</CODE></A>, <A HREF="#crc.cat.crc-64-we"><CODE>CRC-64/WE</CODE></A>, <A HREF="#crc.cat.crc-64-xz"><CODE>CRC-64/XZ</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD>82</TD><TD><CODE>0x0308c0111011401440411</CODE></TD><TD><CODE>0x220808a00a2022200c430</CODE></TD><TD><CODE>0x218460088808a00a20208</CODE></TD><TD>&ndash;</TD><TD><A HREF="#crc.cat.crc-82-darc"><CODE>CRC-82/DARC</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc3.html">3</A></TD><TD ALIGN="RIGHT"><CODE>0x3</CODE></TD><TD ALIGN="RIGHT"><CODE>0x6</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c03/0x5_len.txt"><CODE>0x5</CODE></A></TD><TD>(*p) CRC-3K; RFC 3095; FP-3</TD><TD><A HREF="#crc.cat.crc-3-gsm"><CODE>CRC-3/GSM</CODE></A>, <A HREF="#crc.cat.crc-3-rohc"><CODE>CRC-3/ROHC</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc4.html">4</A></TD><TD ALIGN="RIGHT"><CODE>0x3</CODE></TD><TD ALIGN="RIGHT"><CODE>0xc</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c04/0x9_len.txt"><CODE>0x9</CODE></A></TD><TD>(*p) CCITT-4; FP-4; ITU-T G.704</TD><TD><A HREF="#crc.cat.crc-4-g-704"><CODE>CRC-4/G-704</CODE></A>, <A HREF="#crc.cat.crc-4-interlaken"><CODE>CRC-4/INTERLAKEN</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc5.html">5</A></TD><TD ALIGN="RIGHT"><CODE>0x05</CODE></TD><TD ALIGN="RIGHT"><CODE>0x14</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c05/0x12_len.txt"><CODE>0x12</CODE></A></TD><TD>(*p) CRC-5-EPC; CRC-5-USB; FP-5</TD><TD><A HREF="#crc.cat.crc-5-usb"><CODE>CRC-5/USB</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc5.html">5</A></TD><TD ALIGN="RIGHT"><CODE>0x09</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c05/0x12_len.txt"><CODE>0x12</CODE></A></TD><TD ALIGN="RIGHT">*&lt; <CODE>0x14</CODE></TD><TD>(*p) CRC-5-EPC; CRC-5-USB; FP-5</TD><TD><A HREF="#crc.cat.crc-5-epc-c1g2"><CODE>CRC-5/EPC-C1G2</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc5.html">5</A></TD><TD ALIGN="RIGHT"><CODE>0x15</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c05/0x15_len.txt"><CODE>0x15</CODE></A></TD><TD ALIGN="RIGHT">*&lt; <CODE>0x1a</CODE></TD><TD>(*op) CRC-5; CRC-5-ITU; CRC-5F/4; FOP-5 ("65")</TD><TD><A HREF="#crc.cat.crc-5-g-704"><CODE>CRC-5/G-704</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc6.html">6</A></TD><TD ALIGN="RIGHT"><CODE>0x03</CODE></TD><TD ALIGN="RIGHT"><CODE>0x30</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c06/0x21_len.txt"><CODE>0x21</CODE></A></TD><TD>(*p) CRC-6; CRC-6-ITU; FP-6</TD><TD><A HREF="#crc.cat.crc-6-g-704"><CODE>CRC-6/G-704</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc6.html">6</A></TD><TD ALIGN="RIGHT"><CODE>0x07</CODE></TD><TD ALIGN="RIGHT"><CODE>0x38</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c06/0x23_len.txt"><CODE>0x23</CODE></A></TD><TD>(*op) CRC-6-CDMA2000-B; FOP-6</TD><TD><A HREF="#crc.cat.crc-6-cdma2000-b"><CODE>CRC-6/CDMA2000-B</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc6.html">6</A></TD><TD ALIGN="RIGHT"><CODE>0x19</CODE></TD><TD ALIGN="RIGHT"><CODE>0x26</CODE></TD><TD ALIGN="RIGHT">&lt; <A HREF="https://users.ece.cmu.edu/~koopman/crc/c06/0x2c_len.txt"><CODE>0x2c</CODE></A></TD><TD>(*op) DARC-6</TD><TD><A HREF="#crc.cat.crc-6-darc"><CODE>CRC-6/DARC</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc6.html">6</A></TD><TD ALIGN="RIGHT"><CODE>0x27</CODE></TD><TD ALIGN="RIGHT"><CODE>0x39</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c06/0x33_len.txt"><CODE>0x33</CODE></A></TD><TD>(*p) CRC-6-CDMA2000-A; CRC-6F/3 ("147p")</TD><TD><A HREF="#crc.cat.crc-6-cdma2000-a"><CODE>CRC-6/CDMA2000-A</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc6.html">6</A></TD><TD ALIGN="RIGHT"><CODE>0x2f</CODE></TD><TD ALIGN="RIGHT"><CODE>0x3d</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c06/0x37_len.txt"><CODE>0x37</CODE></A></TD><TD>(*op) CRC-6-GSM; CRC-6F/4 ("157")</TD><TD><A HREF="#crc.cat.crc-6-gsm"><CODE>CRC-6/GSM</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc7.html">7</A></TD><TD ALIGN="RIGHT"><CODE>0x09</CODE></TD><TD ALIGN="RIGHT"><CODE>0x48</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c07/0x44_len.txt"><CODE>0x44</CODE></A></TD><TD>(*p) CRC-7</TD><TD><A HREF="#crc.cat.crc-7-mmc"><CODE>CRC-7/MMC</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc7.html">7</A></TD><TD ALIGN="RIGHT"><CODE>0x45</CODE></TD><TD ALIGN="RIGHT"><CODE>0x51</CODE></TD><TD ALIGN="RIGHT">&lt; <A HREF="https://users.ece.cmu.edu/~koopman/crc/c07/0x62_len.txt"><CODE>0x62</CODE></A></TD><TD>(*op) CRC-7P</TD><TD><A HREF="#crc.cat.crc-7-umts"><CODE>CRC-7/UMTS</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc7.html">7</A></TD><TD ALIGN="RIGHT"><CODE>0x4f</CODE></TD><TD ALIGN="RIGHT"><CODE>0x79</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c07/0x67_len.txt"><CODE>0x67</CODE></A></TD><TD>(*o) RFC 3095</TD><TD><A HREF="#crc.cat.crc-7-rohc"><CODE>CRC-7/ROHC</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc8.html">8</A></TD><TD ALIGN="RIGHT"><CODE>0x07</CODE></TD><TD ALIGN="RIGHT"><CODE>0xe0</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c08/0x83_len.txt"><CODE>0x83</CODE></A></TD><TD>(*op) FOP-8; ATM-8; CRC-8P</TD><TD><A HREF="#crc.cat.crc-8-i-432-1"><CODE>CRC-8/I-432-1</CODE></A>, <A HREF="#crc.cat.crc-8-rohc"><CODE>CRC-8/ROHC</CODE></A>, <A HREF="#crc.cat.crc-8-smbus"><CODE>CRC-8/SMBUS</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc8.html">8</A></TD><TD ALIGN="RIGHT"><CODE>0x31</CODE></TD><TD ALIGN="RIGHT"><CODE>0x8c</CODE></TD><TD ALIGN="RIGHT">&lt; <A HREF="https://users.ece.cmu.edu/~koopman/crc/c08/0x98_len.txt"><CODE>0x98</CODE></A></TD><TD>(*op) DOWCRC</TD><TD><A HREF="#crc.cat.crc-8-maxim-dow"><CODE>CRC-8/MAXIM-DOW</CODE></A>, <A HREF="#crc.cat.crc-8-nrsc-5"><CODE>CRC-8/NRSC-5</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc8.html">8</A></TD><TD ALIGN="RIGHT"><CODE>0x1d</CODE></TD><TD ALIGN="RIGHT"><CODE>0xb8</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c08/0x8e_len.txt"><CODE>0x8e</CODE></A></TD><TD>(*p) SAE J-1850; FP-8</TD><TD><A HREF="#crc.cat.crc-8-gsm-a"><CODE>CRC-8/GSM-A</CODE></A>, <A HREF="#crc.cat.crc-8-hitag"><CODE>CRC-8/HITAG</CODE></A>, <A HREF="#crc.cat.crc-8-i-code"><CODE>CRC-8/I-CODE</CODE></A>, <A HREF="#crc.cat.crc-8-mifare-mad"><CODE>CRC-8/MIFARE-MAD</CODE></A>, <A HREF="#crc.cat.crc-8-sae-j1850"><CODE>CRC-8/SAE-J1850</CODE></A>, <A HREF="#crc.cat.crc-8-tech-3250"><CODE>CRC-8/TECH-3250</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc8.html">8</A></TD><TD ALIGN="RIGHT"><CODE>0x49</CODE></TD><TD ALIGN="RIGHT"><CODE>0x92</CODE></TD><TD ALIGN="RIGHT">&lt; <A HREF="https://users.ece.cmu.edu/~koopman/crc/c08/0xa4_len.txt"><CODE>0xa4</CODE></A></TD><TD>(*o) CRC-8-GSM-B</TD><TD><A HREF="#crc.cat.crc-8-gsm-b"><CODE>CRC-8/GSM-B</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc8.html">8</A></TD><TD ALIGN="RIGHT"><CODE>0x2f</CODE></TD><TD ALIGN="RIGHT"><CODE>0xf4</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c08/0x97_len.txt"><CODE>0x97</CODE></A></TD><TD>(*op) C2; CRC-8-AUTOSAR; CRC-8F/4.2 ("457")</TD><TD><A HREF="#crc.cat.crc-8-autosar"><CODE>CRC-8/AUTOSAR</CODE></A>, <A HREF="#crc.cat.crc-8-opensafety"><CODE>CRC-8/OPENSAFETY</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc8.html">8</A></TD><TD ALIGN="RIGHT"><CODE>0x39</CODE></TD><TD ALIGN="RIGHT"><CODE>0x9c</CODE></TD><TD ALIGN="RIGHT">= <A HREF="https://users.ece.cmu.edu/~koopman/crc/c08/0x9c_len.txt"><CODE>0x9c</CODE></A></TD><TD>DARC-8</TD><TD><A HREF="#crc.cat.crc-8-darc"><CODE>CRC-8/DARC</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc8.html">8</A></TD><TD ALIGN="RIGHT"><CODE>0xd5</CODE></TD><TD ALIGN="RIGHT"><CODE>0xab</CODE></TD><TD ALIGN="RIGHT">&lt; <A HREF="https://users.ece.cmu.edu/~koopman/crc/c08/0xea_len.txt"><CODE>0xea</CODE></A></TD><TD>(*o) CRC-8</TD><TD><A HREF="#crc.cat.crc-8-dvb-s2"><CODE>CRC-8/DVB-S2</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc8.html">8</A></TD><TD ALIGN="RIGHT"><CODE>0x9b</CODE></TD><TD ALIGN="RIGHT"><CODE>0xd9</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c08/0xcd_len.txt"><CODE>0xcd</CODE></A></TD><TD>(*op) WCDMA-8</TD><TD><A HREF="#crc.cat.crc-8-cdma2000"><CODE>CRC-8/CDMA2000</CODE></A>, <A HREF="#crc.cat.crc-8-lte"><CODE>CRC-8/LTE</CODE></A>, <A HREF="#crc.cat.crc-8-wcdma"><CODE>CRC-8/WCDMA</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc8.html">8</A></TD><TD ALIGN="RIGHT"><CODE>0xa7</CODE></TD><TD ALIGN="RIGHT"><CODE>0xe5</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c08/0xd3_len.txt"><CODE>0xd3</CODE></A></TD><TD>(*op) CRC-8-Bluetooth</TD><TD><A HREF="#crc.cat.crc-8-bluetooth"><CODE>CRC-8/BLUETOOTH</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc10.html">10</A></TD><TD ALIGN="RIGHT"><CODE>0x3d9</CODE></TD><TD ALIGN="RIGHT"><CODE>0x26f</CODE></TD><TD ALIGN="RIGHT">&lt; <A HREF="https://users.ece.cmu.edu/~koopman/crc/c10/0x3ec_len.txt"><CODE>0x3ec</CODE></A></TD><TD>(*op) CRC-10-CMDA2000</TD><TD><A HREF="#crc.cat.crc-10-cdma2000"><CODE>CRC-10/CDMA2000</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc10.html">10</A></TD><TD ALIGN="RIGHT"><CODE>0x175</CODE></TD><TD ALIGN="RIGHT"><CODE>0x2ba</CODE></TD><TD ALIGN="RIGHT">= <A HREF="https://users.ece.cmu.edu/~koopman/crc/c10/0x2ba_len.txt"><CODE>0x2ba</CODE></A></TD><TD>CRC-10-GSM</TD><TD><A HREF="#crc.cat.crc-10-gsm"><CODE>CRC-10/GSM</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc10.html">10</A></TD><TD ALIGN="RIGHT"><CODE>0x233</CODE></TD><TD ALIGN="RIGHT"><CODE>0x331</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c10/0x319_len.txt"><CODE>0x319</CODE></A></TD><TD>(*op) CRC-10</TD><TD><A HREF="#crc.cat.crc-10-atm"><CODE>CRC-10/ATM</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc11.html">11</A></TD><TD ALIGN="RIGHT"><CODE>0x385</CODE></TD><TD ALIGN="RIGHT"><CODE>0x50e</CODE></TD><TD ALIGN="RIGHT">&lt; <A HREF="https://users.ece.cmu.edu/~koopman/crc/c11/0x5c2_len.txt"><CODE>0x5c2</CODE></A></TD><TD>(*o) FlexRay-11</TD><TD><A HREF="#crc.cat.crc-11-flexray"><CODE>CRC-11/FLEXRAY</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc11.html">11</A></TD><TD ALIGN="RIGHT"><CODE>0x307</CODE></TD><TD ALIGN="RIGHT"><CODE>0x706</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c11/0x583_len.txt"><CODE>0x583</CODE></A></TD><TD>(*op) CRC-11F/4.2 "7015"</TD><TD><A HREF="#crc.cat.crc-11-umts"><CODE>CRC-11/UMTS</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc12.html">12</A></TD><TD ALIGN="RIGHT"><CODE>0xd31</CODE></TD><TD ALIGN="RIGHT"><CODE>0x8cb</CODE></TD><TD ALIGN="RIGHT">&lt; <A HREF="https://users.ece.cmu.edu/~koopman/crc/c12/0xe98_len.txt"><CODE>0xe98</CODE></A></TD><TD>CRC-12-GSM</TD><TD><A HREF="#crc.cat.crc-12-gsm"><CODE>CRC-12/GSM</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc12.html">12</A></TD><TD ALIGN="RIGHT"><CODE>0x80f</CODE></TD><TD ALIGN="RIGHT"><CODE>0xf01</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c12/0xc07_len.txt"><CODE>0xc07</CODE></A></TD><TD>(*op) CRC-12</TD><TD><A HREF="#crc.cat.crc-12-dect"><CODE>CRC-12/DECT</CODE></A>, <A HREF="#crc.cat.crc-12-umts"><CODE>CRC-12/UMTS</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc12.html">12</A></TD><TD ALIGN="RIGHT"><CODE>0xf13</CODE></TD><TD ALIGN="RIGHT"><CODE>0xc8f</CODE></TD><TD ALIGN="RIGHT">&lt; <A HREF="https://users.ece.cmu.edu/~koopman/crc/c12/0xf89_len.txt"><CODE>0xf89</CODE></A></TD><TD>(*op) CRC-12-CMDA2000</TD><TD><A HREF="#crc.cat.crc-12-cdma2000"><CODE>CRC-12/CDMA2000</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc13.html">13</A></TD><TD ALIGN="RIGHT"><CODE>0x1cf5</CODE></TD><TD ALIGN="RIGHT"><CODE>0x15e7</CODE></TD><TD ALIGN="RIGHT">&lt; <A HREF="https://users.ece.cmu.edu/~koopman/crc/c13/0x1e7a_len.txt"><CODE>0x1e7a</CODE></A></TD><TD>(*o) CRC-13-BBC</TD><TD><A HREF="#crc.cat.crc-13-bbc"><CODE>CRC-13/BBC</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc14.html">14</A></TD><TD ALIGN="RIGHT"><CODE>0x0805</CODE></TD><TD ALIGN="RIGHT"><CODE>0x2804</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c14/0x2402_len.txt"><CODE>0x2402</CODE></A></TD><TD>(*op) DARC-14 (*op)</TD><TD><A HREF="#crc.cat.crc-14-darc"><CODE>CRC-14/DARC</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc14.html">14</A></TD><TD ALIGN="RIGHT"><CODE>0x202d</CODE></TD><TD ALIGN="RIGHT"><CODE>0x2d01</CODE></TD><TD ALIGN="RIGHT">&lt; <A HREF="https://users.ece.cmu.edu/~koopman/crc/c14/0x3016_len.txt"><CODE>0x3016</CODE></A></TD><TD>(*op) CRC-14-GSM</TD><TD><A HREF="#crc.cat.crc-14-gsm"><CODE>CRC-14/GSM</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc15.html">15</A></TD><TD ALIGN="RIGHT"><CODE>0x4599</CODE></TD><TD ALIGN="RIGHT"><CODE>0x4cd1</CODE></TD><TD ALIGN="RIGHT">&lt; <A HREF="https://users.ece.cmu.edu/~koopman/crc/c15/0x62cc_len.txt"><CODE>0x62cc</CODE></A></TD><TD>(*o) CAN</TD><TD><A HREF="#crc.cat.crc-15-can"><CODE>CRC-15/CAN</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc15.html">15</A></TD><TD ALIGN="RIGHT"><CODE>0x6815</CODE></TD><TD ALIGN="RIGHT"><CODE>0x540b</CODE></TD><TD ALIGN="RIGHT">&lt; <A HREF="https://users.ece.cmu.edu/~koopman/crc/c15/0x740a_len.txt"><CODE>0x740a</CODE></A></TD><TD>CRC-15-MPT1327</TD><TD><A HREF="#crc.cat.crc-15-mpt1327"><CODE>CRC-15/MPT1327</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc16.html">16</A></TD><TD ALIGN="RIGHT"><CODE>0x0589</CODE></TD><TD ALIGN="RIGHT"><CODE>0x91a0</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c16/0x82c4_len.txt"><CODE>0x82c4</CODE></A></TD><TD>(*o) CRC-16-DECT</TD><TD><A HREF="#crc.cat.crc-16-dect-r"><CODE>CRC-16/DECT-R</CODE></A>, <A HREF="#crc.cat.crc-16-dect-x"><CODE>CRC-16/DECT-X</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc16.html">16</A></TD><TD ALIGN="RIGHT"><CODE>0x080b</CODE></TD><TD ALIGN="RIGHT"><CODE>0xd010</CODE></TD><TD ALIGN="RIGHT"><CODE>0x8405</CODE></TD><TD>&ndash;</TD><TD><A HREF="#crc.cat.crc-16-nrsc-5"><CODE>CRC-16/NRSC-5</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc16.html">16</A></TD><TD ALIGN="RIGHT"><CODE>0x1021</CODE></TD><TD ALIGN="RIGHT"><CODE>0x8408</CODE></TD><TD ALIGN="RIGHT">&lt; <A HREF="https://users.ece.cmu.edu/~koopman/crc/c16/0x8810_len.txt"><CODE>0x8810</CODE></A></TD><TD>(*op) CCITT-16</TD><TD><A HREF="#crc.cat.crc-16-genibus"><CODE>CRC-16/GENIBUS</CODE></A>, <A HREF="#crc.cat.crc-16-gsm"><CODE>CRC-16/GSM</CODE></A>, <A HREF="#crc.cat.crc-16-ibm-3740"><CODE>CRC-16/IBM-3740</CODE></A>, <A HREF="#crc.cat.crc-16-ibm-sdlc"><CODE>CRC-16/IBM-SDLC</CODE></A>, <A HREF="#crc.cat.crc-16-iso-iec-14443-3-a"><CODE>CRC-16/ISO-IEC-14443-3-A</CODE></A>, <A HREF="#crc.cat.crc-16-kermit"><CODE>CRC-16/KERMIT</CODE></A>, <A HREF="#crc.cat.crc-16-mcrf4xx"><CODE>CRC-16/MCRF4XX</CODE></A>, <A HREF="#crc.cat.crc-16-riello"><CODE>CRC-16/RIELLO</CODE></A>, <A HREF="#crc.cat.crc-16-spi-fujitsu"><CODE>CRC-16/SPI-FUJITSU</CODE></A>, <A HREF="#crc.cat.crc-16-tms37157"><CODE>CRC-16/TMS37157</CODE></A>, <A HREF="#crc.cat.crc-16-xmodem"><CODE>CRC-16/XMODEM</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc16.html">16</A></TD><TD ALIGN="RIGHT"><CODE>0x1dcf</CODE></TD><TD ALIGN="RIGHT"><CODE>0xf3b8</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c16/0x8ee7_len.txt"><CODE>0x8ee7</CODE></A></TD><TD>ProfiBus</TD><TD><A HREF="#crc.cat.crc-16-profibus"><CODE>CRC-16/PROFIBUS</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc16.html">16</A></TD><TD ALIGN="RIGHT"><CODE>0x3d65</CODE></TD><TD ALIGN="RIGHT"><CODE>0xa6bc</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c16/0x9eb2_len.txt"><CODE>0x9eb2</CODE></A></TD><TD>(*o) C1; CRC-16-DNP; CRC-16F/6.2 ("236545")</TD><TD><A HREF="#crc.cat.crc-16-dnp"><CODE>CRC-16/DNP</CODE></A>, <A HREF="#crc.cat.crc-16-en-13757"><CODE>CRC-16/EN-13757</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc16.html">16</A></TD><TD ALIGN="RIGHT"><CODE>0x8005</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c16/0xa001_len.txt"><CODE>0xa001</CODE></A></TD><TD ALIGN="RIGHT">*&lt; <CODE>0xc002</CODE></TD><TD>(*op) CRC-16; CRC-16-IBM</TD><TD><A HREF="#crc.cat.crc-16-arc"><CODE>CRC-16/ARC</CODE></A>, <A HREF="#crc.cat.crc-16-cms"><CODE>CRC-16/CMS</CODE></A>, <A HREF="#crc.cat.crc-16-dds-110"><CODE>CRC-16/DDS-110</CODE></A>, <A HREF="#crc.cat.crc-16-maxim-dow"><CODE>CRC-16/MAXIM-DOW</CODE></A>, <A HREF="#crc.cat.crc-16-modbus"><CODE>CRC-16/MODBUS</CODE></A>, <A HREF="#crc.cat.crc-16-umts"><CODE>CRC-16/UMTS</CODE></A>, <A HREF="#crc.cat.crc-16-usb"><CODE>CRC-16/USB</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc16.html">16</A></TD><TD ALIGN="RIGHT"><CODE>0x5935</CODE></TD><TD ALIGN="RIGHT"><CODE>0xac9a</CODE></TD><TD ALIGN="RIGHT">= <A HREF="https://users.ece.cmu.edu/~koopman/crc/c16/0xac9a_len.txt"><CODE>0xac9a</CODE></A></TD><TD>C3; CRC-16F/5 ("254465s")</TD><TD><A HREF="#crc.cat.crc-16-opensafety-a"><CODE>CRC-16/OPENSAFETY-A</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc16.html">16</A></TD><TD ALIGN="RIGHT"><CODE>0x6f63</CODE></TD><TD ALIGN="RIGHT"><CODE>0xc6f6</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c16/0xb7b1_len.txt"><CODE>0xb7b1</CODE></A></TD><TD>IEEE WG77.1</TD><TD><A HREF="#crc.cat.crc-16-lj1200"><CODE>CRC-16/LJ1200</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc16.html">16</A></TD><TD ALIGN="RIGHT"><CODE>0x755b</CODE></TD><TD ALIGN="RIGHT"><CODE>0xdaae</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c16/0xbaad_len.txt"><CODE>0xbaad</CODE></A></TD><TD>CRC-16K/4</TD><TD><A HREF="#crc.cat.crc-16-opensafety-b"><CODE>CRC-16/OPENSAFETY-B</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc16.html">16</A></TD><TD ALIGN="RIGHT"><CODE>0x8bb7</CODE></TD><TD ALIGN="RIGHT"><CODE>0xedd1</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c16/0xc5db_len.txt"><CODE>0xc5db</CODE></A></TD><TD>(*p) CRC-16-T10-DIF</TD><TD><A HREF="#crc.cat.crc-16-t10-dif"><CODE>CRC-16/T10-DIF</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc16.html">16</A></TD><TD ALIGN="RIGHT"><CODE>0xa097</CODE></TD><TD ALIGN="RIGHT"><CODE>0xe905</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c16/0xd04b_len.txt"><CODE>0xd04b</CODE></A></TD><TD>(*o) IBM-16</TD><TD><A HREF="#crc.cat.crc-16-teledisk"><CODE>CRC-16/TELEDISK</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc16.html">16</A></TD><TD ALIGN="RIGHT"><CODE>0xc867</CODE></TD><TD ALIGN="RIGHT"><CODE>0xe613</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c16/0xe433_len.txt"><CODE>0xe433</CODE></A></TD><TD>(*p) CRC-16-CMDA2000</TD><TD><A HREF="#crc.cat.crc-16-cdma2000"><CODE>CRC-16/CDMA2000</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc17.html">17</A></TD><TD ALIGN="RIGHT"><CODE>0x1685b</CODE></TD><TD ALIGN="RIGHT"><CODE>0x1b42d</CODE></TD><TD ALIGN="RIGHT">= <A HREF="https://users.ece.cmu.edu/~koopman/crc/c17/0x1b42d_len.txt"><CODE>0x1b42d</CODE></A></TD><TD>(*o) CRC-17-CAN</TD><TD><A HREF="#crc.cat.crc-17-can-fd"><CODE>CRC-17/CAN-FD</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc21.html">21</A></TD><TD ALIGN="RIGHT"><CODE>0x102899</CODE></TD><TD ALIGN="RIGHT"><CODE>0x132281</CODE></TD><TD ALIGN="RIGHT">&lt; <A HREF="https://users.ece.cmu.edu/~koopman/crc/c21/0x18144c_len.txt"><CODE>0x18144c</CODE></A></TD><TD>(*o) CRC-21-CAN</TD><TD><A HREF="#crc.cat.crc-21-can-fd"><CODE>CRC-21/CAN-FD</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc24.html">24</A></TD><TD ALIGN="RIGHT"><CODE>0x00065b</CODE></TD><TD ALIGN="RIGHT"><CODE>0xda6000</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c24/0x80032d_len.txt"><CODE>0x80032d</CODE></A></TD><TD>(*op) BLE-24 (Bluetooth Low Energy)</TD><TD><A HREF="#crc.cat.crc-24-ble"><CODE>CRC-24/BLE</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc24.html">24</A></TD><TD ALIGN="RIGHT"><CODE>0x328b63</CODE></TD><TD ALIGN="RIGHT"><CODE>0xc6d14c</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c24/0x9945b1_len.txt"><CODE>0x9945b1</CODE></A></TD><TD>(*op) CRC-24/4</TD><TD><A HREF="#crc.cat.crc-24-interlaken"><CODE>CRC-24/INTERLAKEN</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc24.html">24</A></TD><TD ALIGN="RIGHT"><CODE>0x5d6dcb</CODE></TD><TD ALIGN="RIGHT"><CODE>0xd3b6ba</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c24/0xaeb6e5_len.txt"><CODE>0xaeb6e5</CODE></A></TD><TD>(*o) CRC-24; CRC-24/6.1; FlexRay-24</TD><TD><A HREF="#crc.cat.crc-24-flexray-a"><CODE>CRC-24/FLEXRAY-A</CODE></A>, <A HREF="#crc.cat.crc-24-flexray-b"><CODE>CRC-24/FLEXRAY-B</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc24.html">24</A></TD><TD ALIGN="RIGHT"><CODE>0x800063</CODE></TD><TD ALIGN="RIGHT"><CODE>0xc60001</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c24/0xc00031_len.txt"><CODE>0xc00031</CODE></A></TD><TD>(*op) WCDMA-24</TD><TD><A HREF="#crc.cat.crc-24-lte-b"><CODE>CRC-24/LTE-B</CODE></A>, <A HREF="#crc.cat.crc-24-os-9"><CODE>CRC-24/OS-9</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc24.html">24</A></TD><TD ALIGN="RIGHT"><CODE>0x864cfb</CODE></TD><TD ALIGN="RIGHT"><CODE>0xdf3261</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c24/0xc3267d_len.txt"><CODE>0xc3267d</CODE></A></TD><TD>(*op) CRC-24-Radix-64</TD><TD><A HREF="#crc.cat.crc-24-lte-a"><CODE>CRC-24/LTE-A</CODE></A>, <A HREF="#crc.cat.crc-24-openpgp"><CODE>CRC-24/OPENPGP</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc30.html">30</A></TD><TD ALIGN="RIGHT"><CODE>0x2030b9c7</CODE></TD><TD ALIGN="RIGHT"><CODE>0x38e74301</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c30/0x30185ce3_len.txt"><CODE>0x30185ce3</CODE></A></TD><TD>(*op) CRC-30</TD><TD><A HREF="#crc.cat.crc-30-cdma"><CODE>CRC-30/CDMA</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc31.html">31</A></TD><TD ALIGN="RIGHT"><CODE>0x04c11db7</CODE></TD><TD ALIGN="RIGHT"><CODE>0x76dc4190</CODE></TD><TD ALIGN="RIGHT"><CODE>0x42608edb</CODE></TD><TD>&ndash;</TD><TD><A HREF="#crc.cat.crc-31-philips"><CODE>CRC-31/PHILIPS</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc32.html">32</A></TD><TD ALIGN="RIGHT"><CODE>0x000000af</CODE></TD><TD ALIGN="RIGHT"><CODE>0xf5000000</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c32/0x80000057_len.txt"><CODE>0x80000057</CODE></A></TD><TD>(*p) FP-32, CRC-32K/3</TD><TD><A HREF="#crc.cat.crc-32-xfer"><CODE>CRC-32/XFER</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc32.html">32</A></TD><TD ALIGN="RIGHT"><CODE>0x04c11db7</CODE></TD><TD ALIGN="RIGHT"><CODE>0xedb88320</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c32/0x82608edb_len.txt"><CODE>0x82608edb</CODE></A></TD><TD>(*p) IEEE 802.3; CRC-32</TD><TD><A HREF="#crc.cat.crc-32-bzip2"><CODE>CRC-32/BZIP2</CODE></A>, <A HREF="#crc.cat.crc-32-cksum"><CODE>CRC-32/CKSUM</CODE></A>, <A HREF="#crc.cat.crc-32-iso-hdlc"><CODE>CRC-32/ISO-HDLC</CODE></A>, <A HREF="#crc.cat.crc-32-jamcrc"><CODE>CRC-32/JAMCRC</CODE></A>, <A HREF="#crc.cat.crc-32-mpeg-2"><CODE>CRC-32/MPEG-2</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc32.html">32</A></TD><TD ALIGN="RIGHT"><CODE>0x1edc6f41</CODE></TD><TD ALIGN="RIGHT"><CODE>0x82f63b78</CODE></TD><TD ALIGN="RIGHT">&lt; <A HREF="https://users.ece.cmu.edu/~koopman/crc/c32/0x8f6e37a0_len.txt"><CODE>0x8f6e37a0</CODE></A></TD><TD>(*op) iSCSI; CRC-32C; CRC-32/4</TD><TD><A HREF="#crc.cat.crc-32-iscsi"><CODE>CRC-32/ISCSI</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc32.html">32</A></TD><TD ALIGN="RIGHT"><CODE>0x741b8cd7</CODE></TD><TD ALIGN="RIGHT"><CODE>0xeb31d82e</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c32/0xba0dc66b_len.txt"><CODE>0xba0dc66b</CODE></A></TD><TD>(*o) CRC-32K/6.1</TD><TD><A HREF="#crc.cat.crc-32-mef"><CODE>CRC-32/MEF</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc32.html">32</A></TD><TD ALIGN="RIGHT"><CODE>0x8001801b</CODE></TD><TD ALIGN="RIGHT"><CODE>0xd8018001</CODE></TD><TD ALIGN="RIGHT"><CODE>0xc000c00d</CODE></TD><TD>&ndash;</TD><TD><A HREF="#crc.cat.crc-32-cd-rom-edc"><CODE>CRC-32/CD-ROM-EDC</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc32.html">32</A></TD><TD ALIGN="RIGHT"><CODE>0x814141ab</CODE></TD><TD ALIGN="RIGHT"><CODE>0xd5828281</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c32/0xc0a0a0d5_len.txt"><CODE>0xc0a0a0d5</CODE></A></TD><TD>(*op) CRC-32Q</TD><TD><A HREF="#crc.cat.crc-32-aixm"><CODE>CRC-32/AIXM</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc32.html">32</A></TD><TD ALIGN="RIGHT"><CODE>0xf4acfb13</CODE></TD><TD ALIGN="RIGHT"><CODE>0xc8df352f</CODE></TD><TD ALIGN="RIGHT">&lt; <A HREF="https://users.ece.cmu.edu/~koopman/crc/c32/0xfa567d89_len.txt"><CODE>0xfa567d89</CODE></A></TD><TD>(*o) CRC-32/6 corrected</TD><TD><A HREF="#crc.cat.crc-32-autosar"><CODE>CRC-32/AUTOSAR</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc32.html">32</A></TD><TD ALIGN="RIGHT"><CODE>0xa833982b</CODE></TD><TD ALIGN="RIGHT"><CODE>0xd419cc15</CODE></TD><TD ALIGN="RIGHT">= <A HREF="https://users.ece.cmu.edu/~koopman/crc/c32/0xd419cc15_len.txt"><CODE>0xd419cc15</CODE></A></TD><TD>CRC-32/5.1</TD><TD><A HREF="#crc.cat.crc-32-base91-d"><CODE>CRC-32/BASE91-D</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc40.html">40</A></TD><TD ALIGN="RIGHT"><CODE>0x0004820009</CODE></TD><TD ALIGN="RIGHT"><CODE>0x9000412000</CODE></TD><TD ALIGN="RIGHT"><CODE>0x8002410004</CODE></TD><TD>&ndash;</TD><TD><A HREF="#crc.cat.crc-40-gsm"><CODE>CRC-40/GSM</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc64.html">64</A></TD><TD ALIGN="RIGHT"><CODE>0x000000000000001b</CODE></TD><TD ALIGN="RIGHT"><CODE>0xd800000000000000</CODE></TD><TD ALIGN="RIGHT"><CODE>0x800000000000000d</CODE></TD><TD>(*p) FP-64, CRC-64-ISO</TD><TD><A HREF="#crc.cat.crc-64-go-iso"><CODE>CRC-64/GO-ISO</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc64.html">64</A></TD><TD ALIGN="RIGHT"><CODE>0x259c84cba6426349</CODE></TD><TD ALIGN="RIGHT"><CODE>0x92c64265d32139a4</CODE></TD><TD ALIGN="RIGHT">&lt; <CODE>0x92ce4265d32131a4</CODE></TD><TD>&ndash;</TD><TD><A HREF="#crc.cat.crc-64-ms"><CODE>CRC-64/MS</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc64.html">64</A></TD><TD ALIGN="RIGHT"><CODE>0x42f0e1eba9ea3693</CODE></TD><TD ALIGN="RIGHT"><CODE>0xc96c5795d7870f42</CODE></TD><TD ALIGN="RIGHT"><CODE>0xa17870f5d4f51b49</CODE></TD><TD>(*o) CRC-64-ECMA</TD><TD><A HREF="#crc.cat.crc-64-ecma-182"><CODE>CRC-64/ECMA-182</CODE></A>, <A HREF="#crc.cat.crc-64-we"><CODE>CRC-64/WE</CODE></A>, <A HREF="#crc.cat.crc-64-xz"><CODE>CRC-64/XZ</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT">82</TD><TD ALIGN="RIGHT"><CODE>0x0308c0111011401440411</CODE></TD><TD ALIGN="RIGHT"><CODE>0x220808a00a2022200c430</CODE></TD><TD ALIGN="RIGHT"><CODE>0x218460088808a00a20208</CODE></TD><TD>&ndash;</TD><TD><A HREF="#crc.cat.crc-82-darc"><CODE>CRC-82/DARC</CODE></A></TD></TR>
 </TBODY>
 </TABLE>
 
-<P><STRONG>Legend:</STRONG> * Lexically greater of the two reciprocals (see <CITE>Reflected</CITE> column for the lesser reciprocal). ** Lexically greater of the two reciprocals, but the <CITE>Zoo</CITE> lists under the lesser reciprocal.  (*o) Multiple of (<VAR>x</VAR> + 1).  (*p) Primitive polynomial.  (*op) Product of a primitive polynomial and (<VAR>x</VAR> + 1).</P>
+<P><STRONG>Legend:</STRONG> &lt; Lexically greater than its reciprocal in the <CITE>Reflected</CITE> column.  *&lt; Lexically greater than its reciprocal listed in the <CITE>Zoo</CITE> and in the <CITE>Reflected</CITE> column.  = Palindromic polynomial.  (*o) Multiple of (<VAR>x</VAR> + 1).  (*p) Primitive polynomial.  (*op) Product of a primitive polynomial and (<VAR>x</VAR> + 1).</P>
 
 <HR>
 
 <ADDRESS>Greg Cook, <IMG ALT="[email address]" STYLE="vertical-align: text-bottom;" SRC="../email.png" WIDTH="139" HEIGHT="13"><BR>
-<A HREF="https://reveng.sourceforge.io/crc-catalogue/all.htm">https://reveng.sourceforge.io/crc-catalogue/all.htm</A> Last updated 15 August 2020<BR>
-Links last verified 28 December 2019
+<A HREF="https://reveng.sourceforge.io/crc-catalogue/all.htm">https://reveng.sourceforge.io/crc-catalogue/all.htm</A> Last updated 11 January 2022<BR>
+Links last verified 1 January 2021
 </ADDRESS>
 
-<P><A HREF="https://validator.w3.org/check?uri=https://reveng.sourceforge.io/crc-catalogue/all.htm"><IMG ALT="Valid HTML 4.01 Strict." TITLE="Valid HTML 4.01 Strict" SRC="../valid-html401.png" WIDTH="88" HEIGHT="31" STYLE="vertical-align: middle;"></A><SPAN STYLE="float: right;">&nbsp;Hosting by <A HREF="https://sourceforge.net/"><IMG ALT="SourceForge.net" TITLE="SourceForge.net" SRC="../sflogo.png" WIDTH="125" HEIGHT="37" STYLE="vertical-align: middle;"></A></SPAN></P>
+<P><A HREF="https://validator.w3.org/check?uri=https://reveng.sourceforge.io/crc-catalogue/all.htm"><IMG ALT="Valid HTML 4.01 Strict." TITLE="Valid HTML 4.01 Strict" SRC="../valid-html401.png" WIDTH="88" HEIGHT="31" STYLE="vertical-align: middle;"></A><SPAN STYLE="float: right;">&nbsp;Hosting by <A HREF="https://sourceforge.net/"><IMG ALT="SourceForge.net" TITLE="SourceForge.net" SRC="https://sourceforge.net/sflogo.php?group_id=781152&amp;type=2" WIDTH="125" HEIGHT="37" STYLE="vertical-align: middle;"></A></SPAN></P>
 
 <P CLASS="centred">[ <A HREF="#_top">Top of page</A> ]</P>
 
