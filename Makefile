@@ -3,7 +3,12 @@ OBJS=$(patsubst %.c,%.o,$(wildcard src/crc*.c))
 all: src/allcrcs.c crctest crcadd mincrc
 src/allcrcs.c: crcall allcrcs-abbrev.txt crcany.c
 	@rm -rf src
-	./crcall < allcrcs-abbrev.txt
+	@if stat -t *.def >/dev/null 2>&1; \
+	then \
+		cat allcrcs-abbrev.txt *.def | ./crcall; \
+	else \
+		./crcall < allcrcs-abbrev.txt; \
+	fi
 	@cat src/allcrcs.h >> src/allcrcs.c
 	@rm src/allcrcs.h
 	make src
@@ -24,7 +29,12 @@ crc.o: crc.c crc.h model.h
 crcdbl.o: crcdbl.c crcdbl.h crc.h model.h
 model.o: model.c model.h
 test: src/allcrcs.c crctest allcrcs-abbrev.txt
-	./crctest < allcrcs-abbrev.txt
+	@if stat -t *.def >/dev/null 2>&1; \
+	then \
+		cat allcrcs-abbrev.txt *.def | ./crctest; \
+	else \
+		./crctest < allcrcs-abbrev.txt; \
+	fi
 	src/test_src
 checklists: mincrc allcrcs.txt allcrcs-abbrev.txt
 	./mincrc < allcrcs.txt | diff -qb - allcrcs-abbrev.txt
