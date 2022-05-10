@@ -304,25 +304,25 @@
 <UL>
 <LI>Class: <SPAN CLASS="academic">academic</SPAN></LI>
 <LI>Reference from named polynomial in Prof. Koopman's <A HREF="https://users.ece.cmu.edu/~koopman/crc/notes.html">CRC Polynomial Zoo</A>.</LI>
-<LI>3rd Generation Partnership Project (3GPP) <A HREF="https://www.3gpp.org/ftp/Specs/2017-03/Rel-14/25_series/25427-e00.zip">TS 25.427</A> version 14.0.0 (March 2017) (zipped MS Word document) &mdash; ETSI <A HREF="https://www.etsi.org/deliver/etsi_ts/125400_125499/125427/14.00.00_60/ts_125427v140000p.pdf">TS 125 427</A> version 14.0.0 (April 2017)
+<LI>3rd Generation Partnership Project (3GPP) <A HREF="https://www.3gpp.org/ftp/Specs/latest/Rel-17/25_series/25427-h00.zip">TS 25.427</A> version 17.0.0 (April 2022) (zipped MS Word document) &mdash; ETSI <A HREF="https://www.etsi.org/deliver/etsi_ts/125400_125499/125427/17.00.00_60/ts_125427v170000p.pdf">TS 125 427</A> version 17.0.0 (April 2022)
 <UL>
 <LI><STRONG>I</STRONG> Definition: Width, Poly, Init, XorOut (Section 7.2.1, p.40)</LI>
 <LI><STRONG>I</STRONG> Definition: RefIn, RefOut (Section 6.1.1, p.20; Section 7.2.1.1, pp.40&ndash;1)</LI>
 </UL>
 </LI>
 <LI>Created: 8 February 2016</LI>
-<LI>Updated: 25 March 2019</LI>
+<LI>Updated: 7 May 2022</LI>
 </UL>
 
 <H3><A NAME="crc.cat-bits.8"></A><A NAME="crc.cat.crc-8-autosar">CRC-8/AUTOSAR</A></H3>
 <P CLASS="attested"><CODE>width=8  poly=0x2f  init=0xff  refin=false  refout=false  xorout=0xff  check=0xdf  residue=0x42  name="CRC-8/AUTOSAR"</CODE></P>
 <UL>
 <LI>Class: <SPAN CLASS="attested">attested</SPAN></LI>
-<LI>AUTOSAR (30 November 2020), <A HREF="https://www.autosar.org/standards/classic-platform/">AUTOSAR Classic Platform</A> release R20-11, <A HREF="https://www.autosar.org/fileadmin/user_upload/standards/classic/20-11/AUTOSAR_SWS_CRCLibrary.pdf">Specification of CRC Routines</A>
+<LI>AUTOSAR (25 November 2021), <A HREF="https://www.autosar.org/standards/classic-platform/">AUTOSAR Classic Platform</A> release R21-11, <A HREF="https://www.autosar.org/fileadmin/user_upload/standards/classic/21-11/AUTOSAR_SWS_CRCLibrary.pdf">Specification of CRC Routines</A>
 <UL>
-<LI><STRONG>I</STRONG> Comprehensive primer on CRC theory (Section 7.1, pp.18&ndash;21)</LI>
-<LI><STRONG>I</STRONG> All parameters (Section 7.2.1.2, p.24)</LI>
-<LI><STRONG>IV</STRONG> 7 codewords (Section 7.2.1.2, p.24)
+<LI><STRONG>I</STRONG> Comprehensive primer on CRC theory (Section 7.1, pp.19&ndash;22)</LI>
+<LI><STRONG>I</STRONG> All parameters (Section 7.2.1.2, p.25)</LI>
+<LI><STRONG>IV</STRONG> 7 codewords (Section 7.2.1.2, p.25)
 <UL>
 <LI><CODE>00000000&#8203;12</CODE></LI>
 <LI><CODE>F20183C2</CODE></LI>
@@ -337,7 +337,7 @@
 </LI>
 <LI>Unique effective solution of codeword set</LI>
 <LI>Created: 24 July 2016</LI>
-<LI>Updated: 2 January 2021</LI>
+<LI>Updated: 7 May 2022</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-8-bluetooth">CRC-8/BLUETOOTH</A></H3>
@@ -345,13 +345,13 @@
 <UL>
 <LI>Class: <SPAN CLASS="attested">attested</SPAN></LI>
 <LI>Used in Bluetooth header error correction (HEC).  Init=0x00 is used in the Inquiry Response substate.</LI>
-<LI>Bluetooth SIG (31 December 2019), <A HREF="https://www.bluetooth.com/specifications/">Bluetooth Specification</A>, <A HREF="https://www.bluetooth.org/docman/handlers/downloaddoc.ashx?doc_id=478726">Core Version 5.2</A>
+<LI>Bluetooth SIG (13 July 2021), <A HREF="https://www.bluetooth.com/specifications/">Bluetooth Specification</A>, <A HREF="https://www.bluetooth.org/DocMan/handlers/DownloadDoc.ashx?doc_id=521059">Core Version 5.3</A>
 <UL>
-<LI><STRONG>I</STRONG> Definition: Init (Section 2.B.1.2.1, p.417)</LI>
-<LI><STRONG>I</STRONG> Definition: Width, Poly (Section 2.B.7.1.1, pp.488&ndash;9)</LI>
-<LI><STRONG>I</STRONG> Definition: RefIn; shift register diagram (Figure 2.B.7.3, p.489)</LI>
-<LI><STRONG>I</STRONG> Definition: Refin, RefOut, Residue (Figure 2.B.7.5, p.489)
-<LI><STRONG>IV</STRONG> 10 codewords (Section 2.G.4, p.898)
+<LI><STRONG>I</STRONG> Definition: Init (Section 2.B.1.2.1, p.422)</LI>
+<LI><STRONG>I</STRONG> Definition: Width, Poly (Section 2.B.7.1.1, pp.493&ndash;4)</LI>
+<LI><STRONG>I</STRONG> Definition: RefIn; shift register diagram (Figure 2.B.7.3, p.494)</LI>
+<LI><STRONG>I</STRONG> Definition: Refin, RefOut, Residue (Figure 2.B.7.5, p.494)
+<LI><STRONG>IV</STRONG> 10 codewords (Section 2.G.4, p.899)
 <UL>
 <LI><CODE>11000100&#8203;10100001&#8203;11</CODE></LI>
 <LI><CODE>00100100&#8203;10010011&#8203;00</CODE></LI>
@@ -368,7 +368,7 @@
 </UL>
 </LI>
 <LI>Created: 20 June 2017</LI>
-<LI>Updated: 3 January 2021</LI>
+<LI>Updated: 7 May 2022</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-8-cdma2000">CRC-8/CDMA2000</A></H3>
@@ -419,10 +419,10 @@
 <UL>
 <LI><STRONG>I</STRONG> Full mathematical description (Section 5.1.4, p.18)</LI>
 </UL>
-<LI>Ethernet POWERLINK Standardisation Group (16 October 2015), <A HREF="https://www.ethernet-powerlink.org/fileadmin/user_upload/Dokumente/Downloads/TECHNICAL_DOCUMENTS/EPSG_WDP_304_V-1-5-0__3_.pdf">OpenSAFETY Safety Profile Specification Working Draft Proposal</A>, version 1.5.0
+<LI>Ethernet POWERLINK Standardisation Group (18 October 2018), <A HREF="https://www.ethernet-powerlink.org/fileadmin/user_upload/Dokumente/Downloads/TECHNICAL_DOCUMENTS/EPSG_WDP_304_V-1-5-2.pdf">OpenSAFETY Safety Profile Specification Working Draft Proposal</A>, version 1.5.2
 <UL>
-<LI><STRONG>I</STRONG> Code: C (Appendix 1, pp.192&ndash;3)</LI>
-<LI><STRONG>IV</STRONG> 1 codeword (Appendix 1, p.193)
+<LI><STRONG>I</STRONG> Code: C (Appendix 1, pp.196&ndash;9)</LI>
+<LI><STRONG>IV</STRONG> 1 codeword (Appendix 1, l.3522, p.197)
 <UL>
 <LI><CODE>22C81256&#8203;30112233&#8203;44556677&#8203;884F</CODE></LI>
 </UL>
@@ -435,7 +435,7 @@
 </UL>
 </LI>
 <LI>Created: 10 January 2014</LI>
-<LI>Updated: 5 June 2018</LI>
+<LI>Updated: 7 May 2022</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-8-gsm-a">CRC-8/GSM-A</A></H3>
@@ -447,7 +447,7 @@
 <LI><STRONG>I</STRONG> Full mathematical description (Section 3.1.1.1, pp.17&ndash;18)</LI>
 </UL>
 </LI>
-<LI>Michael Niedermayer, Aur&eacute;lien Jacobs <DFN>et al.</DFN> (11 July 2020), <A HREF="https://ffmpeg.org/releases/ffmpeg-4.3.1.tar.xz">FFmpeg 4.3.1</A> (XZ compressed tarfile), module <A HREF="https://github.com/FFmpeg/FFmpeg/blob/master/libavutil/tests/crc.c"><CODE>ffmpeg-4.3.1/libavutil/tests/crc.c</CODE></A>
+<LI>Michael Niedermayer, Aur&eacute;lien Jacobs <DFN>et al.</DFN> (4 April 2022), <A HREF="https://ffmpeg.org/releases/ffmpeg-5.0.1.tar.xz">FFmpeg 5.0.1</A> (XZ compressed tarfile), module <A HREF="https://github.com/FFmpeg/FFmpeg/blob/master/libavutil/tests/crc.c"><CODE>ffmpeg-5.0.1/libavutil/tests/crc.c</CODE></A>
 <UL>
 <LI><STRONG>IV</STRONG> 1 codeword
 <UL>
@@ -456,7 +456,7 @@
 </LI>
 </UL>
 <LI>Created: 17 February 2017</LI>
-<LI>Updated: 2 January 2021</LI>
+<LI>Updated: 7 May 2022</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-8-gsm-b">CRC-8/GSM-B</A></H3>
@@ -552,20 +552,20 @@
 <UL>
 <LI>Class: <SPAN CLASS="academic">academic</SPAN></LI>
 <LI>Reference from named polynomial in Prof. Koopman's <A HREF="https://users.ece.cmu.edu/~koopman/crc/notes.html">CRC Polynomial Zoo</A>.</LI>
-<LI>3rd Generation Partnership Project (3GPP) <A HREF="https://www.3gpp.org/ftp/Specs/2017-06/Rel-14/36_series/36212-e30.zip">TS 36.212</A> version 14.3.0 (June 2017) (zipped MS Word document) &mdash; ETSI <A HREF="https://www.etsi.org/deliver/etsi_ts/136200_136299/136212/14.03.00_60/ts_136212v140300p.pdf">TS 136 212</A> version 14.3.0 (July 2017)
+<LI>3rd Generation Partnership Project (3GPP) <A HREF="https://www.3gpp.org/ftp/Specs/latest/Rel-17/36_series/36212-h10.zip">TS 36.212</A> version 17.1.0 (March 2022) (zipped MS Word document) &mdash; ETSI <A HREF="https://www.etsi.org/deliver/etsi_ts/136200_136299/136212/17.01.00_60/ts_136212v170100p.pdf">TS 136 212</A> version 17.1.0 (April 2022)
 <UL>
-<LI><STRONG>I</STRONG> Definition: Width, Poly, Init, XorOut, Residue (Section 5.1.1, p.10)</LI>
-<LI><STRONG>I</STRONG> Attachment relation, defining RefIn ^ RefOut (Section 5.1.1, p.10)</LI>
+<LI><STRONG>I</STRONG> Definition: Width, Poly, Init, XorOut, Residue (Section 5.1.1, pp.10&ndash;11)</LI>
+<LI><STRONG>I</STRONG> Attachment relation, defining RefIn ^ RefOut (Section 5.1.1, p.11)</LI>
 </UL>
 </LI>
-<LI>3rd Generation Partnership Project (3GPP) <A HREF="https://www.3gpp.org/ftp/Specs/2017-06/Rel-14/36_series/36321-e30.zip">TS 36.321</A> version 14.3.0 (June 2017) (zipped MS Word document) &mdash; ETSI <A HREF="https://www.etsi.org/deliver/etsi_ts/136300_136399/136321/14.03.00_60/ts_136321v140300p.pdf">TS 136 321</A> version 14.3.0 (July 2017)
+<LI>3rd Generation Partnership Project (3GPP) <A HREF="https://www.3gpp.org/ftp/Specs/2021-09/Rel-16/36_series/36321-g60.zip">TS 36.321</A> version 16.6.0 (September 2021) (zipped MS Word document) &mdash; ETSI <A HREF="https://www.etsi.org/deliver/etsi_ts/136300_136399/136321/16.06.00_60/ts_136321v160600p.pdf">TS 136 321</A> version 16.6.0 (October 2021)
 <UL>
 <LI>Referenced from TS 136 212 section 5.2.2.1, p.23</LI>
-<LI><STRONG>I</STRONG> Definition: RefIn, RefOut (Section 6.1.1, pp.67&ndash;8)</LI>
+<LI><STRONG>I</STRONG> Definition: RefIn, RefOut (Section 6.1.1, p.88)</LI>
 </UL>
 </LI>
 <LI>Created: 13 February 2016</LI>
-<LI>Updated: 25 March 2019</LI>
+<LI>Updated: 7 May 2022</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-8-maxim-dow">CRC-8/MAXIM-DOW</A></H3>
@@ -695,19 +695,19 @@
 <P CLASS="attested"><CODE>width=8  poly=0x2f  init=0x00  refin=false  refout=false  xorout=0x00  check=0x3e  residue=0x00  name="CRC-8/OPENSAFETY"</CODE></P>
 <UL>
 <LI>Class: <SPAN CLASS="attested">attested</SPAN></LI>
-<LI>Ethernet POWERLINK Standardisation Group (16 October 2015), <A HREF="https://www.ethernet-powerlink.org/fileadmin/user_upload/Dokumente/Downloads/TECHNICAL_DOCUMENTS/EPSG_WDP_304_V-1-5-0__3_.pdf">OpenSAFETY Safety Profile Specification Working Draft Proposal</A>, version 1.5.0
+<LI>Ethernet POWERLINK Standardisation Group (18 October 2018), <A HREF="https://www.ethernet-powerlink.org/fileadmin/user_upload/Dokumente/Downloads/TECHNICAL_DOCUMENTS/EPSG_WDP_304_V-1-5-2.pdf">OpenSAFETY Safety Profile Specification Working Draft Proposal</A>, version 1.5.2
 <UL>
-<LI><STRONG>I</STRONG> Full description (Section 5.1.2.6, pp.44&ndash;5)</LI>
-<LI><STRONG>I</STRONG> Error detection capability (Section 8.1, p.183)</LI>
-<LI><STRONG>I</STRONG> Code: C (Appendix 1, pp.192&ndash;5)</LI>
-<LI><STRONG>IV</STRONG> 1 codeword (Appendix 1, pp.192&ndash;3)
+<LI><STRONG>I</STRONG> Full description (Section 5.1.2.6, pp.43&ndash;4)</LI>
+<LI><STRONG>I</STRONG> Error detection capability (Section 8.1, p.182)</LI>
+<LI><STRONG>I</STRONG> Code: C (Appendix 1, pp.196&ndash;9)</LI>
+<LI><STRONG>IV</STRONG> 1 codeword (Appendix 1, l.3519, pp.196&ndash;7)
 <UL>
 <LI><CODE>23C80834&#8203;11223344&#8203;55667788&#8203;3C</CODE></LI>
 </UL>
 </LI>
 </UL>
 </LI>
-<LI>Roland Knall (6 February 2012), <A HREF="https://wiki.wireshark.org/SampleCaptures?action=AttachFile&amp;do=get&amp;target=opensafety_epl_trace.pcap">openSAFETY communication using Ethernet Powerlink V2 as transport protocol</A> (PCAP file) (courtesy of Wireshark Wiki)
+<LI>Roland Knall (6 February 2012), <A HREF="https://wiki.wireshark.org/uploads/__moin_import__/attachments/SampleCaptures/opensafety_epl_trace.pcap">openSAFETY communication using Ethernet Powerlink V2 as transport protocol</A> (PCAP file) (courtesy of Wireshark Wiki)
 <UL>
 <LI><STRONG>II</STRONG> Transcript confirming implementation (selected codewords)
 <UL>
@@ -729,7 +729,7 @@
 </LI>
 <LI>Unique effective solution of codeword set</LI>
 <LI>Created: 22 July 2016</LI>
-<LI>Updated: 5 June 2018</LI>
+<LI>Updated: 7 May 2022</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-8-rohc">CRC-8/ROHC</A></H3>
@@ -770,11 +770,11 @@
 </LI>
 </UL>
 </LI>
-<LI>AUTOSAR (30 November 2020), <A HREF="https://www.autosar.org/standards/classic-platform/">AUTOSAR Classic Platform</A> release R20-11, <A HREF="https://www.autosar.org/fileadmin/user_upload/standards/classic/20-11/AUTOSAR_SWS_CRCLibrary.pdf">Specification of CRC Routines</A>
+<LI>AUTOSAR (25 November 2021), <A HREF="https://www.autosar.org/standards/classic-platform/">AUTOSAR Classic Platform</A> release R21-11, <A HREF="https://www.autosar.org/fileadmin/user_upload/standards/classic/21-11/AUTOSAR_SWS_CRCLibrary.pdf">Specification of CRC Routines</A>
 <UL>
-<LI><STRONG>I</STRONG> Comprehensive primer on CRC theory (Section 7.1, pp.18&ndash;21)</LI>
-<LI><STRONG>I</STRONG> All parameters (Section 7.2.1.1, p.23)</LI>
-<LI><STRONG>IV</STRONG> 7 codewords (same as in SAE Standard J1850) (Section 7.2.1.1, p.23)</LI>
+<LI><STRONG>I</STRONG> Comprehensive primer on CRC theory (Section 7.1, pp.19&ndash;22)</LI>
+<LI><STRONG>I</STRONG> All parameters (Section 7.2.1.1, p.24)</LI>
+<LI><STRONG>IV</STRONG> 7 codewords (same as in SAE Standard J1850) (Section 7.2.1.1, p.24)</LI>
 </UL>
 </LI>
 <LI>"knivmannen" (24 May 2010), StackOverflow <A HREF="https://stackoverflow.com/questions/2896753/find-the-algorithm-that-generates-the-checksum">submitted question</A>
@@ -792,7 +792,7 @@
 </LI>
 <LI>Unique effective solution of codeword set</LI>
 <LI>Created: 17 February 2016</LI>
-<LI>Updated: 2 January 2021</LI>
+<LI>Updated: 7 May 2022</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-8-smbus">CRC-8/SMBUS</A></H3>
@@ -821,7 +821,7 @@
 <LI><STRONG>III</STRONG> Code: 6805 assembler (pp.14,18)</LI>
 </UL>
 </LI>
-<LI>Michael Niedermayer, Aur&eacute;lien Jacobs <DFN>et al.</DFN> (11 July 2020), <A HREF="https://ffmpeg.org/releases/ffmpeg-4.3.1.tar.xz">FFmpeg 4.3.1</A> (XZ compressed tarfile), module <A HREF="https://github.com/FFmpeg/FFmpeg/blob/master/libavutil/tests/crc.c"><CODE>ffmpeg-4.3.1/libavutil/tests/crc.c</CODE></A>
+<LI>Michael Niedermayer, Aur&eacute;lien Jacobs <DFN>et al.</DFN> (4 April 2022), <A HREF="https://ffmpeg.org/releases/ffmpeg-5.0.1.tar.xz">FFmpeg 5.0.1</A> (XZ compressed tarfile), module <A HREF="https://github.com/FFmpeg/FFmpeg/blob/master/libavutil/tests/crc.c"><CODE>ffmpeg-5.0.1/libavutil/tests/crc.c</CODE></A>
 <UL>
 <LI><STRONG>IV</STRONG> 1 codeword
 <UL>
@@ -830,7 +830,7 @@
 </LI>
 </UL>
 <LI>Created: 30 March 2005</LI>
-<LI>Updated: 2 January 2021</LI>
+<LI>Updated: 7 May 2022</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-8-tech-3250">CRC-8/TECH-3250</A></H3>
@@ -916,7 +916,7 @@
 </LI>
 </UL>
 </LI>
-<LI>Broadband Forum Technical Committee (March 1999), <A HREF="http://ftp.fit.vutbr.cz/pub/doc/ATM/atmforum/approved-specs/af-tm-0121.000.pdf">Traffic Management Specification</A>, version 2.1 (courtesy of Faculty of Information Technology, Brno University of Technology, Czechia)
+<LI>Broadband Forum Technical Committee (March 1999), <A HREF="https://web.archive.org/web/20180920113119/http://ftp.fit.vutbr.cz/pub/doc/ATM/atmforum/approved-specs/af-tm-0121.000.pdf">Traffic Management Specification</A>, version 2.1 (courtesy of the Internet Archive)
 <UL>
 <LI><STRONG>I</STRONG> Full mathematical description (Section 5.10.3.1, p.47)</LI>
 </UL>
@@ -938,7 +938,7 @@
 </UL>
 </LI>
 <LI>Created: 19 April 2009</LI>
-<LI>Updated: 21 November 2018</LI>
+<LI>Updated: 7 May 2022</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-10-cdma2000">CRC-10/CDMA2000</A></H3>
@@ -993,9 +993,9 @@
 </LI>
 </UL>
 </LI>
-<LI>Robert Bosch GmbH (3 December 2007), E-Ray FlexRay IP Module, <!-- A HREF="http://www.bosch-semiconductors.com/media/ip_modules/pdf_2/flexray/071203_an001_1r02.pdf" --><!-- https://www.yumpu.com/en/document/view/26236135/flexray-ip-module-application-note-an001-wakeup-bosch- --><A HREF="https://www.yumpu.com/en/document/read/26236135/flexray-ip-module-application-note-an001-wakeup-bosch-">Application Note - Wakeup</A> (embedded content; courtesy of Yumpu)
+<LI>Robert Bosch GmbH (3 December 2007), E-Ray FlexRay IP Module, <!-- A HREF="http://www.bosch-semiconductors.com/media/ip_modules/pdf_2/flexray/071203_an001_1r02.pdf" --><!-- https://www.yumpu.com/en/document/view/26236135/flexray-ip-module-application-note-an001-wakeup-bosch- --><A HREF="https://www.yumpu.com/en/document/read/26236135/flexray-ip-module-application-note-an001-wakeup-bosch-">Application Note 001: Wakeup</A> (embedded content; courtesy of Yumpu)
 <UL>
-<LI><STRONG>IV</STRONG> 3 codewords (Section 4.4.3, pp.26&ndash;30; researched by Vivek Rajan)
+<LI><STRONG>IV</STRONG> 3 codewords (Section 4.4.3, pp.27&ndash;30; researched by Vivek Rajan)
 <UL>
 <LI><CODE>11000000&#8203;00001000&#8203;10000010&#8203;0011011</CODE></LI>
 <LI><CODE>11000000&#8203;00010000&#8203;10000110&#8203;0000100</CODE></LI>
@@ -1005,7 +1005,7 @@
 </UL>
 </LI>
 <LI>Created: 3 November 2007</LI>
-<LI>Updated: 2 January 2021</LI>
+<LI>Updated: 7 May 2022</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-11-umts">CRC-11/UMTS</A></H3>
@@ -1013,14 +1013,14 @@
 <UL>
 <LI>Class: <SPAN CLASS="academic">academic</SPAN></LI>
 <LI>Reference from named polynomial in Prof. Koopman's <A HREF="https://users.ece.cmu.edu/~koopman/crc/notes.html">CRC Polynomial Zoo</A>.</LI>
-<LI>3rd Generation Partnership Project (3GPP) <A HREF="https://www.3gpp.org/ftp/Specs/2017-03/Rel-14/25_series/25427-e00.zip">TS 25.427</A> version 14.0.0 (March 2017) (zipped MS Word document) &mdash; ETSI <A HREF="https://www.etsi.org/deliver/etsi_ts/125400_125499/125427/14.00.00_60/ts_125427v140000p.pdf">TS 125 427</A> version 14.0.0 (April 2017)
+<LI>3rd Generation Partnership Project (3GPP) <A HREF="https://www.3gpp.org/ftp/Specs/latest/Rel-17/25_series/25427-h00.zip">TS 25.427</A> version 17.0.0 (April 2022) (zipped MS Word document) &mdash; ETSI <A HREF="https://www.etsi.org/deliver/etsi_ts/125400_125499/125427/17.00.00_60/ts_125427v170000p.pdf">TS 125 427</A> version 17.0.0 (April 2022)
 <UL>
 <LI><STRONG>I</STRONG> Definition: Width, Poly, Init, XorOut (Section 7.2.1, p.40)</LI>
 <LI><STRONG>I</STRONG> Definition: RefIn, RefOut (Section 6.1.1, p.20; Section 7.2.1.1, pp.40&ndash;1)</LI>
 </UL>
 </LI>
 <LI>Created: 8 February 2016</LI>
-<LI>Updated: 25 March 2019</LI>
+<LI>Updated: 7 May 2022</LI>
 </UL>
 
 <H3><A NAME="crc.cat-bits.12"></A><A NAME="crc.cat.crc-12-cdma2000">CRC-12/CDMA2000</A></H3>
@@ -1075,14 +1075,14 @@
 <LI>Class: <SPAN CLASS="academic">academic</SPAN></LI>
 <LI>Alias: <A NAME="crc.cat.crc-12-3gpp"><STRONG>CRC-12/3GPP</STRONG></A></LI>
 <LI>The crossed-endian definition is unusual but explicit.  Researched by "markw_be" at the Computer Interfacing Forum.</LI>
-<LI>3rd Generation Partnership Project (3GPP) <A HREF="https://www.3gpp.org/ftp/Specs/archive/25_series/25.212/25212-f00.zip">TS 25.212</A> version 15.0.0 (September 2017) (zipped MS Word document) &mdash; ETSI <A HREF="https://www.etsi.org/deliver/etsi_ts/125200_125299/125212/15.00.00_60/ts_125212v150000p.pdf">TS 125 212</A> version 14.0.0 (July 2018)
+<LI>3rd Generation Partnership Project (3GPP) <A HREF="https://www.3gpp.org/ftp/Specs/2021-09/Rel-16/25_series/25212-g00.zip">TS 25.212</A> version 16.0.0 (July 2020) (zipped MS Word document) &mdash; ETSI <A HREF="https://www.etsi.org/deliver/etsi_ts/125200_125299/125212/16.00.00_60/ts_125212v160000p.pdf">TS 125 212</A> version 14.0.0 (September 2020)
 <UL>
 <LI><STRONG>I</STRONG> Mathematical description, defining Width, Poly, Init, Residue (Section 4.2.1.1, pp.19&ndash;20)</LI>
 <LI><STRONG>I</STRONG> Attachment relation, defining RefIn ^ RefOut (Section 4.2.1.2, p.20)</LI>
 </UL>
 </LI>
 <LI>Created: 10 December 2009</LI>
-<LI>Updated: 28 December 2019</LI>
+<LI>Updated: 7 May 2022</LI>
 </UL>
 
 <H3><A NAME="crc.cat-bits.13"></A><A NAME="crc.cat.crc-13-bbc">CRC-13/BBC</A></H3>
@@ -1143,14 +1143,14 @@
 <UL>
 <LI>Class: <SPAN CLASS="academic">academic</SPAN></LI>
 <LI>Alias: <A NAME="crc.cat.crc-15"><STRONG>CRC-15</STRONG></A></LI>
-<LI>Robert Bosch GmbH (September 1991), <A HREF="http://can.marathon.ru/files/can2spec.pdf">CAN 2.0 Specification</A> (courtesy of Marathon, Russia)
+<LI>Robert Bosch GmbH (September 1991), <A HREF="https://github.com/ThrowTheSwitch/pcan-ruby/raw/master/doc/can2spec.pdf">CAN 2.0 Specification</A> (courtesy of GitHub)
 <UL>
 <LI><STRONG>I</STRONG> Full definition (except Check) (Section 3.1.1, pp.13&ndash;14)</LI>
 <LI><STRONG>I</STRONG> Pseudocode</LI>
 </UL>
 </LI>
 <LI>Created: 2 November 2007</LI>
-<LI>Updated: 21 November 2018</LI>
+<LI>Updated: 7 May 2022</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-15-mpt1327">CRC-15/MPT1327</A></H3>
@@ -1218,11 +1218,11 @@
 <UL>
 <LI>Class: <SPAN CLASS="attested">attested</SPAN></LI>
 <LI>Alias: <A NAME="crc.cat.arc"><STRONG>ARC</STRONG></A>, <A NAME="crc.cat.crc-16"><STRONG>CRC-16</STRONG></A>, <A NAME="crc.cat.crc-16-lha"><STRONG>CRC-16/LHA</STRONG></A>, <A NAME="crc.cat.crc-ibm"><STRONG>CRC-IBM</STRONG></A></LI>
-<LI>AUTOSAR (30 November 2020), <A HREF="https://www.autosar.org/standards/classic-platform/">AUTOSAR Classic Platform</A> release R20-11, <A HREF="https://www.autosar.org/fileadmin/user_upload/standards/classic/20-11/AUTOSAR_SWS_CRCLibrary.pdf">Specification of CRC Routines</A>
+<LI>AUTOSAR (25 November 2021), <A HREF="https://www.autosar.org/standards/classic-platform/">AUTOSAR Classic Platform</A> release R21-11, <A HREF="https://www.autosar.org/fileadmin/user_upload/standards/classic/21-11/AUTOSAR_SWS_CRCLibrary.pdf">Specification of CRC Routines</A>
 <UL>
-<LI><STRONG>I</STRONG> Comprehensive primer on CRC theory (Section 7.1, pp.18&ndash;21)</LI>
-<LI><STRONG>I</STRONG> All parameters (Section 7.2.2.2, p.25)</LI>
-<LI><STRONG>IV</STRONG> 7 codewords (Section 7.2.2.2, p.25)
+<LI><STRONG>I</STRONG> Comprehensive primer on CRC theory (Section 7.1, pp.19&ndash;22)</LI>
+<LI><STRONG>I</STRONG> All parameters (Section 7.2.2.2, p.26)</LI>
+<LI><STRONG>IV</STRONG> 7 codewords (Section 7.2.2.2, pp.26&ndash;7)
 <UL>
 <LI><CODE>00000000&#8203;0000</CODE></LI>
 <LI><CODE>F20183E1&#8203;C2</CODE></LI>
@@ -1259,7 +1259,7 @@
 <LI><STRONG>II</STRONG> Implementation (<CODE>CRC16_arc</CODE>)</LI>
 </UL>
 </LI>
-<LI>Dr Ross N. Williams (19 August 1993), <A HREF="https://web.archive.org/web/20190527220400/http://www.ross.net/crc/download/crc_v3.txt">"A Painless Guide to CRC Error Detection Algorithms"</A> (courtesy of the Internet Archive)
+<LI>Dr Ross N. Williams (19 August 1993), <!-- A HREF="https://web.archive.org/web/20190527220400/http://www.ross.net/crc/download/crc_v3.txt" --><A HREF="http://www.ross.net/crc/download/crc_v3.txt">"A Painless Guide to CRC Error Detection Algorithms"</A>
 <UL>
 <LI><STRONG>III</STRONG> All parameters (except Residue)</LI>
 </UL>
@@ -1276,7 +1276,7 @@
 </LI>
 <LI>Unique effective solution of codeword set</LI>
 <LI>Created: 30 March 2005</LI>
-<LI>Updated: 2 January 2021</LI>
+<LI>Updated: 7 May 2022</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-16-cdma2000">CRC-16/CDMA2000</A></H3>
@@ -1657,11 +1657,11 @@
 <LI>Class: <SPAN CLASS="attested">attested</SPAN></LI>
 <LI>Alias: <A NAME="crc.cat.crc-16-autosar"><STRONG>CRC-16/AUTOSAR</STRONG></A>, <A NAME="crc.cat.crc-16-ccitt-false"><STRONG>CRC-16/CCITT-FALSE</STRONG></A></LI>
 <LI>An algorithm commonly misidentified as CRC-CCITT.  CRC-CCITT customarily refers to the LSB-first form of the algorithm in ITU-T Recommendation V.41 (see <A HREF="#crc.cat.crc-16-kermit">CRC-16/KERMIT</A>); its MSB-first counterpart is <A HREF="#crc.cat.crc-16-xmodem">CRC-16/XMODEM</A>.</LI>
-<LI>AUTOSAR (30 November 2020), <A HREF="https://www.autosar.org/standards/classic-platform/">AUTOSAR Classic Platform</A> release R20-11, <A HREF="https://www.autosar.org/fileadmin/user_upload/standards/classic/20-11/AUTOSAR_SWS_CRCLibrary.pdf">Specification of CRC Routines</A>
+<LI>AUTOSAR (25 November 2021), <A HREF="https://www.autosar.org/standards/classic-platform/">AUTOSAR Classic Platform</A> release R21-11, <A HREF="https://www.autosar.org/fileadmin/user_upload/standards/classic/21-11/AUTOSAR_SWS_CRCLibrary.pdf">Specification of CRC Routines</A>
 <UL>
-<LI><STRONG>I</STRONG> Comprehensive primer on CRC theory (Section 7.1, pp.18&ndash;21)</LI>
-<LI><STRONG>I</STRONG> All parameters (Section 7.2.2.1, pp.24&ndash;5)</LI>
-<LI><STRONG>IV</STRONG> 7 codewords (Section 7.2.2.1, p.25)
+<LI><STRONG>I</STRONG> Comprehensive primer on CRC theory (Section 7.1, pp.19&ndash;22)</LI>
+<LI><STRONG>I</STRONG> All parameters (Section 7.2.2.1, pp.25&ndash;6)</LI>
+<LI><STRONG>IV</STRONG> 7 codewords (Section 7.2.2.1, p.26)
 <UL>
 <LI><CODE>00000000&#8203;84C0</CODE></LI>
 <LI><CODE>F20183D3&#8203;74</CODE></LI>
@@ -1693,7 +1693,7 @@
 <LI><STRONG>II</STRONG> Implementation</LI>
 </UL>
 </LI>
-<LI>Dr Ross N. Williams (19 August 1993), <A HREF="https://web.archive.org/web/20190527220400/http://www.ross.net/crc/download/crc_v3.txt">"A Painless Guide to CRC Error Detection Algorithms"</A> (courtesy of the Internet Archive)
+<LI>Dr Ross N. Williams (19 August 1993), <!-- A HREF="https://web.archive.org/web/20190527220400/http://www.ross.net/crc/download/crc_v3.txt" --><A HREF="http://www.ross.net/crc/download/crc_v3.txt">"A Painless Guide to CRC Error Detection Algorithms"</A>
 <UL>
 <LI><STRONG>III</STRONG> All parameters (except Check, Residue)</LI>
 </UL>
@@ -1710,7 +1710,7 @@
 </LI>
 <LI>Unique effective solution of codeword set</LI>
 <LI>Created: 30 March 2005</LI>
-<LI>Updated: 2 January 2021</LI>
+<LI>Updated: 7 May 2022</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-16-ibm-sdlc">CRC-16/IBM-SDLC</A></H3>
@@ -1951,6 +1951,26 @@
 <LI>Updated: 6 June 2018</LI>
 </UL>
 
+<H3><A NAME="crc.cat.crc-16-m17">CRC-16/M17</A></H3>
+<P CLASS="attested"><CODE>width=16  poly=0x5935  init=0xffff  refin=false  refout=false  xorout=0x0000  check=0x772b  residue=0x0000  name="CRC-16/M17"</CODE></P>
+<UL>
+<LI>Class: <SPAN CLASS="attested">attested</SPAN></LI>
+<LI>Contributed by Mark Adler.</LI>
+<LI>M17 Project (8 Mar 2022), <!-- date sourced from https://github.com/M17-Project/M17_spec/blob/main/pages/02.part-1/04.data-link-layer/docs.md --> <A HREF="https://spec.m17project.org/part-1/data-link-layer">M17 protocol specification: Data link layer</A><!-- https://m17-protocol-specification.readthedocs.io/en/latest/data_link_layer.html -->
+<UL>
+<LI><STRONG>I</STRONG> Definition: Width, Poly, Init, RefIn, RefOut, Check</LI>
+<LI><STRONG>IV</STRONG> 3 codewords
+<UL>
+<LI><CODE>FFFF</CODE>
+<LI><CODE>41206E</CODE>
+<LI>256 bytes (<CODE>i</CODE>) plus <CODE>1C31</CODE></LI>
+</UL>
+</LI>
+</UL>
+</LI>
+<LI>Created: 7 May 2022</LI>
+</UL>
+
 <H3><A NAME="crc.cat.crc-16-maxim-dow">CRC-16/MAXIM-DOW</A></H3>
 <P CLASS="attested"><CODE>width=16  poly=0x8005  init=0x0000  refin=true  refout=true  xorout=0xffff  check=0x44c2  residue=0xb001  name="CRC-16/MAXIM-DOW"</CODE></P>
 <UL>
@@ -2091,12 +2111,12 @@
 <UL>
 <LI>Class: <SPAN CLASS="attested">attested</SPAN></LI>
 <LI>The single codeword is supported by the codewords confirming <A HREF="#crc.cat.crc-8-opensafety">CRC-8/OPENSAFETY</A>, defined identically apart from Width, Poly in the same standard.</LI>
-<LI>Ethernet POWERLINK Standardisation Group (16 October 2015), <A HREF="https://www.ethernet-powerlink.org/fileadmin/user_upload/Dokumente/Downloads/TECHNICAL_DOCUMENTS/EPSG_WDP_304_V-1-5-0__3_.pdf">OpenSAFETY Safety Profile Specification Working Draft Proposal</A>, version 1.5.0
+<LI>Ethernet POWERLINK Standardisation Group (18 October 2018), <A HREF="https://www.ethernet-powerlink.org/fileadmin/user_upload/Dokumente/Downloads/TECHNICAL_DOCUMENTS/EPSG_WDP_304_V-1-5-2.pdf">OpenSAFETY Safety Profile Specification Working Draft Proposal</A>, version 1.5.2
 <UL>
-<LI><STRONG>I</STRONG> Full description (Section 5.1.2.6, pp.44&ndash;5)</LI>
-<LI><STRONG>I</STRONG> Error detection capability (Section 8.1, p.183)</LI>
-<LI><STRONG>I</STRONG> Code: C (Appendix 1, pp.192&ndash;5)</LI>
-<LI><STRONG>IV</STRONG> 1 codeword (Appendix 1, pp.192&ndash;3)
+<LI><STRONG>I</STRONG> Full description (Section 5.1.2.6, pp.43&ndash;4)</LI>
+<LI><STRONG>I</STRONG> Error detection capability (Section 8.1, p.182)</LI>
+<LI><STRONG>I</STRONG> Code: C (Appendix 1, pp.196&ndash;9)</LI>
+<LI><STRONG>IV</STRONG> 1 codeword (Appendix 1, l.3525, pp.196&ndash;7)
 <UL>
 <LI><CODE>23C80834&#8203;11223344&#8203;55667788&#8203;0374</CODE></LI>
 </UL>
@@ -2109,7 +2129,7 @@
 </UL>
 </LI>
 <LI>Created: 22 July 2016</LI>
-<LI>Updated: 5 June 2018</LI>
+<LI>Updated: 7 May 2022</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-16-opensafety-b">CRC-16/OPENSAFETY-B</A></H3>
@@ -2117,12 +2137,12 @@
 <UL>
 <LI>Class: <SPAN CLASS="attested">attested</SPAN></LI>
 <LI>The single codeword is supported by the codewords confirming <A HREF="#crc.cat.crc-8-opensafety">CRC-8/OPENSAFETY</A>, defined identically apart from Width, Poly in the same standard.</LI>
-<LI>Ethernet POWERLINK Standardisation Group (16 October 2015), <A HREF="https://www.ethernet-powerlink.org/fileadmin/user_upload/Dokumente/Downloads/TECHNICAL_DOCUMENTS/EPSG_WDP_304_V-1-5-0__3_.pdf">OpenSAFETY Safety Profile Specification Working Draft Proposal</A>, version 1.5.0
+<LI>Ethernet POWERLINK Standardisation Group (18 October 2018), <A HREF="https://www.ethernet-powerlink.org/fileadmin/user_upload/Dokumente/Downloads/TECHNICAL_DOCUMENTS/EPSG_WDP_304_V-1-5-2.pdf">OpenSAFETY Safety Profile Specification Working Draft Proposal</A>, version 1.5.2
 <UL>
-<LI><STRONG>I</STRONG> Full description (Section 5.1.2.6, pp.44&ndash;5)</LI>
-<LI><STRONG>I</STRONG> Error detection capability (Section 8.1, p.183)</LI>
-<LI><STRONG>I</STRONG> Code: C (Appendix 1, pp.192&ndash;5)</LI>
-<LI><STRONG>IV</STRONG> 1 codeword (Appendix 1, pp.192&ndash;3)
+<LI><STRONG>I</STRONG> Full description (Section 5.1.2.6, pp.43&ndash;4)</LI>
+<LI><STRONG>I</STRONG> Error detection capability (Section 8.1, p.182)</LI>
+<LI><STRONG>I</STRONG> Code: C (Appendix 1, pp.196&ndash;9)</LI>
+<LI><STRONG>IV</STRONG> 1 codeword (Appendix 1, l.3530, pp.196&ndash;7)
 <UL>
 <LI><CODE>22C81256&#8203;30112233&#8203;44556677&#8203;887031</CODE></LI>
 </UL>
@@ -2135,7 +2155,7 @@
 </UL>
 </LI>
 <LI>Created: 22 July 2016</LI>
-<LI>Updated: 5 June 2018</LI>
+<LI>Updated: 7 May 2022</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-16-profibus">CRC-16/PROFIBUS</A></H3>
@@ -2143,7 +2163,7 @@
 <UL>
 <LI>Class: <SPAN CLASS="attested">attested</SPAN></LI>
 <LI>Alias: <A NAME="crc.cat.crc-16-iec-61158-2"><STRONG>CRC-16/IEC-61158-2</STRONG></A></LI>
-<LI>PROFIBUS International (March 1998), <A HREF="https://web.archive.org/web/20081116195826/https://www.kuebler.com/PDFs/Feldbus_Multiturn/specification_DP.pdf">PROFIBUS Specification, Normative Parts</A>, Edition 1.0, Part 9 (courtesy of the Internet Archive) &mdash; <A HREF="http://read.pudn.com/downloads93/doc/project/362720/profibus_protocol_in_English_and_Chinese/PROFIBUS%20%E5%8D%8F%E8%AE%AE%E8%A7%84%E8%8C%83%EF%BC%88%E4%B8%AD%E6%96%87%EF%BC%89/PROFIBUS%20%E8%A7%84%E8%8C%83(9)-%E7%94%A8%E4%BA%8E%E8%BF%87%E7%A8%8B%E8%87%AA%E5%8A%A8%E5%8C%96%E7%9A%84%E7%89%A9%E7%90%86%E5%B1%82%E5%92%8C%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82.pdf" LANG="zh" HREFLANG="zh">PROFIBUS &#35268;&#33539;&#65293;&#26631;&#20934;&#37096;&#20998;&#65293;&#31532;&#20061;&#37096;&#20998;</A> (in Chinese; courtesy of PUDN)
+<LI>PROFIBUS International (March 1998), <A HREF="https://web.archive.org/web/20081116195826/https://www.kuebler.com/PDFs/Feldbus_Multiturn/specification_DP.pdf">PROFIBUS Specification, Normative Parts</A>, Edition 1.0, Part 9 (courtesy of the Internet Archive)
 <UL>
 <LI><STRONG>I</STRONG> Transmission order, implying RefIn and RefOut (Part 9 Section 8.5.1, p.902)</LI>
 <LI><STRONG>I</STRONG> Definition: Width, Poly, Init, Residue (Part 9 Section 8.8.4, pp.905&ndash;7)</LI>
@@ -2166,7 +2186,7 @@
 </LI>
 <LI>Unique effective solution of codeword set</LI>
 <LI>Created: 5 July 2016</LI>
-<LI>Updated: 28 December 2019</LI>
+<LI>Updated: 7 May 2022</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-16-riello">CRC-16/RIELLO</A></H3>
@@ -2331,7 +2351,7 @@
 <LI><STRONG>I</STRONG> Definition: Poly.  CRC byte order, implying RefIn and RefOut (Section 4, p.4-1)</LI>
 </UL>
 </LI>
-<LI>3rd Generation Partnership Project (3GPP) <A HREF="https://www.3gpp.org/ftp/Specs/2017-03/Rel-14/25_series/25427-e00.zip">TS 25.427</A> version 14.0.0 (March 2017) (zipped MS Word document) &mdash; ETSI <A HREF="https://www.etsi.org/deliver/etsi_ts/125400_125499/125427/14.00.00_60/ts_125427v140000p.pdf">TS 125 427</A> version 14.0.0 (April 2017)
+<LI>3rd Generation Partnership Project (3GPP) <A HREF="https://www.3gpp.org/ftp/Specs/latest/Rel-17/25_series/25427-h00.zip">TS 25.427</A> version 17.0.0 (April 2022) (zipped MS Word document) &mdash; ETSI <A HREF="https://www.etsi.org/deliver/etsi_ts/125400_125499/125427/17.00.00_60/ts_125427v170000p.pdf">TS 125 427</A> version 17.0.0 (April 2022)
 <UL>
 <LI><STRONG>I</STRONG> Definition: Width, Poly, Init, XorOut (Section 7.2.1, p.40)</LI>
 <LI><STRONG>I</STRONG> Definition: RefIn, RefOut (Section 6.1.1, p.20; Section 7.2.1.1, p.40)</LI>
@@ -2354,7 +2374,7 @@
 <LI><STRONG>III</STRONG> Code: 16C54B assembler (Appendix A, pp.7&ndash;11; Appendix B, pp.12&ndash;22)</LI>
 </UL>
 </LI>
-<LI>Michael Niedermayer, Aur&eacute;lien Jacobs <DFN>et al.</DFN> (11 July 2020), <A HREF="https://ffmpeg.org/releases/ffmpeg-4.3.1.tar.xz">FFmpeg 4.3.1</A> (XZ compressed tarfile), module <A HREF="https://github.com/FFmpeg/FFmpeg/blob/master/libavutil/tests/crc.c"><CODE>ffmpeg-4.3.1/libavutil/tests/crc.c</CODE></A>
+<LI>Michael Niedermayer, Aur&eacute;lien Jacobs <DFN>et al.</DFN> (4 April 2022), <A HREF="https://ffmpeg.org/releases/ffmpeg-5.0.1.tar.xz">FFmpeg 5.0.1</A> (XZ compressed tarfile), module <A HREF="https://github.com/FFmpeg/FFmpeg/blob/master/libavutil/tests/crc.c"><CODE>ffmpeg-5.0.1/libavutil/tests/crc.c</CODE></A>
 <UL>
 <LI><STRONG>IV</STRONG> 1 codeword
 <UL>
@@ -2389,7 +2409,7 @@
 </LI>
 <LI>Unique effective solution of codeword set</LI>
 <LI>Created: 4 June 2008</LI>
-<LI>Updated: 2 January 2021</LI>
+<LI>Updated: 7 May 2022</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-16-usb">CRC-16/USB</A></H3>
@@ -2427,16 +2447,16 @@
 <LI><STRONG>I</STRONG> Shift register diagrams (Appendix I, p.9)</LI>
 </UL>
 </LI>
-<LI>3rd Generation Partnership Project (3GPP) <A HREF="https://www.3gpp.org/ftp/Specs/2017-06/Rel-14/36_series/36212-e30.zip">TS 36.212</A> version 14.3.0 (June 2017) (zipped MS Word document) &mdash; ETSI <A HREF="https://www.etsi.org/deliver/etsi_ts/136200_136299/136212/14.03.00_60/ts_136212v140300p.pdf">TS 136 212</A> version 14.3.0 (July 2017)
+<LI>3rd Generation Partnership Project (3GPP) <A HREF="https://www.3gpp.org/ftp/Specs/latest/Rel-17/36_series/36212-h10.zip">TS 36.212</A> version 17.1.0 (March 2022) (zipped MS Word document) &mdash; ETSI <A HREF="https://www.etsi.org/deliver/etsi_ts/136200_136299/136212/17.01.00_60/ts_136212v170100p.pdf">TS 136 212</A> version 17.1.0 (April 2022)
 <UL>
-<LI><STRONG>I</STRONG> Definition: Width, Poly, Init, XorOut, Residue (Section 5.1.1, p.10)</LI>
-<LI><STRONG>I</STRONG> Attachment relation, defining RefIn ^ RefOut (Section 5.1.1, p.10)</LI>
+<LI><STRONG>I</STRONG> Definition: Width, Poly, Init, XorOut, Residue (Section 5.1.1, pp.10&ndash;11)</LI>
+<LI><STRONG>I</STRONG> Attachment relation, defining RefIn ^ RefOut (Section 5.1.1, p.11)</LI>
 </UL>
 </LI>
-<LI>3rd Generation Partnership Project (3GPP) <A HREF="https://www.3gpp.org/ftp/Specs/2017-06/Rel-14/36_series/36321-e30.zip">TS 36.321</A> version 14.3.0 (June 2017) (zipped MS Word document) &mdash; ETSI <A HREF="https://www.etsi.org/deliver/etsi_ts/136300_136399/136321/14.03.00_60/ts_136321v140300p.pdf">TS 136 321</A> version 14.3.0 (July 2017)
+<LI>3rd Generation Partnership Project (3GPP) <A HREF="https://www.3gpp.org/ftp/Specs/2021-09/Rel-16/36_series/36321-g60.zip">TS 36.321</A> version 16.6.0 (September 2021) (zipped MS Word document) &mdash; ETSI <A HREF="https://www.etsi.org/deliver/etsi_ts/136300_136399/136321/16.06.00_60/ts_136321v160600p.pdf">TS 136 321</A> version 16.6.0 (October 2021)
 <UL>
 <LI>Referenced from TS 136 212 section 5.2.2.1, p.23</LI>
-<LI><STRONG>I</STRONG> Definition: RefIn, RefOut (Section 6.1.1, pp.67&ndash;8)</LI>
+<LI><STRONG>I</STRONG> Definition: RefIn, RefOut (Section 6.1.1, p.88)</LI>
 </UL>
 </LI>
 <LI>JEDEC Standard <A HREF="https://www.jedec.org/sites/default/files/docs/JESD84-A441_0.pdf">JESD84-A441</A> (March 2010) (registration required)
@@ -2493,7 +2513,7 @@
 </UL>
 </LI>
 <LI>Created: 30 March 2005</LI>
-<LI>Updated: 2 January 2021</LI>
+<LI>Updated: 7 May 2022</LI>
 </UL>
 
 <H3><A NAME="crc.cat-bits.17"></A><A NAME="crc.cat.crc-17-can-fd">CRC-17/CAN-FD</A></H3>
@@ -2534,10 +2554,10 @@
 <LI>Reference from named polynomial in Prof. Koopman's <A HREF="https://users.ece.cmu.edu/~koopman/crc/notes.html">CRC Polynomial Zoo</A>.</LI>
 <LI>The Init value applies to Bluetooth Low Energy (BLE) test packets and (device-) advertising channel packets.  Data channel packets use a custom Init value defined at connection time.</LI>
 <LI>BLE sniffer screenshot reference from "volta77" (29 May 2014), <A HREF="https://devzone.nordicsemi.com/question/2104/ble-crc-calculation/">Nordic Developer Zone post</A></LI>
-<LI>Bluetooth SIG (31 December 2019), <A HREF="https://www.bluetooth.com/specifications/">Bluetooth Specification</A>, <A HREF="https://www.bluetooth.org/docman/handlers/downloaddoc.ashx?doc_id=478726">Core Version 5.2</A>
+<LI>Bluetooth SIG (13 July 2021), <A HREF="https://www.bluetooth.com/specifications/">Bluetooth Specification</A>, <A HREF="https://www.bluetooth.org/DocMan/handlers/DownloadDoc.ashx?doc_id=521059">Core Version 5.3</A>
 <UL>
-<LI><STRONG>I</STRONG> Full definition (except Check) (Section 6.B.3.1.1, pp.2923&ndash;4)</LI>
-<LI><STRONG>I</STRONG> Shift register diagram (Figure 6.B.3.3, p.2924)</LI>
+<LI><STRONG>I</STRONG> Full definition (except Check) (Section 6.B.3.1.1, pp.2733&ndash;4)</LI>
+<LI><STRONG>I</STRONG> Shift register diagram (Figure 6.B.3.4, p.2734)</LI>
 </UL>
 </LI>
 <LI>Texas Instruments, Inc. (12 March 2013), Processors wiki, <!-- A HREF="http://processors.wiki.ti.com/index.php/BLE_sniffer_guide" -->BLE sniffer guide<!-- /A -->
@@ -2574,7 +2594,7 @@
 </LI>
 <LI>Unique effective solution of codeword set</LI>
 <LI>Created: 7 February 2016</LI>
-<LI>Updated: 3 January 2021</LI>
+<LI>Updated: 7 May 2022</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-24-flexray-a">CRC-24/FLEXRAY-A</A></H3>
@@ -2660,20 +2680,20 @@
 <UL>
 <LI>Class: <SPAN CLASS="academic">academic</SPAN></LI>
 <LI>Reference from named polynomial in Prof. Koopman's <A HREF="https://users.ece.cmu.edu/~koopman/crc/notes.html">CRC Polynomial Zoo</A>.</LI>
-<LI>3rd Generation Partnership Project (3GPP) <A HREF="https://www.3gpp.org/ftp/Specs/2017-06/Rel-14/36_series/36212-e30.zip">TS 36.212</A> version 14.3.0 (June 2017) (zipped MS Word document) &mdash; ETSI <A HREF="https://www.etsi.org/deliver/etsi_ts/136200_136299/136212/14.03.00_60/ts_136212v140300p.pdf">TS 136 212</A> version 14.3.0 (July 2017)
+<LI>3rd Generation Partnership Project (3GPP) <A HREF="https://www.3gpp.org/ftp/Specs/latest/Rel-17/36_series/36212-h10.zip">TS 36.212</A> version 17.1.0 (March 2022) (zipped MS Word document) &mdash; ETSI <A HREF="https://www.etsi.org/deliver/etsi_ts/136200_136299/136212/17.01.00_60/ts_136212v170100p.pdf">TS 136 212</A> version 17.1.0 (April 2022)
 <UL>
-<LI><STRONG>I</STRONG> Definition: Width, Poly, Init, XorOut, Residue (Section 5.1.1, p.10)</LI>
-<LI><STRONG>I</STRONG> Attachment relation, defining RefIn ^ RefOut (Section 5.1.1, p.10)</LI>
+<LI><STRONG>I</STRONG> Definition: Width, Poly, Init, XorOut, Residue (Section 5.1.1, pp.10&ndash;11)</LI>
+<LI><STRONG>I</STRONG> Attachment relation, defining RefIn ^ RefOut (Section 5.1.1, p.11)</LI>
 </UL>
 </LI>
-<LI>3rd Generation Partnership Project (3GPP) <A HREF="https://www.3gpp.org/ftp/Specs/2017-06/Rel-14/36_series/36321-e30.zip">TS 36.321</A> version 14.3.0 (June 2017) (zipped MS Word document) &mdash; ETSI <A HREF="https://www.etsi.org/deliver/etsi_ts/136300_136399/136321/14.03.00_60/ts_136321v140300p.pdf">TS 136 321</A> version 14.3.0 (July 2017)
+<LI>3rd Generation Partnership Project (3GPP) <A HREF="https://www.3gpp.org/ftp/Specs/2021-09/Rel-16/36_series/36321-g60.zip">TS 36.321</A> version 16.6.0 (September 2021) (zipped MS Word document) &mdash; ETSI <A HREF="https://www.etsi.org/deliver/etsi_ts/136300_136399/136321/16.06.00_60/ts_136321v160600p.pdf">TS 136 321</A> version 16.6.0 (October 2021)
 <UL>
 <LI>Referenced from TS 136 212 section 5.2.2.1, p.23</LI>
-<LI><STRONG>I</STRONG> Definition: RefIn, RefOut (Section 6.1.1, pp.67&ndash;8)</LI>
+<LI><STRONG>I</STRONG> Definition: RefIn, RefOut (Section 6.1.1, p.88)</LI>
 </UL>
 </LI>
 <LI>Created: 13 February 2016</LI>
-<LI>Updated: 25 March 2019</LI>
+<LI>Updated: 7 May 2022</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-24-lte-b">CRC-24/LTE-B</A></H3>
@@ -2681,20 +2701,20 @@
 <UL>
 <LI>Class: <SPAN CLASS="academic">academic</SPAN></LI>
 <LI>Reference from named polynomial in Prof. Koopman's <A HREF="https://users.ece.cmu.edu/~koopman/crc/notes.html">CRC Polynomial Zoo</A>.</LI>
-<LI>3rd Generation Partnership Project (3GPP) <A HREF="https://www.3gpp.org/ftp/Specs/2017-06/Rel-14/36_series/36212-e30.zip">TS 36.212</A> version 14.3.0 (June 2017) (zipped MS Word document) &mdash; ETSI <A HREF="https://www.etsi.org/deliver/etsi_ts/136200_136299/136212/14.03.00_60/ts_136212v140300p.pdf">TS 136 212</A> version 14.3.0 (July 2017)
+<LI>3rd Generation Partnership Project (3GPP) <A HREF="https://www.3gpp.org/ftp/Specs/latest/Rel-17/36_series/36212-h10.zip">TS 36.212</A> version 17.1.0 (March 2022) (zipped MS Word document) &mdash; ETSI <A HREF="https://www.etsi.org/deliver/etsi_ts/136200_136299/136212/17.01.00_60/ts_136212v170100p.pdf">TS 136 212</A> version 17.1.0 (April 2022)
 <UL>
-<LI><STRONG>I</STRONG> Definition: Width, Poly, Init, XorOut, Residue (Section 5.1.1, p.10)</LI>
-<LI><STRONG>I</STRONG> Attachment relation, defining RefIn ^ RefOut (Section 5.1.1, p.10)</LI>
+<LI><STRONG>I</STRONG> Definition: Width, Poly, Init, XorOut, Residue (Section 5.1.1, pp.10&ndash;11)</LI>
+<LI><STRONG>I</STRONG> Attachment relation, defining RefIn ^ RefOut (Section 5.1.1, p.11)</LI>
 </UL>
 </LI>
-<LI>3rd Generation Partnership Project (3GPP) <A HREF="https://www.3gpp.org/ftp/Specs/2017-06/Rel-14/36_series/36321-e30.zip">TS 36.321</A> version 14.3.0 (June 2017) (zipped MS Word document) &mdash; ETSI <A HREF="https://www.etsi.org/deliver/etsi_ts/136300_136399/136321/14.03.00_60/ts_136321v140300p.pdf">TS 136 321</A> version 14.3.0 (July 2017)
+<LI>3rd Generation Partnership Project (3GPP) <A HREF="https://www.3gpp.org/ftp/Specs/2021-09/Rel-16/36_series/36321-g60.zip">TS 36.321</A> version 16.6.0 (September 2021) (zipped MS Word document) &mdash; ETSI <A HREF="https://www.etsi.org/deliver/etsi_ts/136300_136399/136321/16.06.00_60/ts_136321v160600p.pdf">TS 136 321</A> version 16.6.0 (October 2021)
 <UL>
 <LI>Referenced from TS 136 212 section 5.2.2.1, p.23</LI>
-<LI><STRONG>I</STRONG> Definition: RefIn, RefOut (Section 6.1.1, pp.67&ndash;8)</LI>
+<LI><STRONG>I</STRONG> Definition: RefIn, RefOut (Section 6.1.1, p.88)</LI>
 </UL>
 </LI>
 <LI>Created: 13 February 2016</LI>
-<LI>Updated: 25 March 2019</LI>
+<LI>Updated: 7 May 2022</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-24-openpgp">CRC-24/OPENPGP</A></H3>
@@ -2828,11 +2848,11 @@
 <P CLASS="attested"><CODE>width=32  poly=0xf4acfb13  init=0xffffffff  refin=true  refout=true  xorout=0xffffffff  check=0x1697d06a  residue=0x904cddbf  name="CRC-32/AUTOSAR"</CODE></P>
 <UL>
 <LI>Class: <SPAN CLASS="attested">attested</SPAN></LI>
-<LI>AUTOSAR (30 November 2020), <A HREF="https://www.autosar.org/standards/classic-platform/">AUTOSAR Classic Platform</A> release R20-11, <A HREF="https://www.autosar.org/fileadmin/user_upload/standards/classic/20-11/AUTOSAR_SWS_CRCLibrary.pdf">Specification of CRC Routines</A>
+<LI>AUTOSAR (25 November 2021), <A HREF="https://www.autosar.org/standards/classic-platform/">AUTOSAR Classic Platform</A> release R21-11, <A HREF="https://www.autosar.org/fileadmin/user_upload/standards/classic/21-11/AUTOSAR_SWS_CRCLibrary.pdf">Specification of CRC Routines</A>
 <UL>
-<LI><STRONG>I</STRONG> Comprehensive primer on CRC theory (Section 7.1, pp.18&ndash;21)</LI>
-<LI><STRONG>I</STRONG> All parameters (Section 7.2.3.2, pp.26&ndash;7)</LI>
-<LI><STRONG>IV</STRONG> 7 codewords (Section 7.2.3.2, p.27)
+<LI><STRONG>I</STRONG> Comprehensive primer on CRC theory (Section 7.1, pp.19&ndash;22)</LI>
+<LI><STRONG>I</STRONG> All parameters (Section 7.2.3.2, p.28)</LI>
+<LI><STRONG>IV</STRONG> 7 codewords (Section 7.2.3.2, pp.28&ndash;9)
 <UL>
 <LI><CODE>00000000&#8203;4022B36F</CODE></LI>
 <LI><CODE>F2018325&#8203;1A724F</CODE></LI>
@@ -2847,7 +2867,7 @@
 </LI>
 <LI>Unique effective solution of codeword set</LI>
 <LI>Created: 24 July 2016</LI>
-<LI>Updated: 2 January 2021</LI>
+<LI>Updated: 7 May 2022</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-32-base91-d">CRC-32/BASE91-D</A></H3>
@@ -2948,7 +2968,7 @@
 <P CLASS="academic"><CODE>width=32  poly=0x8001801b  init=0x00000000  refin=true  refout=true  xorout=0x00000000  check=0x6ec2edc4  residue=0x00000000  name="CRC-32/CD-ROM-EDC"</CODE></P>
 <UL>
 <LI>Class: <SPAN CLASS="academic">academic</SPAN></LI>
-<LI><A HREF="https://www.ecma-international.org/publications/files/ECMA-ST/Ecma-130.pdf">ECMA standard ECMA-130</A>, edition 2 (June 1996) &mdash; ISO/IEC 10149:1995
+<LI><A HREF="https://www.ecma-international.org/wp-content/uploads/ECMA-130_2nd_edition_june_1996.pdf">ECMA standard ECMA-130</A>, edition 2 (June 1996) &mdash; ISO/IEC 10149:1995
 <UL>
 <LI><STRONG>I</STRONG> Definition: Width, Poly, Refin, RefOut, Residue (Section 14.3, p.16)</LI>
 </UL>
@@ -2960,6 +2980,7 @@
 </UL>
 </LI>
 <LI>Created: 19 April 2019</LI>
+<LI>Updated: 7 May 2022</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-32-cksum">CRC-32/CKSUM</A></H3>
@@ -2978,7 +2999,7 @@
 <LI><STRONG>II</STRONG> Implementation</LI>
 </UL>
 </LI>
-<LI>Michael Niedermayer, Aur&eacute;lien Jacobs <DFN>et al.</DFN> (11 July 2020), <A HREF="https://ffmpeg.org/releases/ffmpeg-4.3.1.tar.xz">FFmpeg 4.3.1</A> (XZ compressed tarfile), module <A HREF="https://github.com/FFmpeg/FFmpeg/blob/master/libavutil/tests/crc.c"><CODE>ffmpeg-4.3.1/libavutil/tests/crc.c</CODE></A>
+<LI>Michael Niedermayer, Aur&eacute;lien Jacobs <DFN>et al.</DFN> (4 April 2022), <A HREF="https://ffmpeg.org/releases/ffmpeg-5.0.1.tar.xz">FFmpeg 5.0.1</A> (XZ compressed tarfile), module <A HREF="https://github.com/FFmpeg/FFmpeg/blob/master/libavutil/tests/crc.c"><CODE>ffmpeg-5.0.1/libavutil/tests/crc.c</CODE></A>
 <UL>
 <LI><STRONG>IV</STRONG> 1 codeword (before XorOut stage)
 <UL>
@@ -2988,7 +3009,7 @@
 </UL>
 </LI>
 <LI>Created: 30 March 2005</LI>
-<LI>Updated: 2 January 2021</LI>
+<LI>Updated: 7 May 2022</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-32-iscsi">CRC-32/ISCSI</A></H3>
@@ -3049,11 +3070,11 @@
 <LI><STRONG>I</STRONG> Definition: Residue; full mathematical description (Section 8.1.1.6.2, p.17)</LI>
 </UL>
 </LI>
-<LI>AUTOSAR (30 November 2020), <A HREF="https://www.autosar.org/standards/classic-platform/">AUTOSAR Classic Platform</A> release R20-11, <A HREF="https://www.autosar.org/fileadmin/user_upload/standards/classic/20-11/AUTOSAR_SWS_CRCLibrary.pdf">Specification of CRC Routines</A>
+<LI>AUTOSAR (25 November 2021), <A HREF="https://www.autosar.org/standards/classic-platform/">AUTOSAR Classic Platform</A> release R21-11, <A HREF="https://www.autosar.org/fileadmin/user_upload/standards/classic/21-11/AUTOSAR_SWS_CRCLibrary.pdf">Specification of CRC Routines</A>
 <UL>
-<LI><STRONG>I</STRONG> Comprehensive primer on CRC theory (Section 7.1, pp.18&ndash;21)</LI>
-<LI><STRONG>I</STRONG> All parameters (Section 7.2.3.1, p.26)</LI>
-<LI><STRONG>IV</STRONG> 7 codewords (Section 7.2.3.1, p.26)
+<LI><STRONG>I</STRONG> Comprehensive primer on CRC theory (Section 7.1, pp.19&ndash;22)</LI>
+<LI><STRONG>I</STRONG> All parameters (Section 7.2.3.1, p.27)</LI>
+<LI><STRONG>IV</STRONG> 7 codewords (Section 7.2.3.1, p.27)
 <UL>
 <LI><CODE>00000000&#8203;1CDF4421</CODE></LI>
 <LI><CODE>F2018377&#8203;9DAB24</CODE></LI>
@@ -3101,7 +3122,7 @@
 <LI><STRONG>II</STRONG> Implementation</LI>
 </UL>
 </LI>
-<LI>Dr Ross N. Williams (19 August 1993), <A HREF="https://web.archive.org/web/20190527220400/http://www.ross.net/crc/download/crc_v3.txt">"A Painless Guide to CRC Error Detection Algorithms"</A> (courtesy of the Internet Archive)
+<LI>Dr Ross N. Williams (19 August 1993), <!-- A HREF="https://web.archive.org/web/20190527220400/http://www.ross.net/crc/download/crc_v3.txt" --><A HREF="http://www.ross.net/crc/download/crc_v3.txt">"A Painless Guide to CRC Error Detection Algorithms"</A>
 <UL>
 <LI><STRONG>III</STRONG> All parameters (except Residue)</LI>
 </UL>
@@ -3136,7 +3157,7 @@
 </LI>
 <LI>Unique effective solution of codeword set</LI>
 <LI>Created: 30 March 2005</LI>
-<LI>Updated: 2 January 2021</LI>
+<LI>Updated: 7 May 2022</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-32-jamcrc">CRC-32/JAMCRC</A></H3>
@@ -3264,13 +3285,13 @@
 <LI>Class: <SPAN CLASS="academic">academic</SPAN></LI>
 <LI>Alias: <A NAME="crc.cat.crc-64"><STRONG>CRC-64</STRONG></A></LI>
 <LI>Used in DLT-1 tape cartridges.  For the algorithm often misidentified as ECMA, see <A HREF="#crc.cat.crc-64-xz">CRC-64/XZ</A>.</LI>
-<LI><A HREF="https://www.ecma-international.org/publications/files/ECMA-ST/Ecma-182.pdf">ECMA standard ECMA-182</A> (December 1992) &mdash; ISO/IEC 13421:1993
+<LI><A HREF="https://www.ecma-international.org/wp-content/uploads/ECMA-182_1st_edition_december_1992.pdf">ECMA standard ECMA-182</A> (December 1992) &mdash; ISO/IEC 13421:1993
 <UL>
 <LI><STRONG>I</STRONG> Full mathematical description (Annex B, p.51)</LI>
 </UL>
 </LI>
 <LI>Created: 6 April 2009</LI>
-<LI>Updated: 21 November 2018</LI>
+<LI>Updated: 7 May 2022</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-64-go-iso">CRC-64/GO-ISO</A></H3>
@@ -3278,17 +3299,17 @@
 <UL>
 <LI>Class: <SPAN CLASS="confirmed">confirmed</SPAN></LI>
 <LI>Go implementation reference contributed by "freetrader".</LI>
-<LI><A HREF="https://golang.org/AUTHORS">The Go Authors</A>, <A HREF="https://golang.org/">The Go Programming Language</A>, package <A HREF="https://golang.org/pkg/hash/crc64/"><CODE>crc64</CODE></A>
+<LI><A HREF="https://go.dev/AUTHORS">The Go Authors</A>, <A HREF="https://go.dev/">The Go Programming Language</A>, package <A HREF="https://pkg.go.dev/hash/crc64"><CODE>crc64</CODE></A>
 <UL>
 <LI><STRONG>II</STRONG> Implementation (using constant <CODE>crc64.ISO</CODE>)</LI>
 </UL>
 </LI>
-<LI><A HREF="https://golang.org/AUTHORS">The Go Authors</A> (26 January 2017), The Go Programming Language, module <A HREF="https://golang.org/src/hash/crc64/crc64.go"><CODE>src/hash/crc64/crc64.go</CODE></A>
+<LI><A HREF="https://go.dev/AUTHORS">The Go Authors</A> (26 January 2017), The Go Programming Language, module <A HREF="https://go.dev/src/hash/crc64/crc64.go"><CODE>src/hash/crc64/crc64.go</CODE></A>
 <UL>
 <LI><STRONG>III</STRONG> Code: Go</LI>
 </UL>
 </LI>
-<LI><A HREF="https://golang.org/AUTHORS">The Go Authors</A> (26 January 2017), The Go Programming Language, module <A HREF="https://golang.org/src/hash/crc64/crc64_test.go"><CODE>src/hash/crc64/crc64_test.go</CODE></A>
+<LI><A HREF="https://go.dev/AUTHORS">The Go Authors</A> (26 January 2017), The Go Programming Language, module <A HREF="https://go.dev/src/hash/crc64/crc64_test.go"><CODE>src/hash/crc64/crc64_test.go</CODE></A>
 <UL>
 <LI><STRONG>IV</STRONG> 32 codewords (selection)
 <UL>
@@ -3312,7 +3333,7 @@
 </LI>
 <LI>Unique effective solution of codeword set (unverified)</LI>
 <LI>Created: 28 January 2017</LI>
-<LI>Updated: 5 June 2018</LI>
+<LI>Updated: 7 May 2022</LI>
 </UL>
 
 <H3><A NAME="crc.cat.crc-64-ms">CRC-64/MS</A></H3>
@@ -3372,11 +3393,11 @@
 <LI>Alias: <A NAME="crc.cat.crc-64-go-ecma"><STRONG>CRC-64/GO-ECMA</STRONG></A></LI>
 <LI>An algorithm commonly misidentified as ECMA.  For the true ECMA algorithm see <A HREF="#crc.cat.crc-64-ecma-182">CRC-64/ECMA-182</A>.</LI>
 <LI>Go implementation reference contributed by "freetrader".</LI>
-<LI>AUTOSAR (30 November 2020), <A HREF="https://www.autosar.org/standards/classic-platform/">AUTOSAR Classic Platform</A> release R20-11, <A HREF="https://www.autosar.org/fileadmin/user_upload/standards/classic/20-11/AUTOSAR_SWS_CRCLibrary.pdf">Specification of CRC Routines</A>
+<LI>AUTOSAR (25 November 2021), <A HREF="https://www.autosar.org/standards/classic-platform/">AUTOSAR Classic Platform</A> release R21-11, <A HREF="https://www.autosar.org/fileadmin/user_upload/standards/classic/21-11/AUTOSAR_SWS_CRCLibrary.pdf">Specification of CRC Routines</A>
 <UL>
-<LI><STRONG>I</STRONG> Comprehensive primer on CRC theory (Section 7.1, pp.18&ndash;21)</LI>
-<LI><STRONG>I</STRONG> All parameters (Section 7.2.4.1, p.28)</LI>
-<LI><STRONG>IV</STRONG> 7 codewords (Section 7.2.4.1, p.29)
+<LI><STRONG>I</STRONG> Comprehensive primer on CRC theory (Section 7.1, pp.19&ndash;22)</LI>
+<LI><STRONG>I</STRONG> All parameters (Section 7.2.4.1, p.29)</LI>
+<LI><STRONG>IV</STRONG> 7 codewords (Section 7.2.4.1, pp.29&ndash;30)
 <UL>
 <LI><CODE>00000000&#8203;4B9F1B1E&#8203;3586A5F4</CODE></LI>
 <LI><CODE>F20183C6&#8203;F1648166&#8203;279C31</CODE></LI>
@@ -3432,7 +3453,7 @@
 </LI>
 <LI>Unique effective solution of codeword set</LI>
 <LI>Created: 4 July 2011</LI>
-<LI>Updated: 6 May 2019</LI>
+<LI>Updated: 7 May 2022</LI>
 </UL>
 
 <H3><A NAME="crc.cat-bits.82"></A><A NAME="crc.cat.crc-82-darc">CRC-82/DARC</A></H3>
@@ -3485,7 +3506,7 @@
 <TR ALIGN="RIGHT" VALIGN="TOP"><TD><A HREF="#crc.cat-bits.13">13</A></TD><TD>1</TD><TD>&ndash;</TD><TD>&ndash;</TD><TD>&ndash;</TD><TD>1</TD></TR>
 <TR ALIGN="RIGHT" VALIGN="TOP"><TD><A HREF="#crc.cat-bits.14">14</A></TD><TD>1</TD><TD>&ndash;</TD><TD>1</TD><TD>&ndash;</TD><TD>2</TD></TR>
 <TR ALIGN="RIGHT" VALIGN="TOP"><TD><A HREF="#crc.cat-bits.15">15</A></TD><TD>1</TD><TD>&ndash;</TD><TD>1</TD><TD>&ndash;</TD><TD>2</TD></TR>
-<TR ALIGN="RIGHT" VALIGN="TOP"><TD><A HREF="#crc.cat-bits.16">16</A></TD><TD>22</TD><TD>3</TD><TD>1</TD><TD>4</TD><TD>30</TD></TR>
+<TR ALIGN="RIGHT" VALIGN="TOP"><TD><A HREF="#crc.cat-bits.16">16</A></TD><TD>23</TD><TD>3</TD><TD>1</TD><TD>4</TD><TD>31</TD></TR>
 <TR ALIGN="RIGHT" VALIGN="TOP"><TD><A HREF="#crc.cat-bits.17">17</A></TD><TD>&ndash;</TD><TD>&ndash;</TD><TD>1</TD><TD>&ndash;</TD><TD>1</TD></TR>
 <TR ALIGN="RIGHT" VALIGN="TOP"><TD><A HREF="#crc.cat-bits.21">21</A></TD><TD>&ndash;</TD><TD>&ndash;</TD><TD>1</TD><TD>&ndash;</TD><TD>1</TD></TR>
 <TR ALIGN="RIGHT" VALIGN="TOP"><TD><A HREF="#crc.cat-bits.24">24</A></TD><TD>5</TD><TD>&ndash;</TD><TD>3</TD><TD>&ndash;</TD><TD>8</TD></TR>
@@ -3495,7 +3516,7 @@
 <TR ALIGN="RIGHT" VALIGN="TOP"><TD><A HREF="#crc.cat-bits.40">40</A></TD><TD>&ndash;</TD><TD>&ndash;</TD><TD>1</TD><TD>&ndash;</TD><TD>1</TD></TR>
 <TR ALIGN="RIGHT" VALIGN="TOP"><TD><A HREF="#crc.cat-bits.64">64</A></TD><TD>2</TD><TD>2</TD><TD>1</TD><TD>&ndash;</TD><TD>5</TD></TR>
 <TR ALIGN="RIGHT" VALIGN="TOP"><TD><A HREF="#crc.cat-bits.82">82</A></TD><TD>1</TD><TD>&ndash;</TD><TD>&ndash;</TD><TD>&ndash;</TD><TD>1</TD></TR>
-<TR ALIGN="RIGHT" VALIGN="TOP"><TH>Total</TH><TD>58</TD><TD>9</TD><TD>37</TD><TD>6</TD><TD>110</TD></TR>
+<TR ALIGN="RIGHT" VALIGN="TOP"><TH>Total</TH><TD>59</TD><TD>9</TD><TD>37</TD><TD>6</TD><TD>111</TD></TR>
 </TBODY>
 </TABLE>
 
@@ -3563,7 +3584,7 @@
 
 <P>Robert Bosch GmbH (September 1991), CAN 2.0 Specification.</P>
 <UL>
-<LI><A HREF="http://can.marathon.ru/files/can2spec.pdf">http://can.marathon.ru/files/can2spec.pdf</A></LI>
+<LI><A HREF="https://github.com/ThrowTheSwitch/pcan-ruby/raw/master/doc/can2spec.pdf">https://github.com/ThrowTheSwitch/pcan-ruby/raw/master/doc/can2spec.pdf</A></LI>
 </UL>
 
 <P>Dipl. Inf. Johann N. L&ouml;fflmann (30 July 2006), <CITE>Jacksum</CITE>.  CRC and hash calculator in Java.</P>
@@ -3581,7 +3602,7 @@
 
 <P>Dr Ross N. Williams (19 August 1993), "A Painless Guide to CRC Error Detection Algorithms" (courtesy of the Internet Archive).</P>
 <UL>
-<LI><A HREF="https://web.archive.org/web/20190527220400/http://www.ross.net/crc/download/crc_v3.txt">https://web.archive.org/web/20190527220400/http://www.ross.net/crc/download/crc_v3.txt</A></LI>
+<LI><A HREF="http://www.ross.net/crc/download/crc_v3.txt">http://www.ross.net/crc/download/crc_v3.txt</A></LI>
 <LI><A HREF="https://web.archive.org/web/20190523182111/http://www.wolfgang-ehrhardt.de/crc_v3.html">https://web.archive.org/web/20190523182111/http://www.wolfgang-ehrhardt.de/crc_v3.html</A></LI>
 </UL>
 
@@ -3750,7 +3771,7 @@ unwillingness to use, this software or documentation.</P>
 <TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc16.html">16</A></TD><TD ALIGN="RIGHT"><CODE>0x1dcf</CODE></TD><TD ALIGN="RIGHT"><CODE>0xf3b8</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c16/0x8ee7_len.txt"><CODE>0x8ee7</CODE></A></TD><TD>ProfiBus</TD><TD><A HREF="#crc.cat.crc-16-profibus"><CODE>CRC-16/PROFIBUS</CODE></A></TD></TR>
 <TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc16.html">16</A></TD><TD ALIGN="RIGHT"><CODE>0x3d65</CODE></TD><TD ALIGN="RIGHT"><CODE>0xa6bc</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c16/0x9eb2_len.txt"><CODE>0x9eb2</CODE></A></TD><TD>(*o) C1; CRC-16-DNP; CRC-16F/6.2 ("236545")</TD><TD><A HREF="#crc.cat.crc-16-dnp"><CODE>CRC-16/DNP</CODE></A>, <A HREF="#crc.cat.crc-16-en-13757"><CODE>CRC-16/EN-13757</CODE></A></TD></TR>
 <TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc16.html">16</A></TD><TD ALIGN="RIGHT"><CODE>0x8005</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c16/0xa001_len.txt"><CODE>0xa001</CODE></A></TD><TD ALIGN="RIGHT">*&lt; <CODE>0xc002</CODE></TD><TD>(*op) CRC-16; CRC-16-IBM</TD><TD><A HREF="#crc.cat.crc-16-arc"><CODE>CRC-16/ARC</CODE></A>, <A HREF="#crc.cat.crc-16-cms"><CODE>CRC-16/CMS</CODE></A>, <A HREF="#crc.cat.crc-16-dds-110"><CODE>CRC-16/DDS-110</CODE></A>, <A HREF="#crc.cat.crc-16-maxim-dow"><CODE>CRC-16/MAXIM-DOW</CODE></A>, <A HREF="#crc.cat.crc-16-modbus"><CODE>CRC-16/MODBUS</CODE></A>, <A HREF="#crc.cat.crc-16-umts"><CODE>CRC-16/UMTS</CODE></A>, <A HREF="#crc.cat.crc-16-usb"><CODE>CRC-16/USB</CODE></A></TD></TR>
-<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc16.html">16</A></TD><TD ALIGN="RIGHT"><CODE>0x5935</CODE></TD><TD ALIGN="RIGHT"><CODE>0xac9a</CODE></TD><TD ALIGN="RIGHT">= <A HREF="https://users.ece.cmu.edu/~koopman/crc/c16/0xac9a_len.txt"><CODE>0xac9a</CODE></A></TD><TD>C3; CRC-16F/5 ("254465s")</TD><TD><A HREF="#crc.cat.crc-16-opensafety-a"><CODE>CRC-16/OPENSAFETY-A</CODE></A></TD></TR>
+<TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc16.html">16</A></TD><TD ALIGN="RIGHT"><CODE>0x5935</CODE></TD><TD ALIGN="RIGHT"><CODE>0xac9a</CODE></TD><TD ALIGN="RIGHT">= <A HREF="https://users.ece.cmu.edu/~koopman/crc/c16/0xac9a_len.txt"><CODE>0xac9a</CODE></A></TD><TD>C3; CRC-16F/5 ("254465s")</TD><TD><A HREF="#crc.cat.crc-16-m17"><CODE>CRC-16/M17</CODE></A>, <A HREF="#crc.cat.crc-16-opensafety-a"><CODE>CRC-16/OPENSAFETY-A</CODE></A></TD></TR>
 <TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc16.html">16</A></TD><TD ALIGN="RIGHT"><CODE>0x6f63</CODE></TD><TD ALIGN="RIGHT"><CODE>0xc6f6</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c16/0xb7b1_len.txt"><CODE>0xb7b1</CODE></A></TD><TD>IEEE WG77.1</TD><TD><A HREF="#crc.cat.crc-16-lj1200"><CODE>CRC-16/LJ1200</CODE></A></TD></TR>
 <TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc16.html">16</A></TD><TD ALIGN="RIGHT"><CODE>0x755b</CODE></TD><TD ALIGN="RIGHT"><CODE>0xdaae</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c16/0xbaad_len.txt"><CODE>0xbaad</CODE></A></TD><TD>CRC-16K/4</TD><TD><A HREF="#crc.cat.crc-16-opensafety-b"><CODE>CRC-16/OPENSAFETY-B</CODE></A></TD></TR>
 <TR ALIGN="LEFT" VALIGN="TOP"><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/crc16.html">16</A></TD><TD ALIGN="RIGHT"><CODE>0x8bb7</CODE></TD><TD ALIGN="RIGHT"><CODE>0xedd1</CODE></TD><TD ALIGN="RIGHT"><A HREF="https://users.ece.cmu.edu/~koopman/crc/c16/0xc5db_len.txt"><CODE>0xc5db</CODE></A></TD><TD>(*p) CRC-16-T10-DIF</TD><TD><A HREF="#crc.cat.crc-16-t10-dif"><CODE>CRC-16/T10-DIF</CODE></A></TD></TR>
@@ -3786,8 +3807,8 @@ unwillingness to use, this software or documentation.</P>
 <HR>
 
 <ADDRESS>Greg Cook, <IMG ALT="[email address]" STYLE="vertical-align: text-bottom;" SRC="../email.png" WIDTH="139" HEIGHT="13"><BR>
-<A HREF="https://reveng.sourceforge.io/crc-catalogue/all.htm">https://reveng.sourceforge.io/crc-catalogue/all.htm</A> Last updated 11 January 2022<BR>
-Links last verified 1 January 2021
+<A HREF="https://reveng.sourceforge.io/crc-catalogue/all.htm">https://reveng.sourceforge.io/crc-catalogue/all.htm</A> Last updated 7 May 2022<BR>
+Links last verified 5 May 2022
 </ADDRESS>
 
 <P><A HREF="https://validator.w3.org/check?uri=https://reveng.sourceforge.io/crc-catalogue/all.htm"><IMG ALT="Valid HTML 4.01 Strict." TITLE="Valid HTML 4.01 Strict" SRC="../valid-html401.png" WIDTH="88" HEIGHT="31" STYLE="vertical-align: middle;"></A><SPAN STYLE="float: right;">&nbsp;Hosting by <A HREF="https://sourceforge.net/"><IMG ALT="SourceForge.net" TITLE="SourceForge.net" SRC="https://sourceforge.net/sflogo.php?group_id=781152&amp;type=2" WIDTH="125" HEIGHT="37" STYLE="vertical-align: middle;"></A></SPAN></P>
