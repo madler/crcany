@@ -3,7 +3,7 @@ OBJS=$(patsubst %.c,%.o,$(wildcard src/crc*.c))
 all: src/allcrcs.c crctest crcadd mincrc
 src/allcrcs.c: crcall allcrcs-abbrev.txt crcany.c
 	@rm -rf src
-	@if stat -t *.def >/dev/null 2>&1; \
+	@if test -n "$$(find . -maxdepth 1 -name '*.def' -print -quit)"; \
 	then \
 		cat allcrcs-abbrev.txt *.def | ./crcall; \
 	else \
@@ -29,7 +29,7 @@ crc.o: crc.c crc.h model.h
 crcdbl.o: crcdbl.c crcdbl.h crc.h model.h
 model.o: model.c model.h
 test: src/allcrcs.c crctest allcrcs-abbrev.txt
-	@if stat -t *.def >/dev/null 2>&1; \
+	@if test -n "$$(find . -maxdepth 1 -name '*.def' -print -quit)"; \
 	then \
 		cat allcrcs-abbrev.txt *.def | ./crctest; \
 	else \
