@@ -40,8 +40,7 @@ static char *strcpytail(char *dst, char const *src) {
 
 // A strncmp() that ignores case, like POSIX strncasecmp().
 static int strncmpi(char const *s1, char const *s2, size_t n) {
-    unsigned char const *a = (unsigned char const *)s1,
-                        *b = (unsigned char const *)s2;
+    uint8_t const *a = (uint8_t const *)s1, *b = (uint8_t const *)s2;
     for (size_t i = 0; i < n; i++) {
         int diff = tolower(a[i]) - tolower(b[i]);
         if (diff != 0)
@@ -156,7 +155,7 @@ int main(int argc, char **argv) {
     // Set endianess default to be that of this machine, and bits of the
     // largest integer type for this machine. (Usually 64.)
     unsigned little = 1;
-    little = *((unsigned char *)(&little));
+    little = *((uint8_t *)(&little));
     int bits = INTMAX_BITS;
 
     // Process options for generated code endianess and word bits.

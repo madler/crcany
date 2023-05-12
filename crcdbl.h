@@ -27,8 +27,7 @@
 
    The CRC of the sequence is left in hi, lo.
  */
-void crc_bitwise_dbl(model_t *, word_t *, word_t *,
-                     unsigned char const *, size_t);
+void crc_bitwise_dbl(model_t *, word_t *, word_t *, uint8_t const *, size_t);
 
 /* Similar to crc_zeros(), but works for CRCs up to twice as long as a
    word_t. */

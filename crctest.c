@@ -44,14 +44,14 @@
 // enough to permit the calculation.
 int main(void) {
     // Create test data.
-    unsigned char *test = malloc(32);       // get memory on a word boundary
+    uint8_t *test = malloc(32);         // get memory on a word boundary
     if (test == NULL) {
         fputs("out of memory -- aborting\n", stderr);
         return 1;
     }
     memcpy(test, "123456789", 9);       // test string for check value
     memcpy(test + 15, "123456789", 9);  // one off from word boundary
-    unsigned char random_data[65521];   // generate random test vector
+    uint8_t random_data[65521];         // generate random test vector
     {
         // Yes, rand() is terrible. But it's good enough for this application,
         // and it's part of the C99 standard. Avoid some of the problems by
@@ -125,7 +125,7 @@ int main(void) {
             else {
                 // Initialize tables for byte-wise and word-wise.
                 unsigned little = 1;
-                little = *((unsigned char *)(&little));
+                little = *((uint8_t *)(&little));
                 crc_table_wordwise(&model, little, WORDBITS);
 
                 // Byte-wise.
@@ -202,7 +202,7 @@ int main(void) {
            goodbyte, numall);
     word_t endian = 1;
     printf("%u models verified word-wise out of %u usable (%s-endian)\n",
-           goodword, numall, *((unsigned char *)(&endian)) ? "little" : "big");
+           goodword, numall, *((uint8_t *)(&endian)) ? "little" : "big");
     printf("%u models verified combine out of %u usable\n",
            goodcomb, numall);
     puts(good == num && goodres == num && goodbyte == numall &&

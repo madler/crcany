@@ -8,7 +8,7 @@
 #include "crc.h"
 
 word_t crc_bitwise(model_t *model, word_t crc, void const *dat, size_t len) {
-    unsigned char const *buf = dat;
+    uint8_t const *buf = dat;
     word_t poly = model->poly;
 
     // If requested, return the initial CRC.
@@ -59,7 +59,7 @@ word_t crc_bitwise(model_t *model, word_t crc, void const *dat, size_t len) {
 }
 
 void crc_table_bytewise(model_t *model) {
-    unsigned char k = 0;
+    uint8_t k = 0;
     do {
         word_t crc = crc_bitwise(model, 0, &k, 1);
         if (model->rev)
@@ -71,7 +71,7 @@ void crc_table_bytewise(model_t *model) {
 }
 
 word_t crc_bytewise(model_t *model, word_t crc, void const *dat, size_t len) {
-    unsigned char const *buf = dat;
+    uint8_t const *buf = dat;
 
     // If requested, return the initial CRC.
     if (buf == NULL)
@@ -160,7 +160,7 @@ void crc_table_wordwise(model_t *model, unsigned little, unsigned word_bits) {
 }
 
 word_t crc_wordwise(model_t *model, word_t crc, void const *dat, size_t len) {
-    unsigned char const *buf = dat;
+    uint8_t const *buf = dat;
 
     // If requested, return the initial CRC.
     if (buf == NULL)
@@ -168,7 +168,7 @@ word_t crc_wordwise(model_t *model, word_t crc, void const *dat, size_t len) {
 
     // Prepare common constants.
     unsigned little = 1;
-    little = *((unsigned char *)(&little));
+    little = *((uint8_t *)(&little));
     unsigned top = model->ref ? 0 :
                    WORDBITS - (model->width > 8 ? model->width : 8);
     unsigned shift = model->width <= 8 ? 8 - model->width : model->width - 8;

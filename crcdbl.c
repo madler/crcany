@@ -68,7 +68,7 @@
     } while (0)
 
 void crc_bitwise_dbl(model_t *model, word_t *crc_hi, word_t *crc_lo,
-                     unsigned char const *buf, size_t len) {
+                     uint8_t const *buf, size_t len) {
     word_t poly_lo = model->poly;
     word_t poly_hi = model->poly_hi;
 

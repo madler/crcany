@@ -193,7 +193,7 @@ int crc_gen(model_t *model, char *name,
     fprintf(code,
         "\n"
         "%s %s_bit(%s crc, void const *mem, size_t len) {\n"
-        "    unsigned char const *data = mem;\n"
+        "    uint8_t const *data = mem;\n"
         "    if (data == NULL)\n"
         "        return %#"X";\n", crc_type, name, crc_type, model->init);
     if (model->xorout) {
@@ -477,7 +477,7 @@ int crc_gen(model_t *model, char *name,
     fprintf(code,
         "\n"
         "%s %s_byte(%s crc, void const *mem, size_t len) {\n"
-        "    unsigned char const *data = mem;\n"
+        "    uint8_t const *data = mem;\n"
         "    if (data == NULL)\n"
         "        return %#"X";\n", crc_type, name, crc_type, model->init);
     if (model->rev)
@@ -576,7 +576,7 @@ int crc_gen(model_t *model, char *name,
         "// This code assumes that integers are stored %s-endian.\n"
         "\n"
         "%s %s_word(%s crc, void const *mem, size_t len) {\n"
-        "    unsigned char const *data = mem;\n"
+        "    uint8_t const *data = mem;\n"
         "    if (data == NULL)\n"
         "        return %#"X";\n",
             little ? "little" : "big", crc_type, name, crc_type, model->init);

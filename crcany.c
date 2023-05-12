@@ -164,7 +164,7 @@ local int matches(char *id, char *hit) {
 // Compute the CRCs of the file in, using the CRC's marked in hit. The CRCs are
 // returned in crc[], which must have room for NUMALL entries.
 local void crcs_file(uintmax_t *crc, char *hit, FILE *in) {
-    unsigned char buf[16384];
+    uint8_t buf[16384];
     size_t got;
     for (size_t k = 0; k < NUMALL; k++)
         if (hit[k])

@@ -215,8 +215,7 @@ static int normal_big(word_t *low, word_t *high, unsigned width) {
 
 // A strncmp() that ignores case, like POSIX strncasecmp().
 static int strncmpi(char const *s1, char const *s2, size_t n) {
-    unsigned char const *a = (unsigned char const *)s1,
-                        *b = (unsigned char const *)s2;
+    uint8_t const *a = (uint8_t const *)s1, *b = (uint8_t const *)s2;
     for (size_t i = 0; i < n; i++) {
         int diff = tolower(a[i]) - tolower(b[i]);
         if (diff != 0)

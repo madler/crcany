@@ -43,8 +43,7 @@ static char *strcpytail(char *dst, char const *src) {
 
 // A strncmp() that ignores case, like POSIX strncasecmp().
 static int strncmpi(char const *s1, char const *s2, size_t n) {
-    unsigned char const *a = (unsigned char const *)s1,
-                        *b = (unsigned char const *)s2;
+    uint8_t const *a = (uint8_t const *)s1, *b = (uint8_t const *)s2;
     for (size_t i = 0; i < n; i++) {
         int diff = tolower(a[i]) - tolower(b[i]);
         if (diff != 0)
@@ -234,7 +233,7 @@ int main(int argc, char **argv) {
     // Determine endianess of this machine (for testing on this machine, we
     // need to match its endianess).
     unsigned little = 1;
-    little = *((unsigned char *)(&little));
+    little = *((uint8_t *)(&little));
     int bits = INTMAX_BITS;
 
     // Process option for generated code word bits.
@@ -273,7 +272,7 @@ int main(int argc, char **argv) {
         "#include \"test_src.h\"\n"
         "\n"
         "int main(void) {\n"
-        "    unsigned char data[31];\n"
+        "    uint8_t data[31];\n"
         "    {\n"
         "        unsigned max = (unsigned)RAND_MAX + 1;\n"
         "        int shft = 0;\n"
