@@ -339,6 +339,14 @@ static word_t multmodp(model_t *model, word_t a, word_t b) {
 // is the index at which to cycle. model->back is the index to go to when
 // model->cycle is reached. If no cycle was detected, then model->back is -1.
 void crc_table_combine(model_t *model) {
+    if (model->width == 1) {
+        // Special case for parity check.
+        model->table_comb[0] = 1;
+        model->cycle = 1;
+        model->back = 0;
+        return;
+    }
+
     // Keep squaring x^1 modulo p(x), where p(x) is the CRC polynomial, to
     // generate x^2^n modulo p(x).
     word_t sq = model->ref ? (word_t)1 << (model->width - 2) : 2;   // x^1
