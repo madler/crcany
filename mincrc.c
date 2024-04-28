@@ -150,8 +150,8 @@ static void parm(char *name, word_t lo, word_t hi, unsigned width, FILE *out) {
     word_t nlo = ~lo + 1;
     word_t nhi = ~hi + (lo == 0 ? 1 : 0);
     dbl2str(nlo, nhi, str[1] + 1);
-    fprintf(out, "%s=%s ", name,
-            strlen(str[1]) < strlen(str[0]) ? str[1] : str[0]);
+    fprintf(out, "%s=%s ", name, strlen(str[1]) < strlen(str[0]) ||
+                                 (nlo == 1 && nhi == 0) ? str[1] : str[0]);
 }
 
 // Print a string parameter, in double quotes if the string contains white
