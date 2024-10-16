@@ -47,10 +47,9 @@
 
 #include <inttypes.h>
 
-/* Divide a double width integer hi:lo by ten, returning the remainder, and
-   updating hi:lo with the quotient. */
-static inline unsigned div10(word_t *lo, word_t *hi)
-{
+// Divide a double width integer hi:lo by ten, returning the remainder, and
+// updating hi:lo with the quotient.
+static inline unsigned div10(word_t *lo, word_t *hi) {
     if (*hi == 0) {
         unsigned rem = *lo % 10;
         *lo /= 10;
@@ -75,11 +74,10 @@ static inline unsigned div10(word_t *lo, word_t *hi)
     return rem;
 }
 
-/* Convert the double-width integer hi:lo to an ASCII decimal integer in str[].
-   str[] is assumed to have enough space for the decimal digits and a
-   terminating nul. Return str. */
-static char *dbl2dec(word_t lo, word_t hi, char *str)
-{
+// Convert the double-width integer hi:lo to an ASCII decimal integer in str[].
+// str[] is assumed to have enough space for the decimal digits and a
+// terminating nul. Return str.
+static char *dbl2dec(word_t lo, word_t hi, char *str) {
     char *p = str;
     do {
         *p++ = '0' + div10(&lo, &hi);
@@ -94,28 +92,25 @@ static char *dbl2dec(word_t lo, word_t hi, char *str)
     return str;
 }
 
-/* Return the number of hexadecimal digits required to represent hi:lo. */
-static unsigned hexdigs(word_t lo, word_t hi)
-{
+// Return the number of hexadecimal digits required to represent hi:lo.
+static unsigned hexdigs(word_t lo, word_t hi) {
     unsigned n = (WORDBITS << 1) - 4;
     while (n && ((n < WORDBITS ? lo >> n : hi >> (n - WORDBITS)) & 0xf) == 0)
         n -= 4;
     return (n >> 2) + 1;
 }
 
-/* Convert the low four bits of n to an ASCII hexadecimal digit. */
-static inline unsigned hex(unsigned n)
-{
+// Convert the low four bits of n to an ASCII hexadecimal digit.
+static inline unsigned hex(unsigned n) {
     n &= 0xf;
     return n < 10 ? n + '0' : 'a' + n - 10;
 }
 
-/* Convert the double-width integer hi:lo to an ASCII decimal integer or to a
-   hexadecimal integer preceded by "0x", whichever is shorter, or the decimal
-   version if they are the same length.  Return the result in str[], and return
-   str.  str[] is assumed to have enough space for either. */
-static char *dbl2str(word_t lo, word_t hi, char *str)
-{
+// Convert the double-width integer hi:lo to an ASCII decimal integer or to a
+// hexadecimal integer preceded by "0x", whichever is shorter, or the decimal
+// version if they are the same length.  Return the result in str[], and return
+// str.  str[] is assumed to have enough space for either.
+static char *dbl2str(word_t lo, word_t hi, char *str) {
     dbl2dec(lo, hi, str);
     unsigned digs = hexdigs(lo, hi);
     if (digs + 2 < strlen(str)) {
@@ -129,11 +124,10 @@ static char *dbl2str(word_t lo, word_t hi, char *str)
     return str;
 }
 
-/* Sign-extend the double-width integer hi:lo with the sign bit at position
-   width-1.  width is assumed to not be zero and hi:lo is assumed to have all
-   zero bits above the width bits. */
-static void sign_extend(word_t *lo, word_t *hi, unsigned width)
-{
+// Sign-extend the double-width integer hi:lo with the sign bit at position
+// width-1.  width is assumed to not be zero and hi:lo is assumed to have all
+// zero bits above the width bits.
+static void sign_extend(word_t *lo, word_t *hi, unsigned width) {
     if (width <= WORDBITS) {
         word_t sign = *lo & ((word_t)1 << (width - 1));
         *lo -= sign << 1;
@@ -146,10 +140,9 @@ static void sign_extend(word_t *lo, word_t *hi, unsigned width)
     }
 }
 
-/* Print a numeric parameter, using hexadecimal and/or a negative value if that
-   would use fewer characters.  End with a space. */
-static void parm(char *name, word_t lo, word_t hi, unsigned width, FILE *out)
-{
+// Print a numeric parameter, using hexadecimal and/or a negative value if that
+// would use fewer characters.  End with a space.
+static void parm(char *name, word_t lo, word_t hi, unsigned width, FILE *out) {
     char str[2][5*WORDCHARS+3];
     dbl2str(lo, hi, str[0]);
     str[1][0] = '-';
@@ -161,13 +154,10 @@ static void parm(char *name, word_t lo, word_t hi, unsigned width, FILE *out)
             strlen(str[1]) < strlen(str[0]) ? str[1] : str[0]);
 }
 
-/* Print a string parameter, in double quotes if the string contains white
-   space.  End with a newline. */
-static void quoted(char *name, char *str, FILE *out)
-{
-    char *next, *quote;
-
-    next = str;
+// Print a string parameter, in double quotes if the string contains white
+// space.  End with a newline.
+static void quoted(char *name, char *str, FILE *out) {
+    char *next = str;
     while (*next) {
         if (isspace(*next))
             break;
@@ -180,6 +170,7 @@ static void quoted(char *name, char *str, FILE *out)
     }
     putc('"', out);
     next = str;
+    char *quote;
     while ((quote = strchr(next, '"')) != NULL) {
         fwrite(next, 1, quote - next, out);
         fputs("\"\"", out);
@@ -188,22 +179,19 @@ static void quoted(char *name, char *str, FILE *out)
     fprintf(out, "%s\"\n", next);
 }
 
-/* Read a series of CRC model descriptions, one per line, from stdin and write
-   the model back out maximally compressed to stdout. */
-int main(void)
-{
-    int ret;
-    model_t model;
+// Read a series of CRC model descriptions, one per line, from stdin and write
+// the model back out maximally compressed to stdout.
+int main(void) {
+    FILE *out = stdout;
     char *line = NULL;
     size_t size;
     ptrdiff_t len;
-    FILE *out = stdout;
-
-    model.name = NULL;
     while ((len = getcleanline(&line, &size, stdin)) != -1) {
         if (len == 0)
             continue;
-        ret = read_model(&model, line, 0);
+        model_t model;
+        model.name = NULL;
+        int ret = read_model(&model, line, 0);
         if (ret == 2) {
             fputs("out of memory -- aborting\n", stderr);
             break;
@@ -228,9 +216,7 @@ int main(void)
             quoted("n", model.name, out);
         }
         free(model.name);
-        model.name = NULL;
     }
     free(line);
-    line = NULL;
     return 0;
 }

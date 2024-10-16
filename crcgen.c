@@ -62,18 +62,18 @@ int rev_gen(int bits, FILE *src) {
     uintmax_t kept = 0;         // accumulator of the kept middle bits
     uintmax_t mask = all;       // mask for left shift at each step
     do {
-        // bits becomes the number of bits in each segment that is moved, and
+        // Bits becomes the number of bits in each segment that is moved, and
         // mid becomes 1 if there is a middle bit between segments to keep --
-        // the amount to shift becomes bits + mid
+        // the amount to shift becomes bits + mid.
         int mid = bits & 1;
         bits >>= 1;
 
         if (mid) {
-            // compute the locations of the new middle bits
+            // Compute the locations of the new middle bits.
             uintmax_t keep = (mask >> bits) ^ (mask >> (bits + 1));
 
-            // create or update mid variable in generated code with middle bits
-            // to keep
+            // Create or update mid variable in generated code with middle bits
+            // to keep.
             if (kept)
                 fprintf(src,
             "    mid |=");                              // update middle bits
@@ -85,19 +85,19 @@ int rev_gen(int bits, FILE *src) {
             else
                 fprintf(src, " val & 0x%jx;\n", keep);
 
-            // kept is the accumuation of middle bits so far
+            // kept is the accumuation of middle bits so far.
             kept |= keep;
         }
 
-        // update mask with the bits to keep for the left shift
+        // Update mask with the bits to keep for the left shift.
         mask ^= mask >> (bits + mid);
 
-        // compute the masks for the left and right shifts, removing the middle
-        // bits
+        // Compute the masks for the left and right shifts, removing the middle
+        // bits.
         uintmax_t left = mask & ~kept;
         uintmax_t right = all ^ kept ^ left;
 
-        // update the value in the generated code with the masked shifts
+        // Update the value in the generated code with the masked shifts.
         if (right < DEC)
             fprintf(src,
             "    val = ((val >> %d) & %ju) | ", bits + mid, right);
@@ -127,11 +127,11 @@ int rev_gen(int bits, FILE *src) {
 int crc_gen(model_t *model, char *name,
                    unsigned little, unsigned word_bits,
                    FILE *head, FILE *code) {
-    // check input -- if invalid, do nothing
+    // Check input -- if invalid, do nothing.
     if ((word_bits != 32 && word_bits != 64) || model->width > word_bits)
         return 1;
 
-    // select the unsigned integer type to be used for CRC calculations
+    // Select the unsigned integer type to be used for CRC calculations.
     char *crc_type;
     unsigned crc_bits;
     if (model->width <= 8) {
@@ -151,38 +151,40 @@ int crc_gen(model_t *model, char *name,
         crc_bits = 64;
     }
 
-    // set the unsigned integer type to be used internally by word-wise CRC
+    // Set the unsigned integer type to be used internally by word-wise CRC
     // calculation routines -- this size is fetched from memory and
-    // exlusive-ored to the CRC at each step of the word-wise calculation
+    // exlusive-ored to the CRC at each step of the word-wise calculation.
     char *word_type = word_bits == 32 ? "uint32_t" : "uint64_t";
     unsigned word_bytes = word_bits >> 3;
-    unsigned word_shift = 0;
-    for (unsigned n = word_bytes; n > 1; n >>= 1)
-        word_shift++;
+    unsigned word_shift = word_bytes == 4 ? 2 : 3;
 
-    // provide usage information in the header, and define the integer types
+    // Provide usage information in the header, and define the integer types.
     fprintf(head,
-        "// The _bit, _byte, and _word routines return the CRC of the len bytes at mem,\n"
-        "// applied to the previous CRC value, crc. If mem is NULL, then the other\n"
-        "// arguments are ignored, and the initial CRC, i.e. the CRC of zero bytes, is\n"
-        "// returned. Those routines will all return the same result, differing only in\n"
-        "// speed and code complexity. The _rem routine returns the CRC of the remaining\n"
-        "// bits in the last byte, for when the number of bits in the message is not a\n"
-        "// multiple of eight. The %s bits bits of the low byte of val are applied to\n"
-        "// crc. bits must be in 0..8.\n"
+        "// The _bit, _byte, and _word routines return the CRC of the len\n"
+        "// bytes at mem, applied to the previous CRC value, crc. If mem is\n"
+        "// NULL, then the other arguments are ignored, and the initial CRC,\n"
+        "// i.e. the CRC of zero bytes, is returned. Those routines will all\n"
+        "// return the same result, differing only in speed and code\n"
+        "// complexity. The _rem routine returns the CRC of the remaining\n"
+        "// bits in the last byte, for when the number of bits in the\n"
+        "// message is not a multiple of eight. The %s bits bits of the low\n"
+        "// byte of val are applied to crc. bits must be in 0..8.\n"
         "\n"
         "#include <stddef.h>\n"
         "#include <stdint.h>\n", model->ref ? "low" : "high");
 
-    // include the header in the code
+    // Include that header in the code.
     fprintf(code,
         "#include \"%s.h\"\n", name);
+    if (model->back == -1)
+        fputs(
+        "#include <assert.h>\n", code);
 
-    // function to reverse the low model->width bits, if needed (unlikely)
+    // Function to reverse the low model->width bits, if needed (unlikely).
     if (model->rev)
         rev_gen(model->width, code);
 
-    // bit-wise CRC calculation function
+    // Bit-wise CRC calculation function.
     fprintf(head,
         "\n"
         "// Compute the CRC a bit at a time.\n"
@@ -283,7 +285,7 @@ int crc_gen(model_t *model, char *name,
     fputs("    return crc;\n"
           "}\n", code);
 
-    // bit-wise CRC calculation function for a small number of bits (0..8)
+    // Bit-wise CRC calculation function for a small number of bits (0..8).
     fprintf(head,
         "\n"
         "// Compute the CRC of the %s bits bits in %sval.\n"
@@ -382,10 +384,10 @@ int crc_gen(model_t *model, char *name,
         "    return crc;\n"
         "}\n", code);
 
-    // generate byte-wise and word-wise tables
+    // Generate byte-wise and word-wise tables.
     crc_table_wordwise(model, little, word_bits);
 
-    // byte-wise table
+    // Byte-wise table.
     if ((little && (model->ref || model->width <= 8)) ||
         (!little && !model->ref && model->width == word_bits))
         fputs(
@@ -427,7 +429,7 @@ int crc_gen(model_t *model, char *name,
         "};\n", code);
     }
 
-    // word-wise table
+    // Word-wise table.
     fprintf(code,
         "\n"
         "static %s const table_word[][256] = {\n",
@@ -466,7 +468,7 @@ int crc_gen(model_t *model, char *name,
     fputs(
         "};\n", code);
 
-    // byte-wise CRC calculation function
+    // Byte-wise CRC calculation function.
     fprintf(head,
         "\n"
         "// Compute the CRC a byte at a time.\n"
@@ -527,12 +529,12 @@ int crc_gen(model_t *model, char *name,
         "    return crc;\n"
         "}\n", code);
 
-    // word-wise CRC calculation function
+    // Word-wise CRC calculation function.
     unsigned shift = model->width <= 8 ? 8 - model->width : model->width - 8;
     if ((little && !model->ref && model->width > 8) ||
         (!little && model->ref)) {
-        // function to swap low bytes, just enough to contain CRC for
-        // little-endian
+        // Function to swap low bytes, just enough to contain CRC for
+        // little-endian.
         fprintf(code,
         "\n"
         "static inline %s swap%s(%s crc) {\n"
@@ -582,7 +584,7 @@ int crc_gen(model_t *model, char *name,
         fprintf(code,
         "    crc = revlow%d(crc);\n", model->width);
 
-    // do bytes up to word boundary
+    // Do bytes up to word boundary.
     if (model->ref) {
         if (model->width != crc_bits && !model->rev)
             fprintf(code,
@@ -620,7 +622,7 @@ int crc_gen(model_t *model, char *name,
         "    }\n", word_bytes - 1, shift);
     }
 
-    // do full words for little-endian
+    // Do full words for little-endian.
     if (little) {
         unsigned top = model->width > 8 ? -model->width & 7 : 0;
         if (!model->ref) {
@@ -658,7 +660,7 @@ int crc_gen(model_t *model, char *name,
         }
     }
 
-    // do full words for big-endian
+    // Do full words for big-endian.
     else {
         unsigned top = model->ref ? 0 :
                        word_bits - (model->width > 8 ? model->width : 8);
@@ -693,7 +695,7 @@ int crc_gen(model_t *model, char *name,
         "    crc = word >> %u;\n", top);
     }
 
-    // do last few bytes
+    // Do last few bytes.
     if (model->ref) {
         if (model->width > 8)
             fputs(
@@ -737,48 +739,6 @@ int crc_gen(model_t *model, char *name,
     fputs(
         "    return crc;\n"
         "}\n", code);
-
-    // CRC combination table.
-    fprintf(head,
-        "\n"
-        "// Compute the combination of two CRCs.\n"
-        "%s %s_comb(%s crc1, %s crc2, uintmax_t len2);\n",
-            crc_type, name, crc_type, crc_type);
-    crc_table_combine(model);
-    fprintf(code,
-        "\n"
-        "static %s const table_comb[] = {\n", crc_type);
-    {
-        word_t most = 0;
-        unsigned len = model->cycle < word_bits ? model->cycle : word_bits;
-        for (unsigned k = 0; k < len; k++)
-            if (model->table_comb[k] > most)
-                most = model->table_comb[k];
-        int hex = most > 9;
-        int digits = 0;
-        while (most) {
-            most >>= 4;
-            digits++;
-        }
-        char const *pre = "   ";    // this plus one space is line prefix
-        unsigned const max = COLS;  // maximum length before new line
-        unsigned n = 0;             // characters on this line, so far
-        for (unsigned k = 0; k < len - 1; k++) {
-            if (n == 0)
-                n += fprintf(code, "%s", pre);
-            n += fprintf(code, " %s%0*"X",",
-                         hex ? "0x" : "", digits, model->table_comb[k]);
-            if (n + digits + (hex ? 4 : 2) > max) {
-                putc('\n', code);
-                n = 0;
-            }
-        }
-        fprintf(code, "%s %s%0*"X, n ? "" : pre,
-                hex ? "0x" : "", digits, model->table_comb[len - 1]);
-    }
-    fputs(
-        "\n"
-        "};\n", code);
 
     // Multiply mod poly for CRC combination.
     if (model->ref)
@@ -824,6 +784,47 @@ int crc_gen(model_t *model, char *name,
         "}\n", code);
     }
 
+    // CRC combination table.
+    fprintf(head,
+        "\n"
+        "// Compute the combination of two CRCs.\n"
+        "%s %s_comb(%s crc1, %s crc2, uintmax_t len2);\n",
+            crc_type, name, crc_type, crc_type);
+    fprintf(code,
+        "\n"
+        "static %s const table_comb[] = {\n", crc_type);
+    {
+        word_t most = 0;
+        int len = model->cycle;
+        for (int k = 0; k < len; k++)
+            if (model->table_comb[k] > most)
+                most = model->table_comb[k];
+        int hex = most > 9;
+        int digits = 0;
+        while (most) {
+            most >>= 4;
+            digits++;
+        }
+        char const *pre = "   ";    // this plus one space is line prefix
+        unsigned const max = COLS;  // maximum length before new line
+        unsigned n = 0;             // characters on this line, so far
+        for (int k = 0; k < len - 1; k++) {
+            if (n == 0)
+                n += fprintf(code, "%s", pre);
+            n += fprintf(code, " %s%0*"X",",
+                         hex ? "0x" : "", digits, model->table_comb[k]);
+            if (n + digits + (hex ? 4 : 2) > max) {
+                putc('\n', code);
+                n = 0;
+            }
+        }
+        fprintf(code, "%s %s%0*"X, n ? "" : pre,
+                hex ? "0x" : "", digits, model->table_comb[len - 1]);
+    }
+    fputs(
+        "\n"
+        "};\n", code);
+
     // Calculate x^(8n) mod poly for CRC combination.
     fprintf(code,
         "\n"
@@ -835,20 +836,26 @@ int crc_gen(model_t *model, char *name,
     else
         fprintf(code,
         "    %s xp = 1;\n", crc_type);
+    fprintf(code,
+        "    int k = %d;\n", model->cycle > 3 ? 3 :
+                             model->cycle == 3 ? model->back :
+                             model->cycle - 1);
     fputs(
-        "    unsigned k = 0;\n"
-        "    while (n) {\n"
+        "    for (;;) {\n"
         "        if (n & 1)\n"
         "            xp = multmodp(table_comb[k], xp);\n"
-        "        n >>= 1;\n", code);
-    if (model->cycle < word_bits)
+        "        n >>= 1;\n"
+        "        if (n == 0)\n"
+        "            break;\n", code);
+    if (model->back != -1)
         fprintf(code,
-        "        if (++k == %u)\n"
-        "            k = 0;\n",
-                model->cycle);
+        "        if (++k == %d)\n"
+        "            k = %d;\n",
+                model->cycle, model->back);
     else
-        fputs(
-        "        k++;\n", code);
+        fprintf(code,
+        "        k++;\n"
+        "        assert(k < %d);\n", model->cycle);
     fputs(
         "    }\n"
         "    return xp;\n"
@@ -866,7 +873,8 @@ int crc_gen(model_t *model, char *name,
         model->init);
     if (model->rev)
         fprintf(code,
-        "    return revlow%u(multmodp(x8nmodp(len2), revlow%u(crc1)) ^ revlow%u(crc2));\n",
+        "    return revlow%u(multmodp(x8nmodp(len2), revlow%u(crc1)) ^\n"
+        "                    revlow%u(crc2));\n",
             model->width, model->width, model->width);
     else
         fputs(

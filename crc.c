@@ -4,119 +4,64 @@
  */
 
 #include <stddef.h>
+#include <assert.h>
 #include "crc.h"
 
-word_t crc_bitwise(model_t *model, word_t crc, void const *dat, size_t len)
-{
+word_t crc_bitwise(model_t *model, word_t crc, void const *dat, size_t len) {
     unsigned char const *buf = dat;
     word_t poly = model->poly;
 
-    /* if requested, return the initial CRC */
+    // If requested, return the initial CRC.
     if (buf == NULL)
         return model->init;
 
-    /* pre-process the CRC */
+    // Pre-process the CRC.
     crc ^= model->xorout;
     if (model->rev)
         crc = reverse(crc, model->width);
 
-    /* process the input data a bit at a time */
+    // Process the input data a bit at a time.
     if (model->ref) {
         crc &= ONES(model->width);
         while (len--) {
             crc ^= *buf++;
-            crc = crc & 1 ? (crc >> 1) ^ poly : crc >> 1;
-            crc = crc & 1 ? (crc >> 1) ^ poly : crc >> 1;
-            crc = crc & 1 ? (crc >> 1) ^ poly : crc >> 1;
-            crc = crc & 1 ? (crc >> 1) ^ poly : crc >> 1;
-            crc = crc & 1 ? (crc >> 1) ^ poly : crc >> 1;
-            crc = crc & 1 ? (crc >> 1) ^ poly : crc >> 1;
-            crc = crc & 1 ? (crc >> 1) ^ poly : crc >> 1;
-            crc = crc & 1 ? (crc >> 1) ^ poly : crc >> 1;
+            for (int k = 0; k < 8; k++)
+                crc = crc & 1 ? (crc >> 1) ^ poly : crc >> 1;
         }
     }
     else if (model->width <= 8) {
-        unsigned shift;
-
-        shift = 8 - model->width;           /* 0..7 */
+        unsigned shift = 8 - model->width;  // 0..7
         poly <<= shift;
         crc <<= shift;
         while (len--) {
             crc ^= *buf++;
-            crc = crc & 0x80 ? (crc << 1) ^ poly : crc << 1;
-            crc = crc & 0x80 ? (crc << 1) ^ poly : crc << 1;
-            crc = crc & 0x80 ? (crc << 1) ^ poly : crc << 1;
-            crc = crc & 0x80 ? (crc << 1) ^ poly : crc << 1;
-            crc = crc & 0x80 ? (crc << 1) ^ poly : crc << 1;
-            crc = crc & 0x80 ? (crc << 1) ^ poly : crc << 1;
-            crc = crc & 0x80 ? (crc << 1) ^ poly : crc << 1;
-            crc = crc & 0x80 ? (crc << 1) ^ poly : crc << 1;
+            for (int k = 0; k < 8; k++)
+                crc = crc & 0x80 ? (crc << 1) ^ poly : crc << 1;
         }
         crc >>= shift;
         crc &= ONES(model->width);
     }
     else {
-        word_t mask;
-        unsigned shift;
-
-        mask = (word_t)1 << (model->width - 1);
-        shift = model->width - 8;           /* 1..WORDBITS-8 */
+        word_t mask = (word_t)1 << (model->width - 1);
+        unsigned shift = model->width - 8;  // 1..WORDBITS-8
         while (len--) {
             crc ^= (word_t)(*buf++) << shift;
-            crc = crc & mask ? (crc << 1) ^ poly : crc << 1;
-            crc = crc & mask ? (crc << 1) ^ poly : crc << 1;
-            crc = crc & mask ? (crc << 1) ^ poly : crc << 1;
-            crc = crc & mask ? (crc << 1) ^ poly : crc << 1;
-            crc = crc & mask ? (crc << 1) ^ poly : crc << 1;
-            crc = crc & mask ? (crc << 1) ^ poly : crc << 1;
-            crc = crc & mask ? (crc << 1) ^ poly : crc << 1;
-            crc = crc & mask ? (crc << 1) ^ poly : crc << 1;
+            for (int k = 0; k < 8; k++)
+                crc = crc & mask ? (crc << 1) ^ poly : crc << 1;
         }
         crc &= ONES(model->width);
     }
 
-    /* post-process and return the CRC */
+    // Post-process and return the CRC.
     if (model->rev)
         crc = reverse(crc, model->width);
     return crc ^ model->xorout;
 }
 
-word_t crc_zeros(model_t *model, word_t crc, size_t count)
-{
-    word_t poly = model->poly;
-
-    /* pre-process the CRC */
-    crc ^= model->xorout;
-    if (model->rev)
-        crc = reverse(crc, model->width);
-
-    /* process count zeros */
-    if (model->ref) {
-        crc &= ONES(model->width);
-        while (count--)
-            crc = crc & 1 ? (crc >> 1) ^ poly : crc >> 1;
-    }
-    else {
-        word_t mask = (word_t)1 << (model->width - 1);
-        while (count--)
-            crc = crc & mask ? (crc << 1) ^ poly : crc << 1;
-        crc &= ONES(model->width);
-    }
-
-    /* post-process and return the CRC */
-    if (model->rev)
-        crc = reverse(crc, model->width);
-    return crc ^ model->xorout;
-}
-
-void crc_table_bytewise(model_t *model)
-{
-    unsigned char k;
-    word_t crc;
-
-    k = 0;
+void crc_table_bytewise(model_t *model) {
+    unsigned char k = 0;
     do {
-        crc = crc_bitwise(model, 0, &k, 1);
+        word_t crc = crc_bitwise(model, 0, &k, 1);
         if (model->rev)
             crc = reverse(crc, model->width);
         if (model->width < 8 && !model->ref)
@@ -125,71 +70,65 @@ void crc_table_bytewise(model_t *model)
     } while (++k);
 }
 
-word_t crc_bytewise(model_t *model, word_t crc, void const *dat, size_t len)
-{
+word_t crc_bytewise(model_t *model, word_t crc, void const *dat, size_t len) {
     unsigned char const *buf = dat;
 
-    /* if requested, return the initial CRC */
+    // If requested, return the initial CRC.
     if (buf == NULL)
         return model->init;
 
-    /* pre-process the CRC */
+    // Pre-process the CRC.
     if (model->rev)
         crc = reverse(crc, model->width);
 
-    /* process the input data a byte at a time */
+    // Process the input data a byte at a time.
     if (model->ref) {
         crc &= ONES(model->width);
         while (len--)
             crc = (crc >> 8) ^ model->table_byte[(crc ^ *buf++) & 0xff];
     }
     else if (model->width <= 8) {
-        unsigned shift;
-
-        shift = 8 - model->width;           /* 0..7 */
+        unsigned shift = 8 - model->width;  // 0..7
         crc <<= shift;
         while (len--)
             crc = model->table_byte[crc ^ *buf++];
         crc >>= shift;
     }
     else {
-        unsigned shift;
-
-        shift = model->width - 8;           /* 1..WORDBITS-8 */
+        unsigned shift = model->width - 8;  // 1..WORDBITS-8
         while (len--)
             crc = (crc << 8) ^
                   model->table_byte[((crc >> shift) ^ *buf++) & 0xff];
         crc &= ONES(model->width);
     }
 
-    /* post-process and return the CRC */
+    // Post-process and return the CRC
     if (model->rev)
         crc = reverse(crc, model->width);
     return crc;
 }
 
-/* Swap the bytes in a word_t.  This can be replaced by a byte-swap builtin, if
-   available on the compiler.  E.g. __builtin_bswap64() on gcc and clang.  The
-   speed of swap() is inconsequential however, being used at most twice per
-   crc_wordwise() call.  It is only used on little-endian machines if the CRC
-   is not reflected, or on big-endian machines if the CRC is reflected. */
-static inline word_t swap(word_t x)
-{
-    word_t y;
-    unsigned n = WORDCHARS - 1;
-
-    y = x & 0xff;
-    while (x >>= 8) {
+// Swap the low n bytes of x. Bytes above those are discarded.
+static inline word_t swaplow(word_t x, unsigned n) {
+    if (n == 0)
+        return 0;
+    word_t y = x & 0xff;
+    while (--n) {
+        x >>= 8;
         y <<= 8;
         y |= x & 0xff;
-        n--;
     }
-    return y << (n << 3);
+    return y;
 }
 
-void crc_table_wordwise(model_t *model, unsigned little, unsigned word_bits)
-{
-    crc_table_bytewise(model);
+// Swap the bytes in a word_t. swap() is used at most twice per crc_wordwise()
+// call, and then only on little-endian machines if the CRC is not reflected,
+// or on big-endian machines if the CRC is reflected.
+static inline word_t swap(word_t x) {
+    return swaplow(x, WORDCHARS);
+}
+
+void crc_table_wordwise(model_t *model, unsigned little, unsigned word_bits) {
     unsigned opp = little ^ model->ref;
     unsigned top =
         model->ref ? 0 :
@@ -197,44 +136,48 @@ void crc_table_wordwise(model_t *model, unsigned little, unsigned word_bits)
     word_t xor = model->xorout;
     if (model->width < 8 && !model->ref)
         xor <<= 8 - model->width;
+    unsigned word_bytes = word_bits >> 3;
     for (unsigned k = 0; k < 256; k++) {
         word_t crc = model->table_byte[k];
-        model->table_word[0][k] = opp ? swap(crc << top) : crc << top;
+        model->table_word[0][k] = opp ? swaplow(crc << top, word_bytes) :
+                                        crc << top;
         for (unsigned n = 1; n < (word_bits >> 3); n++) {
             crc ^= xor;
             if (model->ref)
                 crc = (crc >> 8) ^ model->table_byte[crc & 0xff];
             else if (model->width <= 8)
                 crc = model->table_byte[crc];
-            else
+            else {
                 crc = (crc << 8) ^
                       model->table_byte[(crc >> (model->width - 8)) & 0xff];
+                crc &= ONES(model->width);
+            }
             crc ^= xor;
-            model->table_word[n][k] = opp ? swap(crc << top) : crc << top;
+            model->table_word[n][k] = opp ? swaplow(crc << top, word_bytes) :
+                                            crc << top;
         }
     }
 }
 
-word_t crc_wordwise(model_t *model, word_t crc, void const *dat, size_t len)
-{
+word_t crc_wordwise(model_t *model, word_t crc, void const *dat, size_t len) {
     unsigned char const *buf = dat;
-    unsigned little, top, shift;
 
-    /* if requested, return the initial CRC */
+    // If requested, return the initial CRC.
     if (buf == NULL)
         return model->init;
 
-    /* prepare common constants */
-    little = 1;
+    // Prepare common constants.
+    unsigned little = 1;
     little = *((unsigned char *)(&little));
-    top = model->ref ? 0 : WORDBITS - (model->width > 8 ? model->width : 8);
-    shift = model->width <= 8 ? 8 - model->width : model->width - 8;
+    unsigned top = model->ref ? 0 :
+                   WORDBITS - (model->width > 8 ? model->width : 8);
+    unsigned shift = model->width <= 8 ? 8 - model->width : model->width - 8;
 
-    /* pre-process the CRC */
+    // Pre-process the CRC.
     if (model->rev)
         crc = reverse(crc, model->width);
 
-    /* process the first few bytes up to a word_t boundary, if any */
+    // Process the first few bytes up to a word_t boundary, if any.
     if (model->ref) {
         crc &= ONES(model->width);
         while (len && ((ptrdiff_t)buf & (WORDCHARS - 1))) {
@@ -256,7 +199,7 @@ word_t crc_wordwise(model_t *model, word_t crc, void const *dat, size_t len)
             len--;
         }
 
-    /* process as many word_t's as are available */
+    // Process as many word_t's as are available.
     if (len >= WORDCHARS) {
         crc <<= top;
         if (little) {
@@ -336,7 +279,7 @@ word_t crc_wordwise(model_t *model, word_t crc, void const *dat, size_t len)
         crc >>= top;
     }
 
-    /* process any remaining bytes after the last word_t */
+    // Process any remaining bytes after the last word_t.
     if (model->ref)
         while (len--)
             crc = (crc >> 8) ^ model->table_byte[(crc ^ *buf++) & 0xff];
@@ -352,7 +295,7 @@ word_t crc_wordwise(model_t *model, word_t crc, void const *dat, size_t len)
         crc &= ONES(model->width);
     }
 
-    /* post-process and return the CRC */
+    // Post-process and return the CRC.
     if (model->rev)
         crc = reverse(crc, model->width);
     return crc;
@@ -364,7 +307,7 @@ static word_t multmodp(model_t *model, word_t a, word_t b) {
     word_t top = (word_t)1 << (model->width - 1);
     word_t prod = 0;
     if (model->ref) {
-        // reflected polynomial
+        // Reflected polynomial.
         for (;;) {
             if (a & top) {
                 prod ^= b;
@@ -376,7 +319,7 @@ static word_t multmodp(model_t *model, word_t a, word_t b) {
         }
     }
     else {
-        // normal polynomial
+        // Normal polynomial.
         for (;;) {
             if (a & 1) {
                 prod ^= b;
@@ -391,38 +334,116 @@ static word_t multmodp(model_t *model, word_t a, word_t b) {
     return prod;
 }
 
+// Build table_comb[] for model. Stop when a cycle is detected, or the table is
+// full. On return, model->cycle is the number of entries in the table, which
+// is the index at which to cycle. model->back is the index to go to when
+// model->cycle is reached. If no cycle was detected, then model->back is -1.
 void crc_table_combine(model_t *model) {
-    // Keep squaring x^1 modulo p(x), where p(x) is the CRC polynomial, to get
-    // x^2^n. Start saving values in the table with x^2^3, representing the
-    // action of one zero byte. Go until the sequence cycles, or WORDBITS
-    // entries have been filled in.
+    // Keep squaring x^1 modulo p(x), where p(x) is the CRC polynomial, to
+    // generate x^2^n modulo p(x).
     word_t sq = model->ref ? (word_t)1 << (model->width - 2) : 2;   // x^1
-    sq = multmodp(model, sq, sq);           // x^2^1
-    sq = multmodp(model, sq, sq);           // x^2^2
-    sq = multmodp(model, sq, sq);           // x^2^3
-    word_t x8 = model->table_comb[0] = sq;
-    for (unsigned n = 1; n < WORDBITS; n++) {
-        sq = multmodp(model, sq, sq);       // x^2^(n+3)
-        if (sq == x8) {
-            model->cycle = n;
-            return;
-        }
-        model->table_comb[n] = sq;
+    model->table_comb[0] = sq;
+    int n = 1;
+    while ((unsigned)n < sizeof(model->table_comb) / sizeof(word_t)) {
+        sq = multmodp(model, sq, sq);       // x^2^n
+
+        // If this value has already appeared, then done.
+        for (int j = 0; j < n; j++)
+            if (model->table_comb[j] == sq) {
+                model->cycle = n;
+                model->back = j;
+                return;
+            }
+
+        // New value -- append to table.
+        model->table_comb[n++] = sq;
     }
-    model->cycle = WORDBITS;
+
+    // No cycle was found, up to the size of the table.
+    model->cycle = n;
+    model->back = -1;
+
+#ifdef FIND_CYCLE
+#   define GIVEUP 10000
+    // Just out of curiosity, see when x^2^n cycles for this CRC.
+    word_t comb[GIVEUP];
+    for (int k = 0; k < n; k++)
+        comb[k] = model->table_comb[k];
+    while (n < GIVEUP) {
+        sq = multmodp(model, sq, sq);
+        for (int j = 0; j < n; j++)
+            if (comb[j] == sq) {
+                fprintf(stderr, "%s cycled at %u to %u\n",
+                        model->name, n, j);
+                return;
+            }
+        comb[n++] = sq;
+    }
+    fprintf(stderr, "%s never cycled?\n", model->name);
+#endif
+
+}
+
+word_t crc_zeros(model_t *model, word_t crc, uintmax_t n) {
+    // Pre-process the CRC.
+    crc ^= model->xorout;
+    if (model->rev)
+        crc = reverse(crc, model->width);
+
+    // Apply n zero bits to crc.
+    if (n < 128) {
+        word_t poly = model->poly;
+        if (model->ref) {
+            crc &= ONES(model->width);
+            while (n--)
+                crc = crc & 1 ? (crc >> 1) ^ poly : crc >> 1;
+        }
+        else {
+            word_t mask = (word_t)1 << (model->width - 1);
+            while (n--)
+                crc = crc & mask ? (crc << 1) ^ poly : crc << 1;
+            crc &= ONES(model->width);
+        }
+    }
+    else {
+        crc &= ONES(model->width);
+        int k = 0;
+        for (;;) {
+            if (n & 1)
+                crc = multmodp(model, model->table_comb[k], crc);
+            n >>= 1;
+            if (n == 0)
+                break;
+            if (++k == model->cycle) {
+                assert(model->back != -1);
+                k = model->back;
+            }
+        }
+    }
+
+    // Post-process and return the CRC.
+    if (model->rev)
+        crc = reverse(crc, model->width);
+    return crc ^ model->xorout;
 }
 
 // Return x^(8n) modulo p(x), where p(x) is the CRC polynomial. model->cycle
 // and model->table_comb[] must first be initialized by crc_table_combine().
 static word_t x8nmodp(model_t *model, uintmax_t n) {
     word_t xp = model->ref ? (word_t)1 << (model->width - 1) : 1;   // x^0
-    unsigned k = 0;
-    while (n) {
+    int k = model->cycle > 3 ? 3 :
+            model->cycle == 3 ? model->back :
+            model->cycle - 1;
+    for (;;) {
         if (n & 1)
             xp = multmodp(model, model->table_comb[k], xp);
         n >>= 1;
-        if (++k == model->cycle)
-            k = 0;
+        if (n == 0)
+            break;
+        if (++k == model->cycle) {
+            assert(model->back != -1);
+            k = model->back;
+        }
     }
     return xp;
 }

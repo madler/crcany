@@ -1,7 +1,7 @@
 /*
-  crcany version 2.0, 29 December 2020
+  crcany version 2.1, 19 September 2021
 
-  Copyright (C) 2014, 2016, 2017, 2020 Mark Adler
+  Copyright (C) 2014, 2016, 2017, 2020, 2021 Mark Adler
 
   This software is provided 'as-is', without any express or implied warranty.
   In no event will the authors be held liable for any damages arising from the
@@ -21,7 +21,29 @@
 
   Mark Adler
   madler@alumni.caltech.edu
-*/
+ */
+
+/* Usage:
+
+    crcany [-pattern] [path1] [path2] ...
+
+ where pattern is what to search for in the list of CRC names, and the paths
+ are the inputs to compute the CRCs on. If there are no paths, then input is
+ taken from stdin. If there is no pattern supplied, then "-32" is assumed,
+ which computes all 32-bit CRCs on the input(s).
+
+ If the pattern is "-help" or "-list", then the names of the available CRCs are
+ listed, and any input is ignored.
+
+ If the pattern starts with "CRC" or "crc", then that is removed. Any non-
+ alphanumeric characters are removed from the pattern. If the remaining pattern
+ starts with digits, then that is the width of the CRC, where only CRCs of that
+ width will match. (I.e. "3" does not match "32".) The remainder of the pattern
+ after any digits must appear somewhere in the CRC name for a match. All
+ matching is case insensitive. The empty pattern, option "-", will match all
+ the available CRCs.
+
+ */
 
 /* Version history:
    1.0  22 Dec 2014  First version
@@ -47,6 +69,10 @@
                      Replace Ruby script with Python for portability
                      Add copy of Greg Cook's all-CRCs page for safekeeping
                      Update to the latest CRC catalog
+   2.1  19 Sep 2021  Generate code for combining CRCs
+                     Add options to crcadd for endianess and word size
+                     Split off checks of CRC lists to a checklists make target
+                     Enhance crcany to compute multiple CRCs on the same input
  */
 
 #include <stdio.h>
@@ -92,114 +118,109 @@ local size_t digs(char const *str) {
 // Number of CRCs defined in all (last entry is zeros).
 #define NUMALL (sizeof(all) / sizeof(all[0]) - 1)
 
-// Pick a CRC from the list based on id, return its index in all[], or -1 if
-// not found. Return -2 if help was requested. If id is NULL, then CRC-32 is
-// used.
-local int pick(char *id) {
-    // default CRC = standard PKZip/Ethernet CRC-32
-    char def[] = "CRC-32";          // mutable string
+// Find all CRC names from the list that start with id. hit[] must have space
+// for NUMALL entries. On return hit[i] is true for a match to id. The return
+// value is the number of matches.
+local int matches(char *id, char *hit) {
+    // Default CRC = all 32-bit CRCs.
+    char def[] = "32";              // mutable string
     if (id == NULL)
         id = def;
 
-    // normalize the id to lower case letters and digits
+    // Normalize the id to lower case letters and digits.
     normalize(id);
-    if (*id == 0) {
-        fputs("CRC not found\n", stderr);
+
+    // If asking for help or a list, list all of the CRCs. Return -1.
+    if (strcmp(id, "help") == 0 || strcmp(id, "list") == 0) {
+        for (size_t k = 0; k < NUMALL; k++)
+            printf("%s (%s)\n", all[k].name, all[k].match);
         return -1;
     }
 
-    // if asking for help or a list, list all of the CRCs -- return -2 to
-    // return 0 from the command
-    if (strcmp(id, "help") == 0 || strcmp(id, "list") == 0) {
-        int k = 0;
-        while (all[k].func != NULL) {
-            printf("%s (%s)\n", all[k].name, all[k].match);
-            k++;
-        }
-        return -2;
-    }
-
-    // drop the leading "crc", if present
+    // Drop the leading "crc", if present.
     if (strncmp(id, "crc", 3) == 0)
         id += 3;
 
-    // search for a matching CRC
-    char hit[NUMALL];
-    int index = -1, count = 0;
+    // Search for a matching CRC.
+    memset(hit, 0, NUMALL);
+    size_t di = digs(id);
+    int any = 0;
     for (size_t k = 0; k < NUMALL; k++) {
         char const *match = all[k].match;
-        size_t di = digs(id), dm = digs(match);
-        if (di && strncmp(id, match, di > dm ? di : dm))
-            continue;       // if id has a width, it must match
-        if (di && strcmp(id + di, match + dm) == 0)
-            return k;       // if identical after width, then found
-        hit[k] = strstr(match + dm, id + di) != NULL;
-        if (hit[k]) {       // if contained, then match
-            index = k;
-            count++;
+        size_t dm = digs(match);
+        // If id starts with digits, then match must start with those same
+        // digits, i.e., the CRC widths much match. Then the portion of id
+        // after any initial digits must be found somewhere in match after its
+        // initial digits.
+        if ((di == 0 || (di == dm && memcmp(id, match, di) == 0)) &&
+            strstr(match + dm, id + di) != NULL) {
+            hit[k] = 1;
+            any++;
         }
     }
-
-    // if there was exactly one match, return it
-    if (count == 1)
-        return index;
-
-    // report multiple or no matches and return not found
-    if (count) {
-        fprintf(stderr, "%s matched multiple CRCs:\n", id);
-        for (size_t k = 0; k < NUMALL; k++)
-            if (hit[k])
-                fprintf(stderr, "    %s\n", all[k].name);
-    }
-    else
-        fprintf(stderr, "CRC %s not found\n", id);
-    return -1;
+    return any;
 }
 
-// Return the CRC of the file in, using the CRC function func.
-local uintmax_t crc_file(crc_f func, FILE *in) {
+// Compute the CRCs of the file in, using the CRC's marked in hit. The CRCs are
+// returned in crc[], which must have room for NUMALL entries.
+local void crcs_file(uintmax_t *crc, char *hit, FILE *in) {
     unsigned char buf[16384];
     size_t got;
-    uintmax_t crc = func(0, NULL, 0);
+    for (size_t k = 0; k < NUMALL; k++)
+        if (hit[k])
+            crc[k] = all[k].func(0, NULL, 0);
     while ((got = fread(buf, 1, sizeof(buf), in)) != 0)
-        crc = func(crc, buf, got);
-    return crc;
+        for (size_t k = 0; k < NUMALL; k++)
+            if (hit[k])
+                crc[k] = all[k].func(crc[k], buf, got);
 }
 
-// Print the specified CRC computed on the provided files or on stdin.
+// Print the specified CRCs computed on the provided files or on stdin.
 int main(int argc, char **argv) {
-    // set the CRC to apply
+    // Get the CRCs to apply.
+    char hit[NUMALL];
     int n = 1;
-    int x = pick(n < argc && argv[n][0] == '-' ? argv[n++] + 1 : NULL);
-    if (x < 0)
-        return x + 2;
-    crc_f func = all[x].func;
-    unsigned width = all[x].width;
-    printf("%s\n", all[x].name);
+    int m = matches(n < argc && argv[n][0] == '-' ? argv[n++] + 1 : NULL, hit);
+    if (m < 0)
+        return 0;
+    if (m == 0) {
+        fputs("no matches\n", stderr);
+        return 1;
+    }
 
-    // compute the CRC of the paths in the remaining arguments, or of stdin if
-    // there are no more arguments -- include the paths in the output if there
-    // are two or more
+    // Compute the CRC of the paths in the remaining arguments, or of stdin if
+    // there are no more arguments. Include the paths in the output if there
+    // are two or more paths.
     int ret = 0;                    // set to 1 if any file errors
     int name = argc - n > 1;        // true to print the path name with the CRC
     do {
+        // Open the input.
         FILE *in = n == argc ? stdin : fopen(argv[n], "rb");
         if (in == NULL) {           // open error
             perror(argv[n]);
             ret = 1;
             continue;
         }
-        uintmax_t crc = crc_file(func, in);
+
+        // Compute the CRCs on the input.
+        uintmax_t crc[NUMALL];
+        crcs_file(crc, hit, in);
         if (ferror(in)) {           // read error
             perror(n == argc ? NULL : argv[n]);
             ret = 1;
         }
         else {
-            printf("0x%0*jx", (width + 3) >> 2, crc);
+            // Show the computed CRCs.
             if (name)
-                printf(" %s", argv[n]);
-            putchar('\n');
+                printf("%s:\n", argv[n]);
+            for (size_t k = 0; k < NUMALL; k++) {
+                if (hit[k])
+                    printf("%s%s: 0x%0*jx\n", name ? "  " : "",
+                           all[k].name, (all[k].width + 3) >> 2, crc[k]);
+            }
         }
+
+        // Close the input.
         if (in != stdin)
             fclose(in);
     } while (++n < argc);

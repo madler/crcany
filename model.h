@@ -65,22 +65,25 @@ typedef uintmax_t word_t;
 
    poly is reflected for refin true.  xorout is reflected for refout true.
 
-   The structure includes space for pre-computed CRC tables used to speed up
-   the CRC calculation.  Both are filled in by the crc_table_wordwise()
-   routine, using the CRC parameters already defined in the structure. */
+   The structure includes space for pre-computed tables used to speed up CRC
+   and CRC combination calculations. table_byte[] and table_word[] are filled
+   in by the crc_table_wordwise() routine, using the CRC parameters already
+   defined in the structure. table_comb[] is filled in by crc_table_combine().
+ */
 typedef struct {
     unsigned short width;       /* number of bits in the CRC (the degree of the
                                    polynomial) */
-    unsigned short cycle;       /* length of the table_comb[] cycle */
+    short cycle;                /* length of the table_comb[] cycle */
+    short back;                 /* index of table_comb[] to cycle back to */
     char ref;                   /* if true, reflect input and output */
     char rev;                   /* if true, reverse output */
+    char *name;                 /* text description of this CRC */
     word_t poly, poly_hi;       /* polynomial representation (sans x^width) */
     word_t init, init_hi;       /* CRC of a zero-length sequence */
     word_t xorout, xorout_hi;   /* final CRC is exclusive-or'ed with this */
     word_t check, check_hi;     /* CRC of the nine ASCII bytes "123456789" */
     word_t res, res_hi;         /* Residue of the CRC */
-    char *name;                 /* text description of this CRC */
-    word_t table_comb[WORDBITS];        /* table for CRC combination */
+    word_t table_comb[67];              /* table for CRC combination */
     word_t table_byte[256];             /* table for byte-wise calculation */
     word_t table_word[WORDCHARS][256];  /* tables for word-wise calculation */
 } model_t;
@@ -129,7 +132,8 @@ typedef struct {
    Example (from the RevEng catalogue at
    http://reveng.sourceforge.net/crc-catalogue/all.htm ):
 
-      width=16 poly=0x1021 init=0x0000 refin=true refout=true xorout=0x0000 check=0x2189 residue=0x0000 name="KERMIT"
+      width=16 poly=0x1021 init=0x0000 refin=true refout=true xorout=0x0000
+          check=0x2189 residue=0x0000 name="KERMIT"
 
    The same model maximally abbreviated:
 
