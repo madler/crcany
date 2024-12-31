@@ -2,7 +2,7 @@
 # Get all of the CRC definitions from Greg Cook's CRC catalog.
 import re
 import urllib.request
-desc = re.compile('<code>\s*(width=.*)\s*<\/code>', re.I)
+desc = re.compile('<code>\\s*(width=.*)\\s*</code>', re.I)
 all = 'https://reveng.sourceforge.io/crc-catalogue/all.htm'
 for line in urllib.request.urlopen(all):
     match = desc.search(line.decode('utf-8'))
