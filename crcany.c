@@ -1,7 +1,7 @@
 /*
   crcany version 2.1, 19 September 2021
 
-  Copyright (C) 2014, 2016, 2017, 2020, 2021 Mark Adler
+  Copyright (C) 2014-2025 Mark Adler
 
   This software is provided 'as-is', without any express or implied warranty.
   In no event will the authors be held liable for any damages arising from the

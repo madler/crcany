@@ -74,6 +74,7 @@ Executables:
 
 Information:
 - README.md -- this file
+- LICENSE -- copy of license from crcany.c
 - Makefile -- generate and test code for all CRCs in allcrcs-abbrev.txt
 - allcrcs.txt -- all of the CRC definitions, one per line, from Greg Cook's catalogue
 - allcrcs-abbrev.txt -- allcrcs.txt abbreviated
